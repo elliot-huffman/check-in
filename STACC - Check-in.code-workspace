@@ -1,0 +1,54 @@
+{
+	"folders": [
+		{
+			"name": "STACC - Check In",
+			"path": "."
+		}
+	],
+	"settings": {
+		"cSpell.enabledFileTypes": {
+			"*": true
+		},
+		"editor.formatOnSave": true,
+		"editor.tabSize": 4,
+		"eslint.rules.customizations": [
+			{
+				"rule": "*",
+				"severity": "warn"
+			}
+		],
+		"files.exclude": {
+			"node_modules": true,
+		},
+		"files.insertFinalNewline": true,
+		"files.trimFinalNewlines": true,
+		"js/ts.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": true,
+		"js/ts.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
+		"js/ts.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+		"js/ts.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
+		"js/ts.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+		"js/ts.format.insertSpaceAfterTypeAssertion": true,
+		"js/ts.format.insertSpaceBeforeFunctionParenthesis": false,
+		"js/ts.format.semicolons": "insert",
+		"js/ts.implementationsCodeLens.enabled": true,
+		"js/ts.implicitProjectConfig.target": "ES2024",
+		"js/ts.inlayHints.enumMemberValues.enabled": true,
+		"js/ts.preferences.quoteStyle": "single",
+		"search.exclude": {
+			"**/*.js": true,
+			"**/*.js.map": true,
+		},
+		"window.border": "white"
+	},
+	"extensions": {
+		"recommendations": [
+			"streetsidesoftware.code-spell-checker",
+			"MS-CST-E.vscode-devskim",
+			"dbaeumer.vscode-eslint",
+			"github.vscode-github-actions",
+			"PKief.material-icon-theme",
+			"SocketSecurity.vscode-socket-security",
+			"Gruntfuggly.todo-tree"
+		]
+	}
+}
