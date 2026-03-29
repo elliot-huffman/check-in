@@ -23,12 +23,24 @@
     "license": "MIT",
     "author": "Elliot Huffman",
     "scripts": {
+        "prebuild:Prod": "next telemetry disable",
+        "prebuild:Dev": "next telemetry disable",
         "start:Runtime": "electron .",
         "start:UserInterface": "next dev user-interface",
+        "build:Prod": "npm run build:Prod:Runtime && npm run build:Prod:UserInterface",
         "build:Prod:Runtime": "tsc --project runtime --sourceMap false",
         "build:Prod:UserInterface": "next build user-interface",
-        "build:Prod": "npm run build:Prod:Runtime && npm run build:Prod:UserInterface",
-        "package": "electron-builder build"
+        "build:Dev": "npm run build:Dev:Runtime && npm run build:Dev:UserInterface",
+        "build:Dev:Runtime": "tsc --project runtime",
+        "build:Dev:UserInterface": "npm run build:Prod:UserInterface",
+        "lint": "npm run lint:Runtime && npm run lint:UserInterface",
+        "lint:Runtime": "eslint ./runtime/",
+        "lint:UserInterface": "eslint ./user-interface/",
+        "test": "npm run test:Unit && npm run test:Integration",
+        "test:Unit": "echo Coming soon!",
+        "test:Integration": "echo Coming soon!",
+        "package": "electron-builder build",
+        "generate:LicenseList": "generate-license-file --input package.json --output ./user-interface/public/LicenseList.txt --overwrite"
     },
     "packageManager": "npm@11.12.1",
     "devEngines": {
