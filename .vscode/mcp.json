@@ -10,6 +10,14 @@
         "socket-mcp": {
             "type": "http",
             "url": "https://mcp.socket.dev/"
+        },
+        "microsoft-learn": {
+            "type": "http",
+            "url": "https://learn.microsoft.com/api/mcp"
+        },
+        "github": {
+            "type": "http",
+            "url": "https://api.githubcopilot.com/mcp/"
         }
     }
 }
