@@ -6,13 +6,13 @@ import type { RootState } from '../store';
 
 /** Structure of the slice's state. */
 interface ThemeProviderState {
-    /** Flag that indicates if the current theme is light, dark, or auto (inherited from the system's global settings). */
-    'themeMode': 'light' | 'dark' | 'auto';
+    /** Flag that indicates if the current theme is light or dark. */
+    'themeMode': 'light' | 'dark';
 }
 
 /** Default set of data that the slice will use upon initialization. */
 const initialState: ThemeProviderState = {
-    'themeMode': 'auto'
+    'themeMode': 'light'
 };
 
 /** Section of the global metadata store related to theme management. */
