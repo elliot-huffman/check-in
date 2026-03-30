@@ -57,6 +57,7 @@
     },
     "devDependencies": {
         "@electron/fuses": "~2.1.1",
+        "@shi-corp/development-utilities": "~2.2.0",
         "babel-plugin-react-compiler": "~1.0.0",
         "electron": "~41.1.0",
         "electron-builder": "~26.8.1",
