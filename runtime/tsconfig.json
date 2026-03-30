@@ -4,8 +4,9 @@
     /* Language and output. */
     "target": "es2024",
     "incremental": true,
+    "outDir": "../bin",
     /* Import & Export. */
-    "module": "es2022",
+    "module": "node20",
     "esModuleInterop": true,
     "moduleResolution": "node16",
     "forceConsistentCasingInFileNames": true,
