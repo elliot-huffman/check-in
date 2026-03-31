@@ -56,8 +56,8 @@ export function Layout(props: LayoutProps): React.ReactNode {
 
     /** Direction class lookup for this render. */
     const directionClass = {
-        'column': compiledStyles.directionColumn,
-        'row': compiledStyles.directionRow
+        'column': compiledStyles.directionRow,
+        'row': compiledStyles.directionColumn
     }[direction];
 
     /** Main-axis alignment class lookup for this render. */
@@ -101,6 +101,7 @@ export function Layout(props: LayoutProps): React.ReactNode {
         props.className
     );
 
+    // Render the layout container
     return (
         <LayoutDirectionContext.Provider value={ direction }>
             {/* eslint-disable-next-line react-hooks/refs */ }
@@ -113,7 +114,7 @@ export function Layout(props: LayoutProps): React.ReactNode {
 }
 
 /** Prop contract for grouped layout items. */
-interface LayoutItemProps extends LayoutBaseProps {
+interface LayoutItemProps extends Omit<LayoutBaseProps, 'direction'> {
     /** Flag that allows the item to grow and claim unused main-axis space. */
     'grow'?: boolean;
     /** Requested cross-axis override for this item within its parent layout. */
@@ -132,9 +133,6 @@ export function LayoutItem(props: LayoutItemProps): React.ReactNode {
     /** Closest inherited direction from the parent layout context. */
     const parentDirection = useContext(LayoutDirectionContext);
 
-    /** Effective flex direction used by this grouped item. */
-    const direction = props.direction ?? parentDirection;
-
     /** Effective main-axis alignment used by this grouped item. */
     const justify = props.justify ?? 'start';
 
@@ -151,7 +149,7 @@ export function LayoutItem(props: LayoutItemProps): React.ReactNode {
     const directionClass = {
         'column': compiledStyles.directionColumn,
         'row': compiledStyles.directionRow
-    }[direction];
+    }[parentDirection];
 
     /** Main-axis alignment class lookup for this grouped item render. */
     const justifyClass = {
@@ -207,7 +205,7 @@ export function LayoutItem(props: LayoutItemProps): React.ReactNode {
     );
 
     return (
-        <LayoutDirectionContext.Provider value={ direction }>
+        <LayoutDirectionContext.Provider value={ parentDirection }>
             {/* eslint-disable-next-line react-hooks/refs */ }
             <div ref={ props.ref } className={ layoutItemClassName }>
                 {/* eslint-disable-next-line react-hooks/refs */ }
