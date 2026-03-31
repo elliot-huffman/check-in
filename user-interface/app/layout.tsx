@@ -4,7 +4,7 @@ import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'rea
 import { setTheme, themeModeSelector } from '../store/components/themeProvider';
 import { store } from '../store/store';
 import { useServerInsertedHTML } from 'next/navigation';
-import { useStyleList } from './_styles/globalLayout';
+import { useStyleList } from './_components/styles/globalLayout';
 
 /** Structure of the root layout props. */
 interface RootLayoutProps {
