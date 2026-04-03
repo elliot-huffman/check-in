@@ -52,7 +52,7 @@ export default function Page(): React.ReactNode {
 
     // Render the about screen with the legal notices and other info about the app.
     return (
-        <Layout className={ compiledStyles.aboutPage }>
+        <Layout>
             <Text className={ compiledStyles.licenseText }>{ rawLicenseText }</Text>
         </Layout>
     );
