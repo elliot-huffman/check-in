@@ -8,11 +8,18 @@ import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useStyleList } from '../styles/elements/TopBar';
 
+/** Props for the TopBar component. */
+interface TopBarProps {
+    /** Reference object for the top bar's root element. */
+    'ref'?: React.Ref<HTMLDivElement> | undefined;
+}
+
 /**
  * Renders the application's top bar with a navigation menu button and a home button.
+ * @param props TopBarProps containing optional ref.
  * @returns Rendered top bar.
  */
-export function TopBar(): React.ReactNode {
+export function TopBar(props: TopBarProps): React.ReactNode {
     /** Redux dispatch used to update menu visibility. */
     const dispatch = useDispatch();
 
@@ -24,11 +31,14 @@ export function TopBar(): React.ReactNode {
 
     // Render the top bar
     return (
-        <Layout className={ compiledStyles.topBar } justify="space-between">
-            <LayoutItem>
-                <Button aria-label="Open navigation menu" appearance="subtle" size="large" icon={ <NavigationRegular /> } onClick={ (): void => { dispatch(toggleNavigationMenu()); } } />
-                <Button appearance="transparent" size="large" onClick={ (): void => { router.push('/'); } }>STACC - Check In</Button>
-            </LayoutItem>
-        </Layout>
+        <>
+            {/* eslint-disable-next-line react-hooks/refs */ }
+            <Layout className={ compiledStyles.default } justify="space-between" ref={ props.ref }>
+                <LayoutItem>
+                    <Button aria-label="Open navigation menu" appearance="subtle" size="large" icon={ <NavigationRegular /> } onClick={ (): void => { dispatch(toggleNavigationMenu()); } } />
+                    <Button appearance="transparent" size="large" onClick={ (): void => { router.push('/'); } }>STACC - Check In</Button>
+                </LayoutItem>
+            </Layout>
+        </>
     );
 }
