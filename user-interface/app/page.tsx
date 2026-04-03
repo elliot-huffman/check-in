@@ -1,6 +1,6 @@
 'use client';
 
-import { Layout, LayoutItem } from './_components/LayoutSystem';
+import { Layout, LayoutItem } from './_components/elements/LayoutSystem';
 import { Text } from '@fluentui/react-components';
 
 /**

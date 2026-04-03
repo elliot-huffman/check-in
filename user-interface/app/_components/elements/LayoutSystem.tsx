@@ -1,9 +1,9 @@
 'use client';
 
-import type { LayoutAlign, LayoutDirection, LayoutGap, LayoutItemAlign, LayoutJustify } from './types/LayoutSystem';
+import type { LayoutAlign, LayoutDirection, LayoutGap, LayoutItemAlign, LayoutJustify } from '../types/LayoutSystem';
 import { createContext, useContext } from 'react';
 import { mergeClasses } from '@fluentui/react-components';
-import { useStyleList } from './styles/components/layoutSystem';
+import { useStyleList } from '../styles/components/layoutSystem';
 
 /** Shared prop contract for components that behave like flex containers. */
 interface LayoutBaseProps {

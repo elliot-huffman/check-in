@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Layout } from '../_components/LayoutSystem';
+import { Layout } from '../_components/elements/LayoutSystem';
 import { Text } from '@fluentui/react-components';
 import { useStyleList } from '../_components/styles/pages/About';
 

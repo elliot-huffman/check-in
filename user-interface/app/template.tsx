@@ -1,6 +1,6 @@
 'use client';
 
-import { Layout } from './_components/LayoutSystem';
+import { Layout } from './_components/elements/LayoutSystem';
 import { useStyleList } from './_components/styles/globalTemplate';
 
 /** Structure of the template component's props. */
