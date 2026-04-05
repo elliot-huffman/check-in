@@ -1,8 +1,8 @@
 'use client';
 
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
-import type { UserData } from '../../../app/_components/types/UserData';
 import type { RootState } from '../../store';
+import type { UserData } from '../../../app/_components/types/UserData';
 
 /** Structure of the slice's state. */
 interface UserDataState {
