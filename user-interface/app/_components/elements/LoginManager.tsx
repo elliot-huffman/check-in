@@ -67,8 +67,8 @@ export default function LoginManager(): React.ReactNode {
         <Button appearance="subtle" disabled={ isLoggingIn } onClick={ () => { void onAuthenticationClick(); } }>
             <Persona
                 textPosition="before"
-                name={ user?.displayName ?? 'Click here to log in' }
-                secondaryText={ user?.principalAuthName ?? 'Log in with Entra ID' }
+                name={ user?.displayName ?? 'Click Here to Log In' }
+                secondaryText={ user?.principalAuthName ?? 'Work or School Account' }
             />
         </Button>
     );
