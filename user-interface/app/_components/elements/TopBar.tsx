@@ -1,13 +1,13 @@
 'use client';
 
-import { Layout, LayoutItem } from './LayoutSystem';
 import { Button } from '@fluentui/react-components';
+import { Layout } from './LayoutSystem';
+import LoginManager from './LoginManager';
 import { NavigationRegular } from '@fluentui/react-icons';
 import { toggleNavigationMenu } from '../../../store/components/elements/navigationMenu';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import { useStyleList } from '../styles/elements/TopBar';
-import LoginManager from './LoginManager';
 
 /** Props for the TopBar component. */
 interface TopBarProps {

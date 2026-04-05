@@ -28,12 +28,7 @@ export const userDataSlice = createSlice({
          * @param state Mutable slice state.
          * @param action Payload describing the next user data value.
          */
-        'setUserData': (state, action: PayloadAction<UserDataState['user']>): void => { state.user = action.payload; },
-        /**
-         * Clears the current user data from the global metadata store.
-         * @param state Mutable slice state.
-         */
-        'clearUserData': (state): void => { state.user = void 0; }
+        'setUserData': (state, action: PayloadAction<UserDataState['user']>): void => { state.user = action.payload; }
     }
 });
 
@@ -48,6 +43,5 @@ export function userDataSelector(state: RootState): UserDataState['user'] {
 
 /** Exposes the slice actions for user data updates. */
 export const {
-    setUserData,
-    clearUserData
+    setUserData
 } = userDataSlice.actions;
