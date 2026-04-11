@@ -1,7 +1,7 @@
 'use client';
 
 import type { LayoutAlign, LayoutDirection, LayoutGap, LayoutItemAlign, LayoutJustify } from '../types/LayoutSystem';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
 import { mergeClasses } from '@fluentui/react-components';
 import { useStyleList } from '../styles/components/layoutSystem';
 
@@ -124,10 +124,12 @@ export function Layout(props: LayoutProps): React.ReactNode {
 
 /** Prop contract for grouped layout items. */
 interface LayoutItemProps extends Omit<LayoutBaseProps, 'direction'> {
-    /** Flag that allows the item to grow and claim unused main-axis space. */
-    'grow'?: boolean;
     /** Requested cross-axis override for this item within its parent layout. */
     'alignSelf'?: LayoutItemAlign;
+    /** Flag that allows the item to grow and claim unused main-axis space. */
+    'grow'?: boolean;
+    /** Flag that indicates whether this item should invert the parent's direction instead of matching it. */
+    'invertParentDirection'?: true;
 }
 
 /**
@@ -139,8 +141,20 @@ export function LayoutItem(props: LayoutItemProps): React.ReactNode {
     /** Compile the layout system's Griffel classes for this render. */
     const compiledStyles = useStyleList();
 
-    /** Closest inherited direction from the parent layout context. */
+    /** Closest inherited direction token from the parent layout context. */
     const parentDirection = useContext(LayoutDirectionContext);
+
+    /** Effective flex direction used by this grouped item. */
+    const direction = useMemo(() => {
+        // If the matchParentDirection flag is set, use the same direction as the parent layout instead of inverting it for this grouped item.
+        if (props.invertParentDirection) { return parentDirection === 'row' ? 'column' : 'row'; }
+
+        // Invert the parent layout's direction for this grouped item to create a perpendicular nested layout by default, which is the most common use case for grouped items.
+        return parentDirection;
+    }, [parentDirection, props.invertParentDirection]);
+
+    /** Direction token exposed to nested layout items from this grouped item. */
+    const childDirection = direction === 'row' ? 'column' : 'row';
 
     /** Effective main-axis alignment used by this grouped item. */
     const justify = props.justify ?? 'start';
@@ -158,7 +172,7 @@ export function LayoutItem(props: LayoutItemProps): React.ReactNode {
     const directionClass = {
         'column': compiledStyles.directionColumn,
         'row': compiledStyles.directionRow
-    }[parentDirection];
+    }[direction];
 
     /** Main-axis alignment class lookup for this grouped item render. */
     const justifyClass = {
@@ -213,8 +227,9 @@ export function LayoutItem(props: LayoutItemProps): React.ReactNode {
         props.className
     );
 
+    // Render the layout item
     return (
-        <LayoutDirectionContext.Provider value={ parentDirection }>
+        <LayoutDirectionContext.Provider value={ childDirection }>
             {/* eslint-disable-next-line react-hooks/refs */ }
             <div ref={ props.ref } className={ layoutItemClassName }>
                 {/* eslint-disable-next-line react-hooks/refs */ }
