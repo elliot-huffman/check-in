@@ -127,7 +127,7 @@ export class AuthenticationEngine {
         const pemEncodedCertificate = `-----BEGIN CERTIFICATE-----\n${ selectedKey.x5c[0] }\n-----END CERTIFICATE-----`;
 
         // If the signature doesn't cryptographically verify, then it is not a Microsoft signed access token
-        if (!verify(tokenComponents.signature, 'RS256', pemEncodedCertificate)) { return false; }
+        if (!verify(accessToken, 'RS256', pemEncodedCertificate)) { return false; }
 
         // #endregion Cryptographic Validation
 
