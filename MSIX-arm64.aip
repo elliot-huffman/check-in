@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DOCUMENT Type="Advanced Installer" CreateVersion="23.6" version="23.6" Modules="architect" RootPath="." Language="en" Id="{C76DE8D5-337C-46D8-81A3-6AD6D17FA84D}">
+  <COMPONENT cid="caphyon.advinst.msicomp.ProjectOptionsComponent">
+    <ROW Name="Application_AssetGenDestFolderPath" Value="assets\installer" ValueType="1"/>
+    <ROW Name="Application_AssetGenSourceFilePath" Value="assets\Logo.svg" ValueType="1"/>
+    <ROW Name="AssetGenPkgDestFolderPath" Value="assets\installer" ValueType="1"/>
+    <ROW Name="AssetGenPkgSourceFilePath" Value="assets\Logo.png" ValueType="1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiPropsComponent">
+    <ROW Property="AI_BITMAP_DISPLAY_MODE" Value="0"/>
+    <ROW Property="ALLUSERS" Value="1"/>
+    <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
+    <ROW Property="ARPCONTACT" Value="Elliot Huffman"/>
+    <ROW Property="ARPHELPLINK" Value="https://elliot-huffman.github.io/check-in/"/>
+    <ROW Property="ARPHELPTELEPHONE" Value="+1 (762) 233-7064"/>
+    <ROW Property="ARPPRODUCTICON" Value="Logo.exe" Type="8"/>
+    <ROW Property="ARPURLINFOABOUT" Value="https://github.com/elliot-huffman/check-in/issues"/>
+    <ROW Property="ARPURLUPDATEINFO" Value="https://github.com/elliot-huffman/check-in/releases"/>
+    <ROW Property="Manufacturer" Value="Elliot Huffman"/>
+    <ROW Property="ProductCode" Value="1033:{41A42FE7-4032-4D7E-9CB4-1C6330A59A00} " Type="16"/>
+    <ROW Property="ProductLanguage" Value="1033"/>
+    <ROW Property="ProductName" Value="Check-In"/>
+    <ROW Property="ProductVersion" Value="1.0.0" Options="32"/>
+    <ROW Property="SecureCustomProperties" Value="OLDPRODUCTS;AI_NEWERPRODUCTFOUND"/>
+    <ROW Property="UpgradeCode" Value="{A975326B-A30D-4B5D-89ED-BBFFF9F56559}"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiDirsComponent">
+    <ROW Directory="APPDIR" Directory_Parent="TARGETDIR" DefaultDir="APPDIR:." IsPseudoRoot="1" DirectoryOptions="3"/>
+    <ROW Directory="Assets" Directory_Parent="TARGETDIR" DefaultDir="Assets" IsPseudoRoot="1"/>
+    <ROW Directory="CommonAppDataFolder" Directory_Parent="TARGETDIR" DefaultDir="COMMON~1|CommonAppDataFolder" IsPseudoRoot="1"/>
+    <ROW Directory="TARGETDIR" DefaultDir="SourceDir"/>
+    <ROW Directory="locales_Dir" Directory_Parent="APPDIR" DefaultDir="locales" DirectoryOptions="3"/>
+    <ROW Directory="regid.202506.me.huffman.elliot_Dir" Directory_Parent="CommonAppDataFolder" DefaultDir="REGID2~1.ELL|regid.2025-06.me.huffman.elliot"/>
+    <ROW Directory="resources_Dir" Directory_Parent="APPDIR" DefaultDir="RESOUR~1|resources" DirectoryOptions="3"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SideBySideGuidComponent">
+    <ROW Component="APPDIR" Value="{CE24E334-AAEE-4666-84F6-60EDC4A45E32}"/>
+    <ROW Component="ProductInformation" Value="{3989F590-E454-422C-BCFD-B4C025FC7791}"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCompsComponent">
+    <ROW Component="APPDIR" ComponentId="{CE24E334-AAEE-4666-84F6-60EDC4A45E32}" Directory_="APPDIR" Attributes="0"/>
+    <ROW Component="CheckIn.exe" ComponentId="{5650EC11-19D7-4228-A838-778B56BF7A1D}" Directory_="APPDIR" Attributes="256" KeyPath="CheckIn.exe"/>
+    <ROW Component="ProductInformation" ComponentId="{3989F590-E454-422C-BCFD-B4C025FC7791}" Directory_="APPDIR" Attributes="260" KeyPath="Version"/>
+    <ROW Component="Store50x50Logo.scale100.png" ComponentId="{15A15802-96C4-46A4-A5A3-AA288FDB96F3}" Directory_="Assets" Attributes="0" KeyPath="Store50x50Logo.scale100.png" Type="0"/>
+    <ROW Component="af.pak" ComponentId="{0F7C6E81-B8A2-486C-AB63-5B7FE066918B}" Directory_="locales_Dir" Attributes="0" KeyPath="af.pak" Type="0"/>
+    <ROW Component="app.asar" ComponentId="{F4DD927C-B1E2-45AF-9325-1BB02E8100DF}" Directory_="resources_Dir" Attributes="0" KeyPath="app.asar" Type="0"/>
+    <ROW Component="chrome_100_percent.pak" ComponentId="{AFC76D5B-C660-4B30-9A22-356CA09F9826}" Directory_="APPDIR" Attributes="0" KeyPath="chrome_100_percent.pak" Type="0"/>
+    <ROW Component="d3dcompiler_47.dll" ComponentId="{FCDA7BED-29FC-41A1-9565-D79F817A406A}" Directory_="APPDIR" Attributes="256" KeyPath="d3dcompiler_47.dll"/>
+    <ROW Component="dxcompiler.dll" ComponentId="{48F6FEAD-6CE9-469D-8271-C21AA4DEA363}" Directory_="APPDIR" Attributes="256" KeyPath="dxcompiler.dll"/>
+    <ROW Component="dxil.dll" ComponentId="{7ABD5229-CAF6-49F8-AEE7-0A7044FEBBC2}" Directory_="APPDIR" Attributes="256" KeyPath="dxil.dll"/>
+    <ROW Component="ffmpeg.dll" ComponentId="{FB3D6E49-9681-4573-8944-18E25A552AA1}" Directory_="APPDIR" Attributes="256" KeyPath="ffmpeg.dll"/>
+    <ROW Component="libEGL.dll" ComponentId="{AD18E7FD-770B-4865-9376-62692FC74B3E}" Directory_="APPDIR" Attributes="256" KeyPath="libEGL.dll"/>
+    <ROW Component="libGLESv2.dll" ComponentId="{039926ED-E27E-481C-AB02-787C322FF724}" Directory_="APPDIR" Attributes="256" KeyPath="libGLESv2.dll"/>
+    <ROW Component="regid.202506.me.huffman.elliot" ComponentId="{9CD192EF-7640-4697-9A37-6277CEAAD3D6}" Directory_="regid.202506.me.huffman.elliot_Dir" Attributes="0"/>
+    <ROW Component="vk_swiftshader.dll" ComponentId="{F410461E-607E-4572-ADB8-C5ADE4A11877}" Directory_="APPDIR" Attributes="256" KeyPath="vk_swiftshader.dll"/>
+    <ROW Component="vulkan1.dll" ComponentId="{843146F5-D18F-4786-826F-129BAA2E0B21}" Directory_="APPDIR" Attributes="256" KeyPath="vulkan1.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
+    <ROW Feature="AiAppXAssets" Title="AiAppXAssets" Description="Description" Display="3" Level="0" Directory_="APPDIR" Attributes="0" Options="271" Builds="Build_MSIX"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0"/>
+    <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
+    <ROW File="CheckIn.exe" Component_="CheckIn.exe" FileName="Check-In.exe" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\Check-In.exe" SelfReg="false" DigSign="true"/>
+    <ROW File="chrome_100_percent.pak" Component_="chrome_100_percent.pak" FileName="CHROME~1.PAK|chrome_100_percent.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\chrome_100_percent.pak" SelfReg="false"/>
+    <ROW File="chrome_200_percent.pak" Component_="chrome_100_percent.pak" FileName="CHROME~2.PAK|chrome_200_percent.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\chrome_200_percent.pak" SelfReg="false"/>
+    <ROW File="d3dcompiler_47.dll" Component_="d3dcompiler_47.dll" FileName="D3DCOM~1.DLL|d3dcompiler_47.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\d3dcompiler_47.dll" SelfReg="false"/>
+    <ROW File="dxcompiler.dll" Component_="dxcompiler.dll" FileName="DXCOMP~1.DLL|dxcompiler.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\dxcompiler.dll" SelfReg="false"/>
+    <ROW File="dxil.dll" Component_="dxil.dll" FileName="dxil.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\dxil.dll" SelfReg="false"/>
+    <ROW File="ffmpeg.dll" Component_="ffmpeg.dll" FileName="ffmpeg.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\ffmpeg.dll" SelfReg="false"/>
+    <ROW File="icudtl.dat" Component_="chrome_100_percent.pak" FileName="icudtl.dat" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\icudtl.dat" SelfReg="false"/>
+    <ROW File="libEGL.dll" Component_="libEGL.dll" FileName="libEGL.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\libEGL.dll" SelfReg="false"/>
+    <ROW File="libGLESv2.dll" Component_="libGLESv2.dll" FileName="LIBGLE~1.DLL|libGLESv2.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\libGLESv2.dll" SelfReg="false"/>
+    <ROW File="LICENSE.electron.txt" Component_="chrome_100_percent.pak" FileName="LICENS~1.TXT|LICENSE.electron.txt" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\LICENSE.electron.txt" SelfReg="false"/>
+    <ROW File="LICENSES.chromium.html" Component_="chrome_100_percent.pak" FileName="LICENS~1.HTM|LICENSES.chromium.html" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\LICENSES.chromium.html" SelfReg="false"/>
+    <ROW File="af.pak" Component_="af.pak" FileName="af.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\af.pak" SelfReg="false"/>
+    <ROW File="am.pak" Component_="af.pak" FileName="am.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\am.pak" SelfReg="false"/>
+    <ROW File="ar.pak" Component_="af.pak" FileName="ar.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\ar.pak" SelfReg="false"/>
+    <ROW File="bg.pak" Component_="af.pak" FileName="bg.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\bg.pak" SelfReg="false"/>
+    <ROW File="bn.pak" Component_="af.pak" FileName="bn.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\bn.pak" SelfReg="false"/>
+    <ROW File="ca.pak" Component_="af.pak" FileName="ca.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\ca.pak" SelfReg="false"/>
+    <ROW File="cs.pak" Component_="af.pak" FileName="cs.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\cs.pak" SelfReg="false"/>
+    <ROW File="da.pak" Component_="af.pak" FileName="da.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\da.pak" SelfReg="false"/>
+    <ROW File="de.pak" Component_="af.pak" FileName="de.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\de.pak" SelfReg="false"/>
+    <ROW File="el.pak" Component_="af.pak" FileName="el.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\el.pak" SelfReg="false"/>
+    <ROW File="enGB.pak" Component_="af.pak" FileName="en-GB.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\en-GB.pak" SelfReg="false"/>
+    <ROW File="enUS.pak" Component_="af.pak" FileName="en-US.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\en-US.pak" SelfReg="false"/>
+    <ROW File="es419.pak" Component_="af.pak" FileName="es-419.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\es-419.pak" SelfReg="false"/>
+    <ROW File="es.pak" Component_="af.pak" FileName="es.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\es.pak" SelfReg="false"/>
+    <ROW File="et.pak" Component_="af.pak" FileName="et.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\et.pak" SelfReg="false"/>
+    <ROW File="fa.pak" Component_="af.pak" FileName="fa.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\fa.pak" SelfReg="false"/>
+    <ROW File="fi.pak" Component_="af.pak" FileName="fi.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\fi.pak" SelfReg="false"/>
+    <ROW File="fil.pak" Component_="af.pak" FileName="fil.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\fil.pak" SelfReg="false"/>
+    <ROW File="fr.pak" Component_="af.pak" FileName="fr.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\fr.pak" SelfReg="false"/>
+    <ROW File="gu.pak" Component_="af.pak" FileName="gu.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\gu.pak" SelfReg="false"/>
+    <ROW File="he.pak" Component_="af.pak" FileName="he.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\he.pak" SelfReg="false"/>
+    <ROW File="hi.pak" Component_="af.pak" FileName="hi.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\hi.pak" SelfReg="false"/>
+    <ROW File="hr.pak" Component_="af.pak" FileName="hr.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\hr.pak" SelfReg="false"/>
+    <ROW File="hu.pak" Component_="af.pak" FileName="hu.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\hu.pak" SelfReg="false"/>
+    <ROW File="id.pak" Component_="af.pak" FileName="id.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\id.pak" SelfReg="false"/>
+    <ROW File="it.pak" Component_="af.pak" FileName="it.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\it.pak" SelfReg="false"/>
+    <ROW File="ja.pak" Component_="af.pak" FileName="ja.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\ja.pak" SelfReg="false"/>
+    <ROW File="kn.pak" Component_="af.pak" FileName="kn.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\kn.pak" SelfReg="false"/>
+    <ROW File="ko.pak" Component_="af.pak" FileName="ko.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\ko.pak" SelfReg="false"/>
+    <ROW File="lt.pak" Component_="af.pak" FileName="lt.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\lt.pak" SelfReg="false"/>
+    <ROW File="lv.pak" Component_="af.pak" FileName="lv.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\lv.pak" SelfReg="false"/>
+    <ROW File="ml.pak" Component_="af.pak" FileName="ml.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\ml.pak" SelfReg="false"/>
+    <ROW File="mr.pak" Component_="af.pak" FileName="mr.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\mr.pak" SelfReg="false"/>
+    <ROW File="ms.pak" Component_="af.pak" FileName="ms.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\ms.pak" SelfReg="false"/>
+    <ROW File="nb.pak" Component_="af.pak" FileName="nb.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\nb.pak" SelfReg="false"/>
+    <ROW File="nl.pak" Component_="af.pak" FileName="nl.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\nl.pak" SelfReg="false"/>
+    <ROW File="pl.pak" Component_="af.pak" FileName="pl.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\pl.pak" SelfReg="false"/>
+    <ROW File="ptBR.pak" Component_="af.pak" FileName="pt-BR.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\pt-BR.pak" SelfReg="false"/>
+    <ROW File="ptPT.pak" Component_="af.pak" FileName="pt-PT.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\pt-PT.pak" SelfReg="false"/>
+    <ROW File="ro.pak" Component_="af.pak" FileName="ro.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\ro.pak" SelfReg="false"/>
+    <ROW File="ru.pak" Component_="af.pak" FileName="ru.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\ru.pak" SelfReg="false"/>
+    <ROW File="sk.pak" Component_="af.pak" FileName="sk.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\sk.pak" SelfReg="false"/>
+    <ROW File="sl.pak" Component_="af.pak" FileName="sl.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\sl.pak" SelfReg="false"/>
+    <ROW File="sr.pak" Component_="af.pak" FileName="sr.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\sr.pak" SelfReg="false"/>
+    <ROW File="sv.pak" Component_="af.pak" FileName="sv.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\sv.pak" SelfReg="false"/>
+    <ROW File="sw.pak" Component_="af.pak" FileName="sw.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\sw.pak" SelfReg="false"/>
+    <ROW File="ta.pak" Component_="af.pak" FileName="ta.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\ta.pak" SelfReg="false"/>
+    <ROW File="te.pak" Component_="af.pak" FileName="te.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\te.pak" SelfReg="false"/>
+    <ROW File="th.pak" Component_="af.pak" FileName="th.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\th.pak" SelfReg="false"/>
+    <ROW File="tr.pak" Component_="af.pak" FileName="tr.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\tr.pak" SelfReg="false"/>
+    <ROW File="uk.pak" Component_="af.pak" FileName="uk.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\uk.pak" SelfReg="false"/>
+    <ROW File="ur.pak" Component_="af.pak" FileName="ur.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\ur.pak" SelfReg="false"/>
+    <ROW File="vi.pak" Component_="af.pak" FileName="vi.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\vi.pak" SelfReg="false"/>
+    <ROW File="zhCN.pak" Component_="af.pak" FileName="zh-CN.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\zh-CN.pak" SelfReg="false"/>
+    <ROW File="zhTW.pak" Component_="af.pak" FileName="zh-TW.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\locales\zh-TW.pak" SelfReg="false"/>
+    <ROW File="app.asar" Component_="app.asar" FileName="APP~1.ASA|app.asar" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\resources\app.asar" SelfReg="false"/>
+    <ROW File="resources.pak" Component_="chrome_100_percent.pak" FileName="RESOUR~1.PAK|resources.pak" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\resources.pak" SelfReg="false"/>
+    <ROW File="snapshot_blob.bin" Component_="chrome_100_percent.pak" FileName="SNAPSH~1.BIN|snapshot_blob.bin" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\snapshot_blob.bin" SelfReg="false"/>
+    <ROW File="v8_context_snapshot.bin" Component_="chrome_100_percent.pak" FileName="V8_CON~1.BIN|v8_context_snapshot.bin" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\v8_context_snapshot.bin" SelfReg="false"/>
+    <ROW File="vk_swiftshader.dll" Component_="vk_swiftshader.dll" FileName="VK_SWI~1.DLL|vk_swiftshader.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\vk_swiftshader.dll" SelfReg="false"/>
+    <ROW File="vk_swiftshader_icd.json" Component_="chrome_100_percent.pak" FileName="VK_SWI~1.JSO|vk_swiftshader_icd.json" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\vk_swiftshader_icd.json" SelfReg="false"/>
+    <ROW File="vulkan1.dll" Component_="vulkan1.dll" FileName="vulkan-1.dll" Version="65535.65535.65535.65535" Attributes="0" SourcePath="dist\win-arm64-unpacked\vulkan-1.dll" SelfReg="false"/>
+    <ROW File="Store50x50Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~2.PNG|Store50x50Logo.scale-100.png" Attributes="0" SourcePath="assets\installer\Store50x50Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="CHECKI~1.PNG|CheckIn.exeSquare44x44Logo.scale-100.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare71x71Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="CHECKI~3.PNG|CheckIn.exeSquare71x71Logo.scale-100.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare71x71Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeWide310x150Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~12.PNG|CheckIn.exeWide310x150Logo.scale-100.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeWide310x150Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare310x310Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~17.PNG|CheckIn.exeSquare310x310Logo.scale-100.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare310x310Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSplashScreen.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~41.PNG|CheckIn.exeSplashScreen.scale-100.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSplashScreen.scale-100.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeBadgeLogo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~46.PNG|CheckIn.exeBadgeLogo.scale-100.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeBadgeLogo.scale-100.png" SelfReg="false"/>
+    <ROW File="Store50x50Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~1.PNG|Store50x50Logo.scale-125.png" Attributes="0" SourcePath="assets\installer\Store50x50Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="Store50x50Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~3.PNG|Store50x50Logo.scale-150.png" Attributes="0" SourcePath="assets\installer\Store50x50Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="Store50x50Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~4.PNG|Store50x50Logo.scale-200.png" Attributes="0" SourcePath="assets\installer\Store50x50Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="Store50x50Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="STORE5~5.PNG|Store50x50Logo.scale-400.png" Attributes="0" SourcePath="assets\installer\Store50x50Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare71x71Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="CHECKI~2.PNG|CheckIn.exeSquare71x71Logo.scale-125.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare71x71Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare71x71Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="CHECKI~4.PNG|CheckIn.exeSquare71x71Logo.scale-150.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare71x71Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare71x71Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="CHECKI~5.PNG|CheckIn.exeSquare71x71Logo.scale-200.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare71x71Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare71x71Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="CHECKI~6.PNG|CheckIn.exeSquare71x71Logo.scale-400.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare71x71Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare150x150Logo.scale100.png" Component_="Store50x50Logo.scale100.png" FileName="CHECKI~7.PNG|CheckIn.exeSquare150x150Logo.scale-100.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare150x150Logo.scale-100.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare150x150Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="CHECKI~8.PNG|CheckIn.exeSquare150x150Logo.scale-125.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare150x150Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare150x150Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="CHECKI~9.PNG|CheckIn.exeSquare150x150Logo.scale-150.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare150x150Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare150x150Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~10.PNG|CheckIn.exeSquare150x150Logo.scale-200.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare150x150Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare150x150Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~11.PNG|CheckIn.exeSquare150x150Logo.scale-400.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare150x150Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeWide310x150Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~13.PNG|CheckIn.exeWide310x150Logo.scale-125.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeWide310x150Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeWide310x150Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~14.PNG|CheckIn.exeWide310x150Logo.scale-150.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeWide310x150Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeWide310x150Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~15.PNG|CheckIn.exeWide310x150Logo.scale-200.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeWide310x150Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeWide310x150Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~16.PNG|CheckIn.exeWide310x150Logo.scale-400.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeWide310x150Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare310x310Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~18.PNG|CheckIn.exeSquare310x310Logo.scale-125.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare310x310Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare310x310Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~19.PNG|CheckIn.exeSquare310x310Logo.scale-150.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare310x310Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare310x310Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~20.PNG|CheckIn.exeSquare310x310Logo.scale-200.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare310x310Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare310x310Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~21.PNG|CheckIn.exeSquare310x310Logo.scale-400.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare310x310Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize16.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~22.PNG|CheckIn.exeSquare44x44Logo.targetsize-16.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-16.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize16_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~23.PNG|CheckIn.exeSquare44x44Logo.targetsize-16_altform-unplated.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-16_altform-unplated.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize16_altformlightunplated.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~24.PNG|CheckIn.exeSquare44x44Logo.targetsize-16_altform-lightunplated.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-16_altform-lightunplated.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~25.PNG|CheckIn.exeSquare44x44Logo.scale-125.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.scale-125.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize24.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~26.PNG|CheckIn.exeSquare44x44Logo.targetsize-24.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-24.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize24_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~27.PNG|CheckIn.exeSquare44x44Logo.targetsize-24_altform-unplated.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-24_altform-unplated.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize24_altformlightunplated.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~28.PNG|CheckIn.exeSquare44x44Logo.targetsize-24_altform-lightunplated.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-24_altform-lightunplated.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~29.PNG|CheckIn.exeSquare44x44Logo.scale-150.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.scale-150.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize32.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~30.PNG|CheckIn.exeSquare44x44Logo.targetsize-32.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-32.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize32_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~31.PNG|CheckIn.exeSquare44x44Logo.targetsize-32_altform-unplated.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-32_altform-unplated.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize32_altformlightunplated.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~32.PNG|CheckIn.exeSquare44x44Logo.targetsize-32_altform-lightunplated.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-32_altform-lightunplated.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~33.PNG|CheckIn.exeSquare44x44Logo.scale-200.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.scale-200.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize48.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~34.PNG|CheckIn.exeSquare44x44Logo.targetsize-48.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-48.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize48_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~35.PNG|CheckIn.exeSquare44x44Logo.targetsize-48_altform-unplated.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-48_altform-unplated.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize48_altformlightunplated.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~36.PNG|CheckIn.exeSquare44x44Logo.targetsize-48_altform-lightunplated.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-48_altform-lightunplated.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~37.PNG|CheckIn.exeSquare44x44Logo.scale-400.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.scale-400.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize256.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~38.PNG|CheckIn.exeSquare44x44Logo.targetsize-256.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-256.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize256_altformunplated.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~39.PNG|CheckIn.exeSquare44x44Logo.targetsize-256_altform-unplated.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-256_altform-unplated.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSquare44x44Logo.targetsize256_altformlightunplated.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~40.PNG|CheckIn.exeSquare44x44Logo.targetsize-256_altform-lightunplated.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSquare44x44Logo.targetsize-256_altform-lightunplated.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSplashScreen.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~42.PNG|CheckIn.exeSplashScreen.scale-125.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSplashScreen.scale-125.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSplashScreen.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~43.PNG|CheckIn.exeSplashScreen.scale-150.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSplashScreen.scale-150.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSplashScreen.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~44.PNG|CheckIn.exeSplashScreen.scale-200.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSplashScreen.scale-200.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeSplashScreen.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~45.PNG|CheckIn.exeSplashScreen.scale-400.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeSplashScreen.scale-400.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeBadgeLogo.scale125.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~47.PNG|CheckIn.exeBadgeLogo.scale-125.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeBadgeLogo.scale-125.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeBadgeLogo.scale150.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~48.PNG|CheckIn.exeBadgeLogo.scale-150.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeBadgeLogo.scale-150.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeBadgeLogo.scale200.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~49.PNG|CheckIn.exeBadgeLogo.scale-200.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeBadgeLogo.scale-200.png" SelfReg="false"/>
+    <ROW File="CheckIn.exeBadgeLogo.scale400.png" Component_="Store50x50Logo.scale100.png" FileName="CHECK~50.PNG|CheckIn.exeBadgeLogo.scale-400.png" Attributes="0" SourcePath="assets\installer\CheckIn.exeBadgeLogo.scale-400.png" SelfReg="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.AppXCfgComponent">
+    <ROW ID="Configuration" Order="1" ManifestFile="AppxManifest.xml" TargetOs="4" AutoUpdatesFrequency="0" AutoUpdatesOptions="0" ManifestBundleFile="AppxBundleManifest.xml"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BootstrOptComponent">
+    <ROW BootstrOptKey="GlobalOptions" DownloadFolder="[AppDataFolder][|Manufacturer]\[|ProductName]\prerequisites" Options="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.BuildComponent">
+    <ROW BuildKey="Build_MSIX" BuildName="MSIX" BuildOrder="1" BuildType="7" PackageFolder="dist" PackageFileName="MSIX-x64" Languages="en" UwpTargetDesktop="TargetDeviceFamily" UwpAppInstallerManifestFile="MsixAppInstallerData.xml"/>
+    <ROW BuildKey="Build_MSIXSubBuild" BuildName="arm64" BuildOrder="2" BuildType="8" ParentBuild="Build_MSIX"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DictionaryComponent">
+    <ROW Path="&lt;AI_DICTS&gt;ui.ail"/>
+    <ROW Path="&lt;AI_DICTS&gt;ui_en.ail"/>
+    <ATTRIBUTE name="TranslateSegments" value="0b00000000000000000000000000000000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.DigCertStoreComponent">
+    <ROW TimeStampUrl="http://timestamp.acs.microsoft.com" SignerDescription="[|ProductName]" SignOptions="0" SignTool="7" UseSha256="1" TSEndPoint="https://eus.codesigning.azure.net/" TSAccountName="elliot-huffman" TSCertName="oss"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.FragmentComponent">
+    <ROW Fragment="CommonUI.aip" Path="&lt;AI_FRAGS&gt;CommonUI.aip"/>
+    <ROW Fragment="FolderDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\FolderDlg.aip"/>
+    <ROW Fragment="MaintenanceTypeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceTypeDlg.aip"/>
+    <ROW Fragment="MaintenanceWelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\MaintenanceWelcomeDlg.aip"/>
+    <ROW Fragment="SequenceDialogs.aip" Path="&lt;AI_THEMES&gt;classic\fragments\SequenceDialogs.aip"/>
+    <ROW Fragment="Sequences.aip" Path="&lt;AI_FRAGS&gt;Sequences.aip"/>
+    <ROW Fragment="StaticUIStrings.aip" Path="&lt;AI_FRAGS&gt;StaticUIStrings.aip"/>
+    <ROW Fragment="Themes.aip" Path="&lt;AI_FRAGS&gt;Themes.aip"/>
+    <ROW Fragment="UI.aip" Path="&lt;AI_THEMES&gt;classic\fragments\UI.aip"/>
+    <ROW Fragment="Validation.aip" Path="&lt;AI_FRAGS&gt;Validation.aip"/>
+    <ROW Fragment="VerifyRemoveDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRemoveDlg.aip"/>
+    <ROW Fragment="VerifyRepairDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\VerifyRepairDlg.aip"/>
+    <ROW Fragment="WelcomeDlg.aip" Path="&lt;AI_THEMES&gt;classic\fragments\WelcomeDlg.aip"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlAttributeComponent">
+    <ROW XmlAttribute="AddedItems" XmlElement="UpdateActions" Name="AddedItems" Flags="0" Order="0" Value="keep"/>
+    <ROW XmlAttribute="BackgroundColor" XmlElement="VisualElements" Name="BackgroundColor" Flags="0" Order="0" Value="transparent"/>
+    <ROW XmlAttribute="BadgeLogo" XmlElement="LockScreen" Name="BadgeLogo" Flags="0" Order="0" FileId="CheckIn.exeBadgeLogo.scale100.png"/>
+    <ROW XmlAttribute="Category" XmlElement="Extension" Name="Category" Flags="0" Order="0" Value="windows.installedLocationVirtualization"/>
+    <ROW XmlAttribute="DeletedItems" XmlElement="UpdateActions" Name="DeletedItems" Flags="0" Order="0" Value="keep"/>
+    <ROW XmlAttribute="Description" XmlElement="VisualElements" Name="Description" Flags="0" Order="0" Value="Checks the presented ID to see if it is a valid ID and records the entry/exit of the user."/>
+    <ROW XmlAttribute="DisplayName" XmlElement="VisualElements" Name="DisplayName" Flags="0" Order="0" Value="Check-In.exe"/>
+    <ROW XmlAttribute="Enforcement" XmlElement="Content" Name="Enforcement" Flags="0" Order="0" Value="on"/>
+    <ROW XmlAttribute="EntryPoint" XmlElement="Application" Name="EntryPoint" Flags="0" Order="0" Value="Windows.FullTrustApplication"/>
+    <ROW XmlAttribute="Executable" XmlElement="Application" Name="Executable" Flags="0" Order="0" FileId="CheckIn.exe"/>
+    <ROW XmlAttribute="Id" XmlElement="Application" Name="Id" Flags="0" Order="0" Value="CheckIn.exe"/>
+    <ROW XmlAttribute="IgnorableNamespaces" XmlElement="AppInstallerUX" Name="IgnorableNamespaces" Flags="0" Order="0" Value="ux ux2"/>
+    <ROW XmlAttribute="Image" XmlElement="SplashScreen" Name="Image" Flags="0" Order="0" FileId="CheckIn.exeSplashScreen.scale100.png"/>
+    <ROW XmlAttribute="Language" XmlElement="Resource" Name="Language" Flags="0" Order="0" Value="en-US"/>
+    <ROW XmlAttribute="MaxVersionTested" XmlElement="TargetDeviceFamily" Name="MaxVersionTested" Flags="0" Order="0" Value="10.0.26200.0"/>
+    <ROW XmlAttribute="MinVersion" XmlElement="TargetDeviceFamily" Name="MinVersion" Flags="0" Order="0" Value="10.0.26100.0"/>
+    <ROW XmlAttribute="ModifiedItems" XmlElement="UpdateActions" Name="ModifiedItems" Flags="0" Order="0" Value="keep"/>
+    <ROW XmlAttribute="Name" XmlElement="Identity" Name="Name" Flags="0" Order="0" Value="me.huffman.elliot.check-in"/>
+    <ROW XmlAttribute="Name_1" XmlElement="Capability" Name="Name" Flags="0" Order="0" Value="runFullTrust"/>
+    <ROW XmlAttribute="Name_2" XmlElement="TargetDeviceFamily" Name="Name" Flags="0" Order="0" Value="Windows.Desktop"/>
+    <ROW XmlAttribute="Notification" XmlElement="LockScreen" Name="Notification" Flags="0" Order="0" Value="badge"/>
+    <ROW XmlAttribute="Preference" XmlElement="Rotation" Name="Preference" Flags="0" Order="0" Value="portrait"/>
+    <ROW XmlAttribute="Preference_1" XmlElement="Rotation_1" Name="Preference" Flags="0" Order="0" Value="landscape"/>
+    <ROW XmlAttribute="Preference_2" XmlElement="Rotation_2" Name="Preference" Flags="0" Order="0" Value="portraitFlipped"/>
+    <ROW XmlAttribute="Preference_3" XmlElement="Rotation_3" Name="Preference" Flags="0" Order="0" Value="landscapeFlipped"/>
+    <ROW XmlAttribute="ProcessorArchitecture" XmlElement="Identity" Name="ProcessorArchitecture" Flags="0" Order="0" Value="x64"/>
+    <ROW XmlAttribute="Publisher" XmlElement="Identity" Name="Publisher" Flags="0" Order="0" Value="CN=Elliot Huffman"/>
+    <ROW XmlAttribute="Scale" XmlElement="Resource_1" Name="Scale" Flags="0" Order="0" Value="100"/>
+    <ROW XmlAttribute="Square150x150Logo" XmlElement="VisualElements" Name="Square150x150Logo" Flags="0" Order="0" FileId="CheckIn.exeSquare150x150Logo.scale100.png"/>
+    <ROW XmlAttribute="Square310x310Logo" XmlElement="DefaultTile" Name="Square310x310Logo" Flags="0" Order="0" FileId="CheckIn.exeSquare310x310Logo.scale100.png"/>
+    <ROW XmlAttribute="Square44x44Logo" XmlElement="VisualElements" Name="Square44x44Logo" Flags="0" Order="0" FileId="CheckIn.exeSquare44x44Logo.scale100.png"/>
+    <ROW XmlAttribute="Square71x71Logo" XmlElement="DefaultTile" Name="Square71x71Logo" Flags="0" Order="0" FileId="CheckIn.exeSquare71x71Logo.scale100.png"/>
+    <ROW XmlAttribute="Version" XmlElement="Identity" Name="Version" Flags="0" Order="0" Value="1.0.0.0"/>
+    <ROW XmlAttribute="Version_1" XmlElement="AppInstallerUX" Name="Version" Flags="0" Order="0" Value="1.0.0"/>
+    <ROW XmlAttribute="Wide310x150Logo" XmlElement="DefaultTile" Name="Wide310x150Logo" Flags="0" Order="0" FileId="CheckIn.exeWide310x150Logo.scale100.png"/>
+    <ROW XmlAttribute="xmlns" XmlElement="AppInstallerUX" Name="xmlns" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
+    <ROW XmlAttribute="xmlnsux" XmlElement="AppInstallerUX" Name="xmlns:ux" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux"/>
+    <ROW XmlAttribute="xmlnsux2" XmlElement="AppInstallerUX" Name="xmlns:ux2" Flags="0" Order="0" Value="http://schemas.microsoft.com/msix/appinstallerux/2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlElementComponent">
+    <ROW XmlElement="AppInstallerUX" Name="AppInstallerUX" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Application" ParentElement="Applications" Name="Application" Order="0" Flags="0" Type="4"/>
+    <ROW XmlElement="Applications" ParentElement="Package" Name="Applications" Order="4" Flags="0" Type="3"/>
+    <ROW XmlElement="Bundle" Name="Bundle" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Capabilities" ParentElement="Package" Name="Capabilities" Order="5" Flags="0" Type="0"/>
+    <ROW XmlElement="Capability" ParentElement="Capabilities" Name="Capability" Order="0" Flags="0" Type="0"/>
+    <ROW XmlElement="Content" ParentElement="PackageIntegrity" Name="Content" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="DefaultTile" ParentElement="VisualElements" Name="DefaultTile" Order="3" Flags="0" Type="0"/>
+    <ROW XmlElement="Dependencies" ParentElement="Package" Name="Dependencies" Order="6" Flags="0" Type="0"/>
+    <ROW XmlElement="DisplayName" ParentElement="Properties" Name="DisplayName" Order="2" Flags="0" Text="Check-In" Type="0"/>
+    <ROW XmlElement="Extension" ParentElement="Extensions" Name="Extension" Order="1" Flags="0" Type="152"/>
+    <ROW XmlElement="Extensions" ParentElement="Package" Name="Extensions" Order="7" Flags="0" Type="0"/>
+    <ROW XmlElement="Identity" ParentElement="Package" Name="Identity" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="InitialRotationPreference" ParentElement="VisualElements" Name="InitialRotationPreference" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="InstalledLocationVirtualization" ParentElement="Extension" Name="InstalledLocationVirtualization" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="LockScreen" ParentElement="VisualElements" Name="LockScreen" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="Logo" ParentElement="Properties" Name="Logo" Order="3" Flags="0" FileId="Store50x50Logo.scale100.png" Type="0"/>
+    <ROW XmlElement="Package" Name="Package" Order="0" Flags="0" Type="6"/>
+    <ROW XmlElement="PackageIntegrity" ParentElement="Properties" Name="PackageIntegrity" Order="4" Flags="0" Type="0"/>
+    <ROW XmlElement="Properties" ParentElement="Package" Name="Properties" Order="3" Flags="0" Type="0"/>
+    <ROW XmlElement="PublisherDisplayName" ParentElement="Properties" Name="PublisherDisplayName" Order="1" Flags="0" Text="Elliot Huffman" Type="0"/>
+    <ROW XmlElement="Resource" ParentElement="Resources" Name="Resource" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="Resource_1" ParentElement="Resources" Name="Resource" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="Resources" ParentElement="Package" Name="Resources" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="Rotation" ParentElement="InitialRotationPreference" Name="Rotation" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="Rotation_1" ParentElement="InitialRotationPreference" Name="Rotation" Order="2" Flags="0" Type="0"/>
+    <ROW XmlElement="Rotation_2" ParentElement="InitialRotationPreference" Name="Rotation" Order="3" Flags="0" Type="0"/>
+    <ROW XmlElement="Rotation_3" ParentElement="InitialRotationPreference" Name="Rotation" Order="4" Flags="0" Type="0"/>
+    <ROW XmlElement="SplashScreen" ParentElement="VisualElements" Name="SplashScreen" Order="4" Flags="0" Type="0"/>
+    <ROW XmlElement="TargetDeviceFamily" ParentElement="Dependencies" Name="TargetDeviceFamily" Order="0" Flags="0" Type="28"/>
+    <ROW XmlElement="UpdateActions" ParentElement="InstalledLocationVirtualization" Name="UpdateActions" Order="1" Flags="0" Type="0"/>
+    <ROW XmlElement="VisualElements" ParentElement="Application" Name="VisualElements" Order="1" Flags="0" Type="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.GenericXmlFileComponent">
+    <ROW XmlFile="AppxBundleManifest.xml" FileName="AppxBundleManifest.xml" RootElement="Bundle" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+    <ROW XmlFile="AppxManifest.xml" FileName="AppxManifest.xml" RootElement="Package" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+    <ROW XmlFile="MsixAppInstallerData.xml" FileName="MsixAppInstallerData.xml" RootElement="AppInstallerUX" Flags="89" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiActionTextComponent">
+    <ROW Action="AI_XmlCommit" Description="Committing XML file configurations." DescriptionLocId="ActionText.Description.AI_XmlCommit" Template="Committing XML file configurations." TemplateLocId="ActionText.Template.AI_XmlCommit"/>
+    <ROW Action="AI_XmlConfig" Description="Executing XML file configurations" DescriptionLocId="ActionText.Description.AI_XmlConfig" Template="Configuring XML file: &quot;[1]&quot;" TemplateLocId="ActionText.Template.AI_XmlConfig"/>
+    <ROW Action="AI_XmlInstall" Description="Generating actions to configure XML files" DescriptionLocId="ActionText.Description.AI_XmlInstall"/>
+    <ROW Action="AI_XmlRemove" Description="Executing XML file configurations" DescriptionLocId="ActionText.Description.AI_XmlRemove" Template="Configuring XML file: &quot;[1]&quot;" TemplateLocId="ActionText.Template.AI_XmlRemove"/>
+    <ROW Action="AI_XmlRollback" Description="Rolling back XML file configurations." DescriptionLocId="ActionText.Description.AI_XmlRollback" Template="Rolling back XML file configurations." TemplateLocId="ActionText.Template.AI_XmlRollback"/>
+    <ROW Action="AI_XmlUninstall" Description="Generating actions to configure XML files" DescriptionLocId="ActionText.Description.AI_XmlUninstall"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiBinaryComponent">
+    <ROW Name="aicustact.dll" SourcePath="&lt;AI_CUSTACTS&gt;aicustact.dll"/>
+    <ROW Name="xmlCfg.dll" SourcePath="&lt;AI_CUSTACTS&gt;xmlCfg.dll"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiControlEventComponent">
+    <ROW Dialog_="WelcomeDlg" Control_="Next" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="FolderDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="FolderDlg" Control_="Back" Event="NewDialog" Argument="WelcomeDlg" Condition="AI_INSTALL" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_INSTALL" Ordering="197"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="FolderDlg" Condition="AI_INSTALL" Ordering="201"/>
+    <ROW Dialog_="MaintenanceWelcomeDlg" Control_="Next" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="99"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_MAINT" Ordering="101"/>
+    <ROW Dialog_="CustomizeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_MAINT" Ordering="198"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="202"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="ChangeButton" Event="NewDialog" Argument="CustomizeDlg" Condition="AI_MAINT" Ordering="501"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceWelcomeDlg" Condition="AI_MAINT" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RemoveButton" Event="NewDialog" Argument="VerifyRemoveDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="1"/>
+    <ROW Dialog_="MaintenanceTypeDlg" Control_="RepairButton" Event="NewDialog" Argument="VerifyRepairDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="601"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Back" Event="NewDialog" Argument="MaintenanceTypeDlg" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="1"/>
+    <ROW Dialog_="VerifyRepairDlg" Control_="Repair" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Repair&quot;" Ordering="399" Options="1"/>
+    <ROW Dialog_="VerifyRemoveDlg" Control_="Remove" Event="EndDialog" Argument="Return" Condition="AI_MAINT AND InstallMode=&quot;Remove&quot;" Ordering="299" Options="1"/>
+    <ROW Dialog_="PatchWelcomeDlg" Control_="Next" Event="NewDialog" Argument="VerifyReadyDlg" Condition="AI_PATCH" Ordering="201"/>
+    <ROW Dialog_="ResumeDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_RESUME" Ordering="299"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Install" Event="EndDialog" Argument="Return" Condition="AI_PATCH" Ordering="199"/>
+    <ROW Dialog_="VerifyReadyDlg" Control_="Back" Event="NewDialog" Argument="PatchWelcomeDlg" Condition="AI_PATCH" Ordering="203"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCreateFolderComponent">
+    <ROW Directory_="APPDIR" Component_="APPDIR" ManualDelete="true"/>
+    <ROW Directory_="regid.202506.me.huffman.elliot_Dir" Component_="regid.202506.me.huffman.elliot" ManualDelete="false"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiCustActComponent">
+    <ROW Action="AI_DATA_SETTER" Type="51" Source="CustomActionData" Target="[~]"/>
+    <ROW Action="AI_DATA_SETTER_1" Type="51" Source="CustomActionData" Target="[~]"/>
+    <ROW Action="AI_DOWNGRADE" Type="19" Target="4010"/>
+    <ROW Action="AI_DpiContentScale" Type="1" Source="aicustact.dll" Target="DpiContentScale"/>
+    <ROW Action="AI_EnableDebugLog" Type="321" Source="aicustact.dll" Target="EnableDebugLog"/>
+    <ROW Action="AI_InstallModeCheck" Type="1" Source="aicustact.dll" Target="UpdateInstallMode" WithoutSeq="true"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Type="65" Source="aicustact.dll" Target="PrepareUpgrade"/>
+    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Type="65" Source="aicustact.dll" Target="PreserveInstallType"/>
+    <ROW Action="AI_RESTORE_LOCATION" Type="65" Source="aicustact.dll" Target="RestoreLocation"/>
+    <ROW Action="AI_ResolveKnownFolders" Type="1" Source="aicustact.dll" Target="AI_ResolveKnownFolders"/>
+    <ROW Action="AI_SHOW_LOG" Type="65" Source="aicustact.dll" Target="LaunchLogFile" WithoutSeq="true"/>
+    <ROW Action="AI_STORE_LOCATION" Type="51" Source="ARPINSTALLLOCATION" Target="[APPDIR]"/>
+    <ROW Action="AI_XmlCommit" Type="11777" Source="xmlCfg.dll" Target="OnXmlCommit" WithoutSeq="true"/>
+    <ROW Action="AI_XmlConfig" Type="11265" Source="xmlCfg.dll" Target="OnXmlConfig" WithoutSeq="true"/>
+    <ROW Action="AI_XmlInstall" Type="1" Source="xmlCfg.dll" Target="OnXmlInstall" AdditionalSeq="AI_DATA_SETTER"/>
+    <ROW Action="AI_XmlRemove" Type="11265" Source="xmlCfg.dll" Target="OnXmlRemove" WithoutSeq="true"/>
+    <ROW Action="AI_XmlRollback" Type="11521" Source="xmlCfg.dll" Target="OnXmlRollback" WithoutSeq="true"/>
+    <ROW Action="AI_XmlUninstall" Type="1" Source="xmlCfg.dll" Target="OnXmlUninstall" AdditionalSeq="AI_DATA_SETTER_1"/>
+    <ROW Action="SET_APPDIR" Type="307" Source="APPDIR" Target="[ProgramFilesFolder][Manufacturer]\[ProductName]" MultiBuildTarget="Build_MSIX:"/>
+    <ROW Action="SET_SHORTCUTDIR" Type="307" Source="SHORTCUTDIR" Target="[ProgramMenuFolder][ProductName]"/>
+    <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatCompsComponent">
+    <ROW Feature_="MainFeature" Component_="APPDIR"/>
+    <ROW Feature_="MainFeature" Component_="ProductInformation"/>
+    <ROW Feature_="MainFeature" Component_="CheckIn.exe"/>
+    <ROW Feature_="MainFeature" Component_="chrome_100_percent.pak"/>
+    <ROW Feature_="MainFeature" Component_="d3dcompiler_47.dll"/>
+    <ROW Feature_="MainFeature" Component_="dxcompiler.dll"/>
+    <ROW Feature_="MainFeature" Component_="dxil.dll"/>
+    <ROW Feature_="MainFeature" Component_="ffmpeg.dll"/>
+    <ROW Feature_="MainFeature" Component_="libEGL.dll"/>
+    <ROW Feature_="MainFeature" Component_="libGLESv2.dll"/>
+    <ROW Feature_="MainFeature" Component_="af.pak"/>
+    <ROW Feature_="MainFeature" Component_="app.asar"/>
+    <ROW Feature_="MainFeature" Component_="vk_swiftshader.dll"/>
+    <ROW Feature_="MainFeature" Component_="vulkan1.dll"/>
+    <ROW Feature_="AiAppXAssets" Component_="Store50x50Logo.scale100.png"/>
+    <ROW Feature_="MainFeature" Component_="regid.202506.me.huffman.elliot"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiIconsComponent">
+    <ROW Name="Logo.exe" SourcePath="assets\Logo.ico" Index="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">
+    <ROW Action="AI_DOWNGRADE" Condition="AI_NEWERPRODUCTFOUND AND (UILevel &lt;&gt; 5)" Sequence="210"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_STORE_LOCATION" Condition="(Not Installed) OR REINSTALL" Sequence="1501"/>
+    <ROW Action="AI_PREPARE_UPGRADE" Condition="AI_UPGRADE=&quot;No&quot; AND (Not Installed)" Sequence="1399"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+    <ROW Action="AI_XmlInstall" Condition="(REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="5102"/>
+    <ROW Action="AI_DATA_SETTER" Condition="(REMOVE &lt;&gt; &quot;ALL&quot;)" Sequence="5101"/>
+    <ROW Action="AI_XmlUninstall" Condition="(REMOVE)" Sequence="3102"/>
+    <ROW Action="AI_DATA_SETTER_1" Condition="(REMOVE)" Sequence="3101"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiInstallUISequenceComponent">
+    <ROW Action="AI_PRESERVE_INSTALL_TYPE" Sequence="199"/>
+    <ROW Action="AI_RESTORE_LOCATION" Condition="APPDIR=&quot;&quot;" Sequence="749"/>
+    <ROW Action="AI_ResolveKnownFolders" Sequence="53"/>
+    <ROW Action="AI_DpiContentScale" Sequence="52"/>
+    <ROW Action="AI_EnableDebugLog" Sequence="51"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiRegsComponent">
+    <ROW Registry="Manufacturer" Root="-1" Key="Software\[Manufacturer]" Name="\"/>
+    <ROW Registry="Path" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Path" Value="[APPDIR]" Component_="ProductInformation"/>
+    <ROW Registry="ProductName" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="\"/>
+    <ROW Registry="Software" Root="-1" Key="Software" Name="\"/>
+    <ROW Registry="Version" Root="-1" Key="Software\[Manufacturer]\[ProductName]" Name="Version" Value="[ProductVersion]" Component_="ProductInformation"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiThemeComponent">
+    <ATTRIBUTE name="UsedTheme" value="classic"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.MsiUpgradeComponent">
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="0.0.1" VersionMax="[|ProductVersion]" Attributes="257" ActionProperty="OLDPRODUCTS"/>
+    <ROW UpgradeCode="[|UpgradeCode]" VersionMin="[|ProductVersion]" Attributes="2" ActionProperty="AI_NEWERPRODUCTFOUND"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SoftwareIdentificationComponent">
+    <ATTRIBUTE name="LocalFile" value="regid.199509.com.example_ProductNam"/>
+    <ATTRIBUTE name="SystemFile" value="regid.199509.com.example_ProductN_1"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.SynchronizedFolderComponent">
+    <ROW Directory_="APPDIR" SourcePath="dist\win-arm64-unpacked" Feature="MainFeature" ExcludePattern="*~|#*#|%*%|._|CVS|.cvsignore|SCCS|vssver.scc|mssccprj.scc|vssver2.scc|.svn|.DS_Store|\app.asar.unpacked" ExcludeFlags="6" FileAddOptions="4"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.XmlAttributeComponent">
+    <ROW XmlAttribute="xmlnsds" XmlElement="swidsoftware_identification_tag" Name="xmlns:ds" Flags="14" Order="0" Value="http://www.w3.org/2000/09/xmldsig#"/>
+    <ROW XmlAttribute="xmlnsswid" XmlElement="swidsoftware_identification_tag" Name="xmlns:swid" Flags="14" Order="1" Value="http://standards.iso.org/iso/19770/-2/2008/schema.xsd"/>
+    <ROW XmlAttribute="xmlnsxsi" XmlElement="swidsoftware_identification_tag" Name="xmlns:xsi" Flags="14" Order="2" Value="http://www.w3.org/2001/XMLSchema-instance"/>
+    <ROW XmlAttribute="xsischemaLocation" XmlElement="swidsoftware_identification_tag" Name="xsi:schemaLocation" Flags="14" Order="3" Value="http://standards.iso.org/iso/19770/-2/2008/schema.xsd software_identification_tag.xsd"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.XmlElementComponent">
+    <ROW XmlElement="swidbuild" ParentElement="swidnumeric" Name="swid:build" Condition="1" Order="2" Flags="14" Text="0" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidentitlement_required_indicator" ParentElement="swidsoftware_identification_tag" Name="swid:entitlement_required_indicator" Condition="1" Order="0" Flags="14" Text="false" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidmajor" ParentElement="swidnumeric" Name="swid:major" Condition="1" Order="0" Flags="14" Text="1" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidminor" ParentElement="swidnumeric" Name="swid:minor" Condition="1" Order="1" Flags="14" Text="0" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidname" ParentElement="swidproduct_version" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[ProductVersion]" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidname_1" ParentElement="swidsoftware_creator" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[Manufacturer]" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidname_2" ParentElement="swidsoftware_licensor" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[Manufacturer]" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidname_3" ParentElement="swidtag_creator" Name="swid:name" Condition="1" Order="0" Flags="14" Text="[Manufacturer]" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidnumeric" ParentElement="swidproduct_version" Name="swid:numeric" Condition="1" Order="1" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidproduct_title" ParentElement="swidsoftware_identification_tag" Name="swid:product_title" Condition="1" Order="1" Flags="14" Text="[ProductName]" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidproduct_version" ParentElement="swidsoftware_identification_tag" Name="swid:product_version" Condition="1" Order="2" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidregid" ParentElement="swidsoftware_creator" Name="swid:regid" Condition="1" Order="1" Flags="14" Text="regid.2025-06.me.huffman.elliot" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidregid_1" ParentElement="swidsoftware_licensor" Name="swid:regid" Condition="1" Order="1" Flags="14" Text="regid.2025-06.me.huffman.elliot" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidregid_2" ParentElement="swidtag_creator" Name="swid:regid" Condition="1" Order="1" Flags="14" Text="regid.2025-06.me.huffman.elliot" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidreview" ParentElement="swidnumeric" Name="swid:review" Condition="1" Order="3" Flags="14" Text="0" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidsoftware_creator" ParentElement="swidsoftware_identification_tag" Name="swid:software_creator" Condition="1" Order="3" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidsoftware_id" ParentElement="swidsoftware_identification_tag" Name="swid:software_id" Condition="1" Order="5" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidsoftware_identification_tag" Name="swid:software_identification_tag" Condition="1" Order="0" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidsoftware_licensor" ParentElement="swidsoftware_identification_tag" Name="swid:software_licensor" Condition="1" Order="4" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidtag_creator" ParentElement="swidsoftware_identification_tag" Name="swid:tag_creator" Condition="1" Order="6" Flags="14" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidtag_creator_regid" ParentElement="swidsoftware_id" Name="swid:tag_creator_regid" Condition="1" Order="1" Flags="14" Text="regid.2025-06.me.huffman.elliot" UpdateIndexInParent="0"/>
+    <ROW XmlElement="swidunique_id" ParentElement="swidsoftware_id" Name="swid:unique_id" Condition="1" Order="0" Flags="14" Text="[ProductName]" UpdateIndexInParent="0"/>
+  </COMPONENT>
+  <COMPONENT cid="caphyon.advinst.msicomp.XmlFileComponent">
+    <ROW XmlFile="regid.199509.com.example_ProductN_1" FileName="REGID2~1.SWI|regid.2025-06.me.huffman.elliot_[|ProductName].swidtag" DirProperty="regid.202506.me.huffman.elliot_Dir" Component="ProductInformation" RootElement="swidsoftware_identification_tag" Flags="153" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+    <ROW XmlFile="regid.199509.com.example_ProductNam" FileName="REGID2~1.SWI|regid.2025-06.me.huffman.elliot_[|ProductName].swidtag" DirProperty="APPDIR" Component="ProductInformation" RootElement="swidsoftware_identification_tag" Flags="153" Version="1.0" Encoding="UTF-8" IndentUnits="2"/>
+  </COMPONENT>
+</DOCUMENT>
