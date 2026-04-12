@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 /** Configurations used for the Next.js compiler. */
 const nextConfig: NextConfig = {
@@ -12,7 +12,7 @@ const nextConfig: NextConfig = {
     'reactStrictMode': true,
     // Ensure that all generated URLs end with a trailing slash, which can help with consistent URL structure for static hosting.
     'trailingSlash': true
-}
+};
 
 // Export the configuration object so that Next.js can use it during the build and development processes.
-export default nextConfig
+export default nextConfig;

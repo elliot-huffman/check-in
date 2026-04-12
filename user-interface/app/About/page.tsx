@@ -1,6 +1,6 @@
 'use client';
 
-import { Divider, Subtitle1, Subtitle2, Text, Title1, Title3, Link } from '@fluentui/react-components';
+import { Divider, Subtitle1, Subtitle2, Text, Title1, Title3 } from '@fluentui/react-components';
 import { Layout, LayoutItem } from '../_components/elements/LayoutSystem';
 import { useEffect, useState } from 'react';
 import { useStyleList } from '../_components/styles/pages/About';
