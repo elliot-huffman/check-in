@@ -18,6 +18,8 @@ export class SettingsEngine {
     /** Name of the settings file to ensure consistency across the settings engine. */
     #settingsFileName: string;
 
+    // #region Initialization
+
     /** Initializes the properties and state of the SettingsEngine. */
     private constructor() {
         // Initialize the current settings with default values. These will be overwritten once the actual settings are loaded.
@@ -57,7 +59,9 @@ export class SettingsEngine {
      * This is useful for testing purposes or if you need to reinitialize the settings during runtime.
      * @deprecated This method is intended for testing and should not be used in production code.
      */
-    public static reset(): void { SettingsEngine.instance = void 0; }
+    public static clearInstance(): void { SettingsEngine.instance = void 0; }
+
+    // #endregion Initialization
 
     /** Loads settings from disk when present and leaves defaults in place when the file is absent or invalid. */
     async #loadSettings(): Promise<void> {
