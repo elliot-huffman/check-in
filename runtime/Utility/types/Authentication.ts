@@ -7,16 +7,21 @@ import type { tags } from 'typia';
  * It is only an extraction of the claims.
  */
 export interface AuthorizationData {
-    /** Tenant ID of the tenant the principal authenticated from. */
-    'tenantId': string & tags.Format<'uuid'>;
-    /** Object ID of the principal. */
-    'objectId': string & tags.Format<'uuid'>;
-    /** List of delegated and application permissions granted to the principal. */
-    'permissionList': string[];
     /** List of Microsoft Entra role template IDs for each Entra role assigned to the principal. */
     'entraRoleList': (string & tags.Format<'uuid'>)[];
-    /** Base64-encoded, HTML compatible profile picture of the authenticated user if it is available. Undefined if not available. */
-    'profilePicture'?: string;
+    /** Object ID of the principal. */
+    'objectId': string & tags.Format<'uuid'> | null;
+    /** List of delegated and application permissions granted to the principal. */
+    'permissionList': string[];
+    /**
+     * Subject ID of the principal.
+     * Opaque string that uniquely identifies the principal within the enterprise app that the end user is authenticating to.
+     * If the principal is updated, this values remains the same.
+     * Similar to objectId, but while objectId is the same across all apps in the tenant, subjectId is different per app. This means that if the same user authenticates to two different apps, the objectId claim will be the same in both tokens, but the subjectId claim will be different.
+     */
+    'subjectId': string;
+    /** Tenant ID of the tenant the principal authenticated from. */
+    'tenantId': string & tags.Format<'uuid'>;
 }
 
 /** Minimal set of OpenID Connect configuration properties used for token validation. */
@@ -61,26 +66,36 @@ export interface JwksKeySet {
 
 /** Minimal set of claims used for both v1.0 and v2.0 Microsoft access tokens. */
 interface AccessTokenCommonClaims {
-    /** Issuer of the access token. */
-    'iss': string;
     /** Audience for which the token is intended, which app is this token allowed to be used with. */
     'aud': string;
-    /** Timestamp of when the token was issued. */
-    'iat': number;
-    /** Timestamp of when the token becomes valid. Token is not valid if used before this time stamp. */
-    'nbf': number;
     /** Timestamp of when the token expires. Token is not valid if used after this time stamp. */
     'exp': number;
+    /** List of object IDs of the groups the user is a member of, inclusion of the values is configured on the app's auth config. */
+    'groups'?: (string & tags.Format<'uuid'>)[];
+    /** Timestamp of when the token was issued. */
+    'iat': number;
+    /** Issuer of the access token. */
+    'iss': string;
+    /** Timestamp of when the token becomes valid. Token is not valid if used before this time stamp. */
+    'nbf': number;
+    /** Object ID of the principal that authenticated. */
+    'oid'?: string & tags.Format<'uuid'>;
     /** Roles assigned to the access token's principal. */
     'roles'?: string[];
     /** Space separated list of permissions granted to the access token's principal. */
     'scp'?: string;
-    /** Object ID of the principal that authenticated. */
-    'oid': string & tags.Format<'uuid'>;
+    /**
+     * The principal associated with the token.
+     * For example, the user of an application.
+     * This value is immutable, don't reassign or reuse.
+     * The subject is a pairwise identifier that's unique to a particular application ID.
+     * If a single user signs into two different applications using two different client IDs, those applications receive two different values for the subject claim.
+     * Using the two different values depends on architecture and privacy requirements.
+     * See also the oid claim, which does remain the same across applications within a tenant.
+     */
+    'sub': string;
     /** Denotes the tenant-wide roles assigned to this user, from the section of roles present in Microsoft Entra built-in roles. */
     'wids'?: (string & tags.Format<'uuid'>)[];
-    /** List of object IDs of the groups the user is a member of, inclusion of the values is configured on the app's auth config. */
-    'groups'?: (string & tags.Format<'uuid'>)[];
 }
 
 /** Minimal set of claims used for Microsoft v1.0 access tokens. */

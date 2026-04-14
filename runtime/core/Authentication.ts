@@ -173,8 +173,9 @@ export class AuthenticationEngine {
         /** Current state of the AuthZ data that has been extracted from the access token. */
         const authzData: AuthorizationData = {
             'entraRoleList': [],
-            'objectId': NULL_UUID,
+            'objectId': null,
             'permissionList': [],
+            'subjectId': '',
             'tenantId': NULL_UUID
         };
 
@@ -193,14 +194,11 @@ export class AuthenticationEngine {
         // If the tenant ID cannot be extracted from the token configured issuer, throw an error as it is not valid
         if (!tenantId) { throw new TypeError('The provided access token does not contain a valid tenant ID in the issuer claim!', { 'cause': 'Input validation!' }); }
 
-        // Populate the Object ID of the authenticated principal
-        authzData.objectId = tokenClaims.payload.oid;
-
-        // Populate the tenant ID that the authenticated principal authenticated to
-        authzData.tenantId = tenantId;
-
         // Populate the list of Microsoft Entra roles assigned to the authenticated principal if the 'wids' claim is present
         if (tokenClaims.payload.wids) { authzData.entraRoleList = tokenClaims.payload.wids; }
+
+        // Populate the Object ID of the authenticated principal if the claim is present in the token
+        if (tokenClaims.payload.oid) { authzData.objectId = tokenClaims.payload.oid; }
 
         // If application permissions are present, process them
         if (tokenClaims.payload.roles) {
@@ -219,6 +217,12 @@ export class AuthenticationEngine {
                 if (!authzData.permissionList.includes(permission)) { authzData.permissionList.push(permission); }
             }
         }
+
+        // Populate the subject ID of the authenticated principal
+        authzData.subjectId = tokenClaims.payload.sub;
+
+        // Populate the tenant ID that the authenticated principal authenticated to
+        authzData.tenantId = tenantId;
 
         // Return the extracted and computed data to the caller
         return authzData;
