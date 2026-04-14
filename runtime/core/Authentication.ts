@@ -233,31 +233,19 @@ export class AuthenticationEngine {
      * @param domain Domain used in resolving the tenant ID.
      * @returns GUID of the tenant, if no tenant found, undefined.
      */
-    public static async findTenantId(domain: string & tags.Format<'hostname'>): Promise<string & tags.Format<'uuid'> | undefined> {
+    public async findTenantId(domain: string & tags.Format<'hostname'>): Promise<string & tags.Format<'uuid'> | undefined> {
         // #region Input Validation
         assertGuardEquals(domain);
         // #endregion Input Validation
 
-        /** Information about the OpenID configuration for the specified domain. Used to extract the tenant ID. */
-        const rawConfigResponse = await fetch(`https://login.microsoftonline.com/${ domain }/v2.0/.well-known/openid-configuration`);
+        /** OpenID configuration for the specified domain. If it exists. */
+        const config = await this.#getTenantConfig(domain, '2.0');
 
-        // Only extract the tenant ID if the domain could be resolved
-        if (rawConfigResponse.status === 200) {
-            /** JSON parsed response containing the OpenID configuration for the specified domain. */
-            const parsedResponse = await rawConfigResponse.json() as OpenIdConfiguration;
+        // Check if the config could be found, if not then return undefined as the tenant ID cannot be found without the config
+        if (!config) { return void 0; }
 
-            // Check if the structure is actually an OpenID configuration before trusting the contents
-            if (is(parsedResponse)) {
-                /** Parsed URL of the issuer from the OpenID configuration. */
-                const parsedIssuer = new URL(parsedResponse.issuer);
-
-                // Return the tenant ID to the caller after extraction
-                return parsedIssuer.pathname.split('/')[1] as string & tags.Format<'uuid'>;
-            }
-        }
-
-        // Return undefined if the domain can't be resolved
-        return void 0;
+        // Return the tenant ID extracted from the issuer claim in the OpenID configuration, if it cannot be extracted then return undefined as it is not valid
+        return this.#findTenantIdFromIssuer(config.issuer);
     }
 
     /*
