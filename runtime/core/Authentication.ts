@@ -14,11 +14,17 @@ export class AuthenticationEngine {
     /** Instance of the settings engine to use for authentication configuration. */
     #settingsEngine: SettingsEngine;
 
+    // #region Initialization
+
     /**
      * Initializes the properties and state of the AuthenticationEngine.
      * @param settingsEngine Instance of the settings engine that has had its loading flag awaited.
      */
     private constructor(settingsEngine: SettingsEngine) {
+        // #region Input Validation
+        if (!(settingsEngine instanceof SettingsEngine)) { throw new TypeError('The provided settings engine is not an instance of the SettingsEngine class!', { 'cause': 'Input validation!' }); }
+        // #endregion Input Validation
+
         // Store a copy of the settings engine for later use
         this.#settingsEngine = settingsEngine;
 
@@ -57,6 +63,8 @@ export class AuthenticationEngine {
      * @deprecated This is used for testing purposes to ensure that each test can start with a clean slate.
      */
     public static clearInstance(): void { this.instance = void 0; }
+
+    // #endregion Initialization
 
     /**
      * Checks the access token's claims and cryptographic validity to determine if it is a valid Entra ID access token for this application.
