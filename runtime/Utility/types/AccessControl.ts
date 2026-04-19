@@ -66,4 +66,6 @@ export interface CheckInOut {
     'type': 'check-in' | 'check-out';
     /** Indicates which principal initiated the action. Null ID indicates the system initiated the action. */
     'initiatingActor': string & tags.Format<'uuid'>;
+    /** List of activities that the member is showing up for. */
+    'activity': string[];
 }
