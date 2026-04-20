@@ -56,7 +56,7 @@ export class StorageEngine {
      * @param initiatingActor Unique identifier of the principal that initiated the check-in.
      * @returns Unique identifier of the created audit log entry.
      */
-    public async checkIn(memberId: CheckInOut['memberId'], activity: string[], initiatingActor: CheckInOut['initiatingActor']): Promise<CheckInOut['id']> {
+    public async newCheckIn(memberId: CheckInOut['memberId'], activity: string[], initiatingActor: CheckInOut['initiatingActor']): Promise<CheckInOut['id']> {
         // #region Input Validation
         assertGuardEquals(memberId);
 
@@ -97,7 +97,7 @@ export class StorageEngine {
      * @param initiatingActor Unique identifier of the principal that initiated the check-out.
      * @returns Unique identifier of the created audit log entry.
      */
-    public async checkOut(memberId: CheckInOut['memberId'], initiatingActor: CheckInOut['initiatingActor']): Promise<CheckInOut['id']> {
+    public async newCheckOut(memberId: CheckInOut['memberId'], initiatingActor: CheckInOut['initiatingActor']): Promise<CheckInOut['id']> {
         // #region Input Validation
         assertGuardEquals(memberId);
 
@@ -213,7 +213,7 @@ export class StorageEngine {
      * @param member The member data to store. If an ID is not provided, one will be generated.
      * @returns The stored member with a unique ID.
      */
-    public async createMember(member: Member | Omit<Member, 'id'>): Promise<Member> {
+    public async newMember(member: Member | Omit<Member, 'id'>): Promise<Member> {
         // #region Input Validation
         assertGuardEquals(member);
         // #endregion Input Validation
@@ -314,7 +314,7 @@ export class StorageEngine {
      * Deletes a member from persistent storage by their unique ID.
      * @param id Unique identifier of the member to delete.
      */
-    public async deleteMember(id: Member['id']): Promise<void> {
+    public async removeMember(id: Member['id']): Promise<void> {
         // #region Input Validation
         assertGuardEquals(id);
         // #endregion Input Validation
