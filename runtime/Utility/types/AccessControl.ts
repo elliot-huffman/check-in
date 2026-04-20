@@ -1,4 +1,38 @@
+import type { LanguageCodes } from './i18n.js';
 import type { tags } from 'typia';
+
+/** Represents a legal form. */
+export interface LegalForm {
+    /** Object ID for the legal form. */
+    'id': string & tags.Format<'uuid'>;
+    /** Display name of the legal form. */
+    'displayName': string;
+    /** Description of the legal form. */
+    'description': string;
+    /**
+     * Content of the legal form that is to be signed.
+     *
+     * Where the key is the language code.
+     * Where the value is the content of the legal form in that language.
+     */
+    'content': Record<LanguageCodes, string>;
+    /** Content version of the legal form. */
+    'version': number;
+}
+
+/** Represents a legal form signature for a member. */
+export interface LegalFormSignature {
+    /** Object ID for the legal form signature. */
+    'id': string & tags.Format<'uuid'>;
+    /** Object ID for the member that signed the legal form. */
+    'memberId': string & tags.Format<'uuid'>;
+    /** Object ID for the legal form that was signed. */
+    'formId': string & tags.Format<'uuid'>;
+    /** Timestamp indicating when the legal form was signed. */
+    'timestamp': string & tags.Format<'date-time'>;
+    /** Version of the legal form that was signed. */
+    'formVersion': number;
+}
 
 /** Represents an emergency contact for a member. */
 interface EmergencyContact {

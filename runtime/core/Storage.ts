@@ -1,4 +1,4 @@
-import type { CheckInOut, Member } from '../Utility/types/AccessControl.js';
+import type { CheckInOut, LegalForm, LegalFormSignature, Member } from '../Utility/types/AccessControl.js';
 import { assertGuardEquals, json } from 'typia';
 import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import { SettingsEngine } from './Settings.js';
@@ -48,6 +48,8 @@ export class StorageEngine {
     public static clearInstance(): void { this.#instance = void 0; }
 
     // #endregion Initialization
+
+    // #region Business Logic
 
     /**
      * Creates a check-in audit log entry for a member.
@@ -331,6 +333,46 @@ export class StorageEngine {
         }
     }
 
+    /**
+     * Creates a legal form signature record for a member.
+     * @param memberId Unique identifier of the member signing the legal form.
+     * @param formId Unique identifier of the legal form being signed.
+     * @returns The stored legal form signature record.
+     */
+    public async newSignature(memberId: Member['id'], formId: LegalForm['id']): Promise<LegalFormSignature> {
+        // #region Input Validation
+        assertGuardEquals(memberId);
+
+        assertGuardEquals(formId);
+        // #endregion Input Validation
+
+        /** Captures the legal form signature with a guaranteed unique identifier for persistent storage. */
+        const storedSignature: LegalFormSignature = {
+            formId,
+            'formVersion': 1,
+            'id': randomUUID(),
+            memberId,
+            'timestamp': new Date().toISOString()
+        };
+
+        /** Path to the legal form signatures folder in persistent storage. */
+        const signatureFolderPath = this.#calculateFolderPath('signature');
+
+        /** Path to the legal form signature JSON file in persistent storage. */
+        const signaturePath = join(signatureFolderPath, `${ storedSignature.id }.json`);
+
+        // Create the signatures folder if it doesn't exist so the signature record has a valid destination.
+        await mkdir(signatureFolderPath, { 'recursive': true });
+
+        // Write the signature record to disk.
+        await writeFile(signaturePath, json.stringify(storedSignature));
+
+        // Return the created signature record to the caller.
+        return storedSignature;
+    }
+
+    // #endregion Business Logic
+
     /*
      * Helper functions
      */
@@ -341,7 +383,7 @@ export class StorageEngine {
      * @param folderType Flag that indicates which path to calculate based on the current settings.
      * @returns Full path to the requested folder type.
      */
-    #calculateFolderPath(folderType: 'checkInOutLog' | 'member'): string {
+    #calculateFolderPath(folderType: 'checkInOutLog' | 'member' | 'signature'): string {
         // #region Input Validation
         assertGuardEquals(folderType);
         // #endregion Input Validation
@@ -375,6 +417,19 @@ export class StorageEngine {
 
                 // Stop execution to prevent fallthrough
                 break;
+            case 'signature': {
+                // Check if a custom signature folder path is provided in the settings, and if not, use the default 'signatures' subfolder within the app data path to store the signature records.
+                if (!this.#settingsEngine.currentSettings.signatureFolderPath) {
+                    // Default to using a sub folder within the app's data directory by default
+                    computedFolderPath = join(computedFolderPath, 'signatures');
+                } else {
+                    // If specified, use the custom folder instead of the default location
+                    computedFolderPath = this.#settingsEngine.currentSettings.signatureFolderPath;
+                }
+
+                // Stop execution to prevent fallthrough
+                break;
+            }
             default:
                 // This should never be reached due to the input validation, but is necessary to satisfy the exhaustiveness requirement of the switch statement.
                 break;

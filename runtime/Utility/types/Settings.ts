@@ -11,6 +11,12 @@ export interface CurrentSettings {
      */
     'checkInLogFolderPath': string | undefined;
     /**
+     * Path to the folder where legal form signatures are stored.
+     * Stores the signatures in the same folder the settings file is stored if left undefined.
+     * @default undefined
+     */
+    'signatureFolderPath': string | undefined;
+    /**
      * Client ID used for authenticating the end user.
      * Required to be configured before use.
      * @default NULL_UUID
