@@ -69,6 +69,10 @@ export class AuthenticationEngine {
     /**
      * Checks the access token's claims and cryptographic validity to determine if it is a valid Entra ID access token for this application.
      *
+     * This function only checks authentication, not authorization. Please use `getAccessTokenAuthzData` to extract authorization data from the token after confirming its validity with this function.
+     *
+     * This function is designed for Access Tokens only. ID Tokens require a different validation process and should not be validated with this function.
+     *
      * Client ID defaults to the client ID specified in the settings engine's current settings if not provided.
      * If the client ID is provided as a parameter, the value stored in the settings engine will be ignored.
      *
@@ -108,6 +112,9 @@ export class AuthenticationEngine {
 
         // If the required claims are not present in the token, it is not valid
         if (!is<AccessTokenV1Claims | AccessTokenV2Claims>(tokenComponents.payload)) { return false; }
+
+        // Prevent ID tokens from being validated by accident
+        if (tokenComponents.payload.nonce) { return false; }
         // #endregion Input Validation
 
         // #region Initialization

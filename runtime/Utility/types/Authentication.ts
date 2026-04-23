@@ -78,6 +78,8 @@ interface AccessTokenCommonClaims {
     'iss': string;
     /** Timestamp of when the token becomes valid. Token is not valid if used before this time stamp. */
     'nbf': number;
+    /** Value used by ID tokens to prevent replay attacks. Indicates the token is an ID token. */
+    'nonce'?: string;
     /** Object ID of the principal that authenticated. */
     'oid'?: string & tags.Format<'uuid'>;
     /** Roles assigned to the access token's principal. */
