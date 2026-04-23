@@ -75,6 +75,8 @@ export class AuthenticationEngine {
      * Validation mode defaults to multi-tenant mode.
      * If a tenant ID is provided, the token will only be considered valid if it is issued for that tenant.
      * If a tenant ID is not provided, any tenant will be allowed and the tenant from the access token will be used during validation.
+     *
+     * This function does not throw like most others, it intentionally catches all errors and returns `false` to fail into a safe state.
      * @param accessToken String to be checked if it is a valid Entra ID access token.
      * @param tenantId Tenant ID to validate to. If not provided, any tenant is allowed and the tenant from the access token will be used during validation.
      * @param clientId Client ID override, if not provided, uses the client ID from the settings engine's current settings.
@@ -82,14 +84,21 @@ export class AuthenticationEngine {
      */
     public async confirmAccessToken(accessToken: string, tenantId?: string & tags.Format<'uuid'>, clientId?: string & tags.Format<'uuid'>): Promise<boolean> {
         // #region Input Validation
-        assertGuardEquals(accessToken);
 
-        assertGuardEquals(clientId);
+        // If any input validation fails, return false instead of throwing
+        try {
+            assertGuardEquals(accessToken);
 
-        assertGuardEquals(tenantId);
+            assertGuardEquals(clientId);
+
+            assertGuardEquals(tenantId);
+        } catch (_error) { return false; }
 
         /** Parsed components of the access token used for validation. */
-        const tokenComponents = decode(accessToken);
+        let tokenComponents: ReturnType<typeof decode> = null;
+
+        // Safely decode the token and return false if fails on syntax error
+        try { tokenComponents = decode(accessToken); } catch (_error) { return false; }
 
         // If the token is not in the correct format, it is not valid
         if (tokenComponents === null) { return false; }
@@ -121,7 +130,10 @@ export class AuthenticationEngine {
          * If a tenant ID is provided to in the function parameters, uses that one instead and ignores the token's tenant ID.
          * This value can be trusted as it is from Microsoft.
          */
-        const openIdConfig = await this.#getTenantConfig(tenantId ?? tokenTenantId, tokenComponents.payload.ver === '2.0' ? '2.0' : '1.0');
+        let openIdConfig: OpenIdConfiguration | undefined = void 0;
+
+        // Gracefully attempt config retrieval
+        try { openIdConfig = await this.#getTenantConfig(tenantId ?? tokenTenantId, tokenComponents.payload.ver === '2.0' ? '2.0' : '1.0'); } catch (_error) { return false; }
 
         // If the OpenID configuration cannot be retrieved for the tenant specified in the token, it is not valid as we cannot validate the issuer or retrieve signing keys to validate the signature
         if (!openIdConfig) { return false; }
@@ -130,7 +142,10 @@ export class AuthenticationEngine {
         if (tokenComponents.payload.iss !== openIdConfig.issuer) { return false; }
 
         /** Signing keys that MSFT has specified are valid for access tokens issued to this tenant's app. */
-        const signingKeyList = await this.#getTenantSigningKeys(openIdConfig, computedClientId);
+        let signingKeyList: JwksKeySet = { 'keys': [] };
+
+        // Gracefully attempt signing key retrieval
+        try { signingKeyList = await this.#getTenantSigningKeys(openIdConfig, computedClientId); } catch (_error) { return false; }
 
         /** Key ID that matches the token header's key ID. Undefined if no matching key is found. */
         const selectedKey = signingKeyList.keys.find((publicKey) => publicKey.kid === tokenComponents.header.kid);
@@ -142,7 +157,7 @@ export class AuthenticationEngine {
         const pemEncodedCertificate = `-----BEGIN CERTIFICATE-----\n${ selectedKey.x5c[0] }\n-----END CERTIFICATE-----`;
 
         // If the signature doesn't cryptographically verify, then it is not a Microsoft signed access token
-        if (!verify(accessToken, 'RS256', pemEncodedCertificate)) { return false; }
+        try { if (!verify(accessToken, 'RS256', pemEncodedCertificate)) { return false; } } catch (_error) { return false; }
 
         // #endregion Cryptographic Validation
 
