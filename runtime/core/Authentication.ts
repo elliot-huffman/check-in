@@ -80,10 +80,10 @@ export class AuthenticationEngine {
      * This function does not throw like most others, it intentionally catches all errors and returns `false` to fail into a safe state.
      * @param accessToken String to be checked if it is a valid Entra ID access token.
      * @param clientId Client ID, also known as the Application ID. If the access token's audience claim doesn't match this value, then the token is not valid for this application.
-     * @param tenantId Tenant ID to validate to. If not provided, any tenant is allowed and the tenant from the access token will be used during validation.
+     * @param tenantId Tenant ID to validate to. If the NULL UUID (`00000000-0000-0000-0000-000000000000`) is provided, any tenant is allowed and the tenant from the access token will be used during validation.
      * @returns Flag indicating whether the access token is valid.
      */
-    public async confirmAccessToken(accessToken: string, clientId: string & tags.Format<'uuid'>, tenantId?: string & tags.Format<'uuid'>): Promise<boolean> {
+    public async confirmAccessToken(accessToken: string, clientId: string & tags.Format<'uuid'>, tenantId: string & tags.Format<'uuid'>): Promise<boolean> {
         // #region Input Validation
 
         // If any input validation fails, return false instead of throwing
@@ -122,6 +122,9 @@ export class AuthenticationEngine {
         // If no tenant could be extracted, it is not a valid MSFT token
         if (!tokenTenantId) { return false; }
 
+        /** Tenant ID to be used for validation. If the NULL UUID is provided, the tenant ID from the access token will be used. */
+        const computedTenantId = tenantId === NULL_UUID ? tokenTenantId : tenantId;
+
         /**
          * OpenID configuration for the tenant ID specified in the access token.
          * If a tenant ID is provided to in the function parameters, uses that one instead and ignores the token's tenant ID.
@@ -130,7 +133,7 @@ export class AuthenticationEngine {
         let openIdConfig: OpenIdConfiguration | undefined = void 0;
 
         // Gracefully attempt config retrieval
-        try { openIdConfig = await this.#getTenantConfig(tenantId ?? tokenTenantId, tokenComponents.payload.ver === '2.0' ? '2.0' : '1.0'); } catch (_error) { return false; }
+        try { openIdConfig = await this.#getTenantConfig(computedTenantId, tokenComponents.payload.ver === '2.0' ? '2.0' : '1.0'); } catch (_error) { return false; }
 
         // If the OpenID configuration cannot be retrieved for the tenant specified in the token, it is not valid as we cannot validate the issuer or retrieve signing keys to validate the signature
         if (!openIdConfig) { return false; }
