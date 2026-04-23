@@ -67,21 +67,60 @@ export class AuthenticationEngine {
     // #endregion Initialization
 
     /**
-     * Checks the access token's claims and cryptographic validity to determine if it is a valid Entra ID access token for this application.
+     * Validates that a JWT is a Microsoft Entra access token issued for this application and acceptable for the requested tenant scope.
      *
-     * This function only checks authentication, not authorization. Please use `getAccessTokenAuthzData` to extract authorization data from the token after confirming its validity with this function.
+     * This method performs authentication validation only. A return value of `true` means the token was structurally valid,
+     * Microsoft-signed, issued by the expected tenant, within its validity window, and targeted at the supplied `clientId`.
+     * It does not determine what the caller is allowed to do. Authorization must be evaluated separately, typically by calling
+     * `getAccessTokenAuthzData()` only after this method returns `true`.
      *
-     * This function is designed for Access Tokens only. ID Tokens require a different validation process and should not be validated with this function.
+     * Validation flow:
+     * 1. Validates the function inputs and safely decodes the JWT.
+     * 2. Rejects malformed tokens, tokens without a `kid`, and tokens that do not match the expected Entra access-token claim shape.
+     * 3. Rejects tokens that contain `nonce` so ID tokens are not accidentally accepted as access tokens.
+     * 4. Extracts the tenant from the token's `iss` claim.
+     * 5. Chooses the tenant to validate against:
+     * - If the NULL UUID is provided for the tenantId parameter, the token is validated in explicit multi-tenant mode using the tenant from the token.
+     * - Otherwise, the token must have been issued by the specific tenant passed to `tenantId`.
+     * 6. Downloads the tenant's OpenID configuration from Microsoft, using the token `ver` claim to select the v1.0 or v2.0 metadata endpoint.
+     * 7. Requires the token `iss` claim to exactly match the Microsoft-provided issuer from that metadata.
+     * 8. Downloads the tenant signing keys from the metadata JWKS endpoint, scoped to the supplied `clientId` via the `appid` query parameter.
+     * 9. Selects the signing key whose `kid` matches the JWT header and verifies the `RS256` signature using the Microsoft certificate chain.
+     * 10. Validates time-based claims (`nbf` and `exp`), the audience claim (`aud`), and the tenant restriction.
      *
-     * Validation mode defaults to multi-tenant mode.
-     * If a tenant ID is provided, the token will only be considered valid if it is issued for that tenant.
-     * If a tenant ID is not provided, any tenant will be allowed and the tenant from the access token will be used during validation.
+     * This method is intentionally fail-closed. Any parsing error, metadata retrieval failure, signing-key mismatch, signature verification failure, or claim mismatch results in `false` instead of an exception.
      *
-     * This function does not throw like most others, it intentionally catches all errors and returns `false` to fail into a safe state.
-     * @param accessToken String to be checked if it is a valid Entra ID access token.
-     * @param clientId Client ID, also known as the Application ID. If the access token's audience claim doesn't match this value, then the token is not valid for this application.
-     * @param tenantId Tenant ID to validate to. If the NULL UUID (`00000000-0000-0000-0000-000000000000`) is provided, any tenant is allowed and the tenant from the access token will be used during validation.
-     * @returns Flag indicating whether the access token is valid.
+     * Security notes and misuse risks:
+     * - Do not treat a `true` result as authorization. A valid token may still lack required roles, scopes, or directory roles.
+     * - Do not call this with `NULL_UUID` unless you intentionally support multi-tenant sign-in. Doing so broadens acceptance to any tenant that can mint a valid token for the app.
+     * - Always pass the application ID of the protected resource whose token you expect. Passing the wrong `clientId` can cause you to validate for the wrong audience.
+     * - Do not use this method for ID tokens. They have different validation requirements and are intentionally rejected here.
+     * - Do not parse claims from an un-validated token and then make security decisions from them. Validate first, then extract authorization data.
+     * - Because this method fetches Microsoft metadata and signing keys, transient network or service failures return `false`. Do not respond to those failures by bypassing validation.
+     * @param accessToken JWT access token to validate from Entra ID.
+     * @param clientId Application ID of the API or app resource that should appear in the token `aud` claim.
+     * @param tenantId Tenant restriction to enforce. Pass a specific tenant ID for single-tenant validation, or `NULL_UUID` (`00000000-0000-0000-0000-000000000000`) to explicitly allow any tenant and validate against the tenant named in the token issuer.
+     * @returns `true` when the token passes all checks, otherwise `false` if any failure occurs.
+     * @example
+     * const authEngine = await AuthenticationEngine.getInstance();
+     * const isValid = await authEngine.confirmAccessToken(bearerToken, settings.clientId, settings.tenantId);
+     *
+     * if (!isValid) { throw new Error('Access token validation failed.'); }
+     *
+     * const authz = authEngine.getAccessTokenAuthzData(bearerToken);
+     * if (!authz.permissionList.includes('CheckIn.Read')) {
+     * throw new Error('Authenticated token is missing the required permission.');
+     * }
+     * @example
+     * const authEngine = await AuthenticationEngine.getInstance();
+     *
+     * // Explicit multi-tenant validation: accept any tenant that issued a valid token for this app.
+     * const isValid = await authEngine.confirmAccessToken(bearerToken, settings.clientId, NULL_UUID);
+     *
+     * if (!isValid) { return false; }
+     *
+     * const authz = authEngine.getAccessTokenAuthzData(bearerToken);
+     * console.log(`Authenticated subject ${ authz.subjectId } from tenant ${ authz.tenantId }`);
      */
     public async confirmAccessToken(accessToken: string, clientId: string & tags.Format<'uuid'>, tenantId: string & tags.Format<'uuid'>): Promise<boolean> {
         // #region Input Validation
