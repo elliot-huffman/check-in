@@ -73,20 +73,17 @@ export class AuthenticationEngine {
      *
      * This function is designed for Access Tokens only. ID Tokens require a different validation process and should not be validated with this function.
      *
-     * Client ID defaults to the client ID specified in the settings engine's current settings if not provided.
-     * If the client ID is provided as a parameter, the value stored in the settings engine will be ignored.
-     *
      * Validation mode defaults to multi-tenant mode.
      * If a tenant ID is provided, the token will only be considered valid if it is issued for that tenant.
      * If a tenant ID is not provided, any tenant will be allowed and the tenant from the access token will be used during validation.
      *
      * This function does not throw like most others, it intentionally catches all errors and returns `false` to fail into a safe state.
      * @param accessToken String to be checked if it is a valid Entra ID access token.
+     * @param clientId Client ID, also known as the Application ID. If the access token's audience claim doesn't match this value, then the token is not valid for this application.
      * @param tenantId Tenant ID to validate to. If not provided, any tenant is allowed and the tenant from the access token will be used during validation.
-     * @param clientId Client ID override, if not provided, uses the client ID from the settings engine's current settings.
      * @returns Flag indicating whether the access token is valid.
      */
-    public async confirmAccessToken(accessToken: string, tenantId?: string & tags.Format<'uuid'>, clientId?: string & tags.Format<'uuid'>): Promise<boolean> {
+    public async confirmAccessToken(accessToken: string, clientId: string & tags.Format<'uuid'>, tenantId?: string & tags.Format<'uuid'>): Promise<boolean> {
         // #region Input Validation
 
         // If any input validation fails, return false instead of throwing
@@ -117,13 +114,6 @@ export class AuthenticationEngine {
         if (tokenComponents.payload.nonce) { return false; }
         // #endregion Input Validation
 
-        // #region Initialization
-
-        /** Client ID of the app to be used during validation. */
-        const computedClientId = clientId ?? this.#settingsEngine.currentSettings.clientId;
-
-        // #endregion Initialization
-
         // #region Cryptographic Validation
 
         /** This is the tenant ID as provided by the access token's 'iss' claim. */
@@ -152,7 +142,7 @@ export class AuthenticationEngine {
         let signingKeyList: JwksKeySet = { 'keys': [] };
 
         // Gracefully attempt signing key retrieval
-        try { signingKeyList = await this.#getTenantSigningKeys(openIdConfig, computedClientId); } catch (_error) { return false; }
+        try { signingKeyList = await this.#getTenantSigningKeys(openIdConfig, clientId); } catch (_error) { return false; }
 
         /** Key ID that matches the token header's key ID. Undefined if no matching key is found. */
         const selectedKey = signingKeyList.keys.find((publicKey) => publicKey.kid === tokenComponents.header.kid);
@@ -186,7 +176,7 @@ export class AuthenticationEngine {
         if (now > expiresAt) { return false; }
 
         // If the client ID from the token's audience claim doesn't match the client ID configured for validation, then the token is not valid for this app
-        if (computedClientId !== tokenComponents.payload.aud) { return false; }
+        if (clientId !== tokenComponents.payload.aud) { return false; }
 
         // If a tenant ID was provided for validation and the tenant ID from the token doesn't match, then the token is not valid for the expected tenant
         if (tenantId && tokenTenantId !== tenantId) { return false; }
