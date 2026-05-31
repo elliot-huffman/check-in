@@ -1,7 +1,9 @@
 'use client';
 
+import { ArrowSync20Regular, BarcodeScanner20Regular, Home20Regular, Info20Regular, PeopleSettings20Regular } from '@fluentui/react-icons';
 import { Layout, LayoutItem } from './_components/elements/LayoutSystem';
-import { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
+import type { MenuItem, NavigationMenuUnifiedConfiguration } from './_components/types/elements/NavigationMenu';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { NavigationMenu } from './_components/elements/NavigationMenu';
 import { TopBar } from './_components/elements/TopBar';
 import { useStyleList } from './_components/styles/globalTemplate';
@@ -20,6 +22,9 @@ interface TemplateProps {
 export default function Template(props: TemplateProps): React.ReactNode {
     /** CSS Styles compiled for the root template in Next.js. */
     const compiledStyles = useStyleList();
+
+    // Local state that controls the state of the navigation menu's visibility
+    const [isMenuOpen, setMenuOpen] = useState(true);
 
     /** Instance of the Top Bar's HTML element, used for calculating the content container's height. */
     const topBarRef = useRef<HTMLDivElement>(null);
@@ -51,12 +56,64 @@ export default function Template(props: TemplateProps): React.ReactNode {
         return (): void => { window.removeEventListener('resize', calculateContentMaxHeight); };
     }, [calculateContentMaxHeight]);
 
+    /** Configuration for the navigation menu. */
+    const navigationMenuConfig: NavigationMenuUnifiedConfiguration = {
+        'header': { 'title': 'Navigation Menu' },
+        'items': [
+            {
+                'label': 'General',
+                'type': 'divider'
+            },
+            {
+                'destination': '/',
+                'icon': <Home20Regular />,
+                'label': 'Home',
+                'type': 'item'
+            } as MenuItem,
+            {
+                'destination': '/Check-In',
+                'icon': <BarcodeScanner20Regular />,
+                'label': 'Check-In',
+                'type': 'item'
+            } as MenuItem,
+            {
+                'label': 'Member Management',
+                'type': 'divider'
+            },
+            {
+                'destination': '/MemberManagement',
+                'icon': <PeopleSettings20Regular />,
+                'label': 'Add/Remove',
+                'type': 'item'
+            } as MenuItem,
+            {
+                'destination': '/MemberManagement/Sync',
+                'icon': <ArrowSync20Regular />,
+                'label': 'Sync',
+                'type': 'item'
+            } as MenuItem,
+            {
+                'label': 'System',
+                'type': 'divider'
+            },
+            {
+                'destination': '/About',
+                'icon': <Info20Regular />,
+                'label': 'About',
+                'type': 'item'
+            } as MenuItem
+        ]
+    };
+
     // Rendered page wrapper
     return (
         <Layout className={ compiledStyles.rootContainer }>
-            <TopBar ref={ topBarRef } />
+            <TopBar ref={ topBarRef } navMenuToggle={ {
+                isMenuOpen,
+                setMenuOpen
+            } } />
             <Layout direction="column" noWrap ref={ contentContainerRef }>
-                <NavigationMenu />
+                <NavigationMenu open={ isMenuOpen } setMenuOpenState={ setMenuOpen } menuLayout={ navigationMenuConfig } />
                 <LayoutItem className={ compiledStyles.pageContent } >
                     { props.children }
                 </LayoutItem>
