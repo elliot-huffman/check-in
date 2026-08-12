@@ -79,5 +79,9 @@
         "react-dom": "~19.2.8",
         "react-redux": "~9.3.0",
         "typia": "~12.1.1"
+    },
+    "allowScripts": {
+        "electron-winstaller@5.4.0": true,
+        "unrs-resolver@1.12.2": true
     }
 }
