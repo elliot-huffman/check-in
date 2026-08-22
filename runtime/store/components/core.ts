@@ -1,5 +1,3 @@
-'use client';
-
 import { join, normalize } from 'node:path';
 import type { RootState } from '../store.js';
 import { createSlice } from '@reduxjs/toolkit';

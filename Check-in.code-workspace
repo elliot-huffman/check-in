@@ -42,6 +42,9 @@
 		"window.border": "white",
 		"cSpell.words": [
 			"elhuff",
+			"fluentui",
+			"Griffel",
+			"Pipeable",
 			"renderable"
 		],
 		"js/ts.tsdk.path": "node_modules\\typescript\\lib"
@@ -54,7 +57,7 @@
 			"github.vscode-github-actions",
 			"PKief.material-icon-theme",
 			"SocketSecurity.vscode-socket-security",
-			"Gruntfuggly.todo-tree"
+			"FanaticPythoner.better-todo-tree"
 		]
 	}
 }

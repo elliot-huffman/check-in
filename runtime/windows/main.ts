@@ -17,10 +17,10 @@ export async function startWindow(appPath: string, windowReference: WindowRefere
     // #endregion Input validation
 
     /** Folder path that containers the statically rendered user interface. */
-    const staticUiDir = join(appPath, './user-interface/out/');
+    const staticUiDir = join(appPath, './user-interface/out/client/');
 
     /** Path to the runtime compiled components used to load standalone scripts. */
-    const runtimeDir = join(appPath, './bin/');
+    const runtimeDir = join(appPath, './bin/runtime/');
 
     // Initialize the main window and store a reference to it in the provided window reference container for use in other parts of the app.
     windowReference.mainWindow = new BrowserWindow({

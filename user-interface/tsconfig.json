@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     /* Language and output. */
-    "target": "es2024",
+    "target": "es2025",
     "lib": [
       "dom",
       "dom.iterable",
@@ -10,9 +10,17 @@
     "jsx": "react-jsx",
     "incremental": true,
     /* Import & Export. */
-    "module": "esnext",
+    "module": "es2022",
     "esModuleInterop": true,
     "moduleResolution": "bundler",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@/public/*": [
+        "./public/*"
+      ]
+    },
     "removeComments": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
@@ -42,21 +50,13 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "useUnknownInCatchVariables": true,
-    "verbatimModuleSyntax": true,
-    /* Misc. */
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "verbatimModuleSyntax": true
   },
   "include": [
-    "next-env.d.ts",
-    ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts",
-    "**/*.mts",
+    "**/*.tsx",
     "**/*.ts",
-    "**/*.tsx"
+    "**/*.mts",
+    ".react-router/types/**/*"
   ],
   "exclude": [
     "node_modules"

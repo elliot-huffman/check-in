@@ -1,0 +1,83 @@
+{
+    "name": "@elliot-huffman/check-in-user-interface",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Checks the presented ID to see if it is a valid ID and records the entry/exit of the user",
+    "type": "module",
+    "main": "out/index.html",
+    "keywords": [
+        "automation",
+        "check-in",
+        "membership",
+        "management",
+        "kiosk"
+    ],
+    "homepage": "https://github.com/elliot-huffman/check-in#readme",
+    "bugs": {
+        "url": "https://github.com/elliot-huffman/check-in/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/elliot-huffman/check-in.git"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "Elliot Huffman",
+        "email": "elliot@huffman.me",
+        "url": "https://elliot.huffman.me"
+    },
+    "scripts": {
+        "start": "react-router dev",
+        "build:Prod": "react-router build",
+        "build:Dev": "react-router build",
+        "lint": "eslint ./",
+        "test": "npm run test:Unit && npm run test:Integration",
+        "test:Unit": "vitest --run",
+        "test:Integration": "echo Coming soon!",
+        "typecheck": "react-router typegen && tsc",
+        "generate:LicenseList": "generate-license-file --input ../package.json --output ./public/UI-LicenseList.txt --overwrite"
+    },
+    "packageManager": "npm@12.0.2",
+    "devEngines": {
+        "runtime": {
+            "name": "node",
+            "version": ">=24.18.0",
+            "onFail": "error"
+        },
+        "packageManager": {
+            "name": "npm",
+            "onFail": "error"
+        }
+    },
+    "dependencies": {
+        "@fluentui/react-components": "~9.74.6",
+        "@fluentui/react-icons": "~2.0.337",
+        "@react-router/node": "~8.3.0",
+        "@react-router/serve": "~8.3.0",
+        "@reduxjs/toolkit": "~2.12.0",
+        "react": "~19.2.8",
+        "react-dom": "~19.2.8",
+        "react-redux": "~9.3.0",
+        "react-router": "~8.3.0"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.29.7",
+        "@griffel/tag-processor": "~1.0.16",
+        "@griffel/vite-plugin": "~1.0.0",
+        "@react-router/dev": "~8.3.0",
+        "@rolldown/plugin-babel": "^0.2.3",
+        "@software-hardware-integration-lab/development-utilities": "~3.0.0",
+        "@types/babel__core": "^7.20.5",
+        "@types/node": "~26.2.0",
+        "@types/react": "~19.2.18",
+        "@types/react-dom": "~19.2.4",
+        "@types/react-redux": "~7.1.34",
+        "@vitejs/plugin-react": "~6.1.0",
+        "babel-plugin-react-compiler": "^1.0.0",
+        "generate-license-file": "~4.2.1",
+        "jsdom": "~30.0.1",
+        "typescript": "~6.0.3",
+        "vite": "~8.2.2",
+        "vitest": "~4.1.11"
+    }
+}

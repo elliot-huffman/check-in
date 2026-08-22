@@ -1,0 +1,69 @@
+{
+    "name": "@elliot-huffman/check-in-runtime",
+    "version": "1.0.0",
+    "description": "Checks the presented ID to see if it is a valid ID and records the entry/exit of the user.",
+    "private": true,
+    "type": "module",
+    "main": "bin/index.js",
+    "keywords": [
+        "automation",
+        "check-in",
+        "membership",
+        "management",
+        "kiosk"
+    ],
+    "homepage": "https://github.com/elliot-huffman/check-in#readme",
+    "bugs": {
+        "url": "https://github.com/elliot-huffman/check-in/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/elliot-huffman/check-in.git"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "Elliot Huffman",
+        "email": "elliot@huffman.me",
+        "url": "https://elliot.huffman.me"
+    },
+    "scripts": {
+        "prepare": "ts-patch install",
+        "start": "electron .",
+        "build:Prod": "tsc --sourceMap false",
+        "build:Dev": "tsc",
+        "lint": "eslint ./",
+        "test": "npm run test:Unit && npm run test:Integration",
+        "test:Unit": "echo Coming soon!",
+        "test:Integration": "echo Coming soon!",
+        "generate:LicenseList": "generate-license-file --input ./package.json --output ../user-interface/public/Runtime-LicenseList.txt --overwrite",
+        "package": "electron-builder build --config electronBuilder.ts"
+    },
+    "packageManager": "npm@12.0.2",
+    "devEngines": {
+        "runtime": {
+            "name": "node",
+            "version": ">=24.18.1",
+            "onFail": "error"
+        },
+        "packageManager": {
+            "name": "npm",
+            "onFail": "error"
+        }
+    },
+    "devDependencies": {
+        "@electron/fuses": "~2.1.3",
+        "@software-hardware-integration-lab/development-utilities": "~3.0.0",
+        "@types/jws": "~3.2.11",
+        "electron": "~43.4.1",
+        "electron-builder": "~26.15.3",
+        "generate-license-file": "~4.2.1",
+        "ts-patch": "~4.0.1",
+        "typescript": "~6.0.3"
+    },
+    "dependencies": {
+        "@azure/identity": "~4.13.2",
+        "@reduxjs/toolkit": "~2.12.0",
+        "jws": "~4.0.1",
+        "typia": "~12.1.1"
+    }
+}

@@ -21,8 +21,9 @@
                 "color": "terminal.ansiYellow"
             },
             "type": "npm",
-            "script": "build:Dev:Runtime",
+            "script": "build:Dev",
             "group": "build",
+            "path": "runtime",
             "problemMatcher": []
         },
         {
@@ -34,7 +35,8 @@
             },
             "isBackground": true,
             "type": "npm",
-            "script": "start:UserInterface",
+            "script": "start",
+            "path": "user-interface",
             "problemMatcher": {
                 "owner": "custom",
                 "pattern": {
@@ -42,8 +44,8 @@
                 },
                 "background": {
                     "activeOnStart": true,
-                    "beginsPattern": "▲ Next.js *",
-                    "endsPattern": "✓ Ready in *"
+                    "beginsPattern": "[restart] Relaunching with",
+                    "endsPattern": "press h \\+ enter to show help"
                 }
             }
         }

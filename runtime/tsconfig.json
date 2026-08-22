@@ -2,9 +2,9 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     /* Language and output. */
-    "target": "es2024",
+    "target": "es2025",
     "incremental": true,
-    "outDir": "../bin",
+    "outDir": "./bin",
     /* Import & Export. */
     "module": "node20",
     "esModuleInterop": true,
@@ -46,5 +46,10 @@
         "transform": "typia/lib/transform"
       }
     ]
-  }
+  },
+  "exclude": [
+    "electronBuilder.ts",
+    "eslint.config.js",
+    "bin"
+  ]
 }

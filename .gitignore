@@ -1,9 +1,9 @@
 # Build output
 bin/
-user-interface/.next/
+user-interface/.react-router/
 user-interface/out/
-user-interface/next-env.d.ts
-user-interface/public/LicenseList.txt
+user-interface/public/UI-LicenseList.txt
+user-interface/public/Runtime-LicenseList.txt
 
 # Package output
 dist/
