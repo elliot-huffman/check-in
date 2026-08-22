@@ -20,7 +20,7 @@ export async function startWindow(appPath: string, windowReference: WindowRefere
     const staticUiDir = join(appPath, './user-interface/out/client/');
 
     /** Path to the runtime compiled components used to load standalone scripts. */
-    const runtimeDir = join(appPath, './bin/runtime/');
+    const runtimeDir = join(appPath, './bin/');
 
     // Initialize the main window and store a reference to it in the provided window reference container for use in other parts of the app.
     windowReference.mainWindow = new BrowserWindow({
