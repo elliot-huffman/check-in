@@ -35,7 +35,7 @@
         "test:Unit": "vitest --run",
         "test:Integration": "echo Coming soon!",
         "typecheck": "react-router typegen && tsc",
-        "generate:LicenseList": "generate-license-file --input ../package.json --output ./public/UI-LicenseList.txt --overwrite"
+        "generate:LicenseList": "generate-license-file --input ./package.json --output ./public/UI-LicenseList.txt --overwrite"
     },
     "packageManager": "npm@12.0.2",
     "devEngines": {
