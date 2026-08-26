@@ -25,6 +25,6 @@ export default defineConfig(({ command }) => ({
         }
     },
     // Tabster is CommonJS but Fluent UI imports it through ESM named exports during SSR.
-    'ssr': { 'noExternal': [/^@fluentui\//, 'tabster'] },
-    'server': { 'port': 3000 }
+    'server': { 'port': 3000 },
+    'ssr': { 'noExternal': [/^@fluentui\//u, 'tabster'] }
 }));

@@ -3,12 +3,20 @@
     /* Language and output. */
     "target": "es2025",
     "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
+      "DOM",
+      "DOM.Iterable",
+      "ES2025"
+    ],
+    "types": [
+      "node",
+      "vite/client"
     ],
     "jsx": "react-jsx",
     "incremental": true,
+    "rootDirs": [
+      ".",
+      "./.react-router/types"
+    ],
     /* Import & Export. */
     "module": "es2022",
     "esModuleInterop": true,
@@ -55,8 +63,8 @@
   "include": [
     "**/*.tsx",
     "**/*.ts",
-    "**/*.mts",
-    ".react-router/types/**/*"
+    ".react-router/types/**/*",
+    "eslint.config.js"
   ],
   "exclude": [
     "node_modules"

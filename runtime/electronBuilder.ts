@@ -1,14 +1,12 @@
-import type { Configuration } from "electron-builder";
-import packageConfig from "./package.json" with { 'type': "json" };
+import type { Configuration } from 'electron-builder';
+import packageConfig from './package.json' with { 'type': 'json' };
 
 /** Electron compile settings used to convert the compiled files to platform binaries. */
 const builderConfig: Configuration = {
     'appId': 'me.huffman.elliot.check-in',
-    'productName': 'Elliot Huffman\'s - Check-In',
-    'copyright': 'Copyright © 2026 Elliot Huffman',
     'buildVersion': '1.0.0',
-    'executableName': 'Check-In',
-    'electronVersion': packageConfig.devDependencies.electron.replace('~', ''),
+    'copyright': 'Copyright © 2026 Elliot Huffman',
+    'directories': { 'output': '../dist/' },
     'electronFuses': {
         'enableCookieEncryption': true,
         'enableEmbeddedAsarIntegrityValidation': true,
@@ -19,17 +17,17 @@ const builderConfig: Configuration = {
         'onlyLoadAppFromAsar': true,
         'runAsNode': false
     },
-    'directories': {
-        'output': '../dist/'
-    },
+    'electronVersion': packageConfig.devDependencies.electron.replace('~', ''),
+    'executableName': 'Check-In',
     'files': [
-        "bin/",
-        "!bin/tsconfig.tsbuildinfo",
+        'bin/',
+        '!bin/tsconfig.tsbuildinfo',
         {
             'from': '../user-interface/out/client/',
             'to': 'user-interface/out/client/'
         }
     ],
+    'productName': 'Elliot Huffman\'s - Check-In',
     'protocols': {
         'name': 'Elliot Huffman\'s - Check-In',
         'schemes': ['elhuff-check-in']
@@ -39,11 +37,11 @@ const builderConfig: Configuration = {
         'icon': '../assets/Logo.ico',
         'target': [
             {
-                'target': 'dir',
                 'arch': [
                     'x64',
                     'arm64'
-                ]
+                ],
+                'target': 'dir'
             }
         ]
     }

@@ -8,5 +8,8 @@ export default defineConfig([
         'out/**',
         'public/**'
     ]),
-    ...baseConfig.map(config => ({ ...config, 'files': ['**/*.{ts,js,tsx}'] })),
+    ...baseConfig.map((config) => ({
+        ...config,
+        'files': ['**/*.{ts,js,tsx}']
+    }))
 ]);

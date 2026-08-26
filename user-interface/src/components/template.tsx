@@ -1,6 +1,6 @@
 import { ArrowSync20Regular, BarcodeScanner20Regular, Home20Regular, Info20Regular, PeopleSettings20Regular } from '@fluentui/react-icons';
 import { Layout, LayoutItem } from './LayoutSystem';
-import type { MenuItem, NavigationMenuUnifiedConfiguration } from '@/utility/types/elements/NavigationMenu';
+import type { MenuItem, NavigationMenuUnifiedConfiguration } from '@/utility/types/components/NavigationMenu';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { NavigationMenu } from './NavigationMenu';
 import { TopBar } from './TopBar';

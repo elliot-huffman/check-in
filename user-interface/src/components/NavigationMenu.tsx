@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/refs */
 import { Activity, useMemo } from 'react';
 import { DrawerHeaderTitle, NavCategory, NavCategoryItem, NavDrawer, NavDrawerBody, NavDrawerHeader, NavItem, NavSectionHeader, NavSubItem, NavSubItemGroup, type OnNavItemSelectData } from '@fluentui/react-components';
 import { Layout, LayoutItem } from './LayoutSystem';
-import type { MenuEntry, MenuItem, MenuItemContainer, NavigationMenuUnifiedConfiguration } from '@/utility/types/elements/NavigationMenu';
-import { useNavigate, useLocation } from 'react-router';
-import { useStyleList } from '@/styles/elements/NavigationMenu';
+import type { MenuEntry, MenuItem, MenuItemContainer, NavigationMenuUnifiedConfiguration } from '@/utility/types/components/NavigationMenu';
+import { useLocation, useNavigate } from 'react-router';
+import { useStyleList } from '@/styles/components/NavigationMenu';
 
 /** Props for the NavigationMenu component. */
 interface NavigationMenuProps {

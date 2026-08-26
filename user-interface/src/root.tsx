@@ -1,15 +1,14 @@
 import { FluentProvider, webDarkTheme, webLightTheme } from '@fluentui/react-components';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Suspense, useCallback, useEffect, useMemo } from 'react';
 import { setTheme, themeModeSelector } from '@/store/components/themeProvider';
+import Template from '@/components/template';
 import { store } from '@/store/store';
 import { useStyleList } from '@/styles/root';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
-import Template from '@/components/template';
 
 /**
  * Renders the root layout/HTML of the application, wrapping it with Fluent UI support and handling theme changes based on user system preferences.
- * @param props Child page/components to be rendered in the app.
  * @returns Renders the root HTML with Fluent UI support, along with any provided children pages/components.
  */
 function RootContent(): React.ReactNode {
@@ -88,7 +87,6 @@ function RootContent(): React.ReactNode {
 
 /**
  * Renders the root layout/HTML of the application, wrapping it with the Redux Provider to make the store available throughout the app.
- * @param props Child page/components to be rendered in the app.
  * @returns Rendered root layout with Redux support.
  */
 export default function Root(): React.ReactNode {

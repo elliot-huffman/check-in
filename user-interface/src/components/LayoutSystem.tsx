@@ -1,4 +1,4 @@
-import type { LayoutAlign, LayoutDirection, LayoutGap, LayoutItemAlign, LayoutJustify } from '@/utility/types/LayoutSystem';
+import type { LayoutAlign, LayoutDirection, LayoutGap, LayoutItemAlign, LayoutJustify } from '@/utility/types/components/LayoutSystem';
 import { createContext, useContext, useMemo } from 'react';
 import { mergeClasses } from '@fluentui/react-components';
 import { useStyleList } from '@/styles/components/layoutSystem';

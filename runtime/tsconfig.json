@@ -48,8 +48,7 @@
     ]
   },
   "exclude": [
-    "electronBuilder.ts",
-    "eslint.config.js",
-    "bin"
+    "bin",
+    "node_modules"
   ]
 }
