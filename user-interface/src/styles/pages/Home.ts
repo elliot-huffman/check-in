@@ -4,6 +4,7 @@ import { makeStyles, tokens } from '@fluentui/react-components';
 export const useStyleList = makeStyles({
     'card': {
         'backgroundColor': tokens.colorNeutralBackground2,
+        'marginBottom': tokens.spacingVerticalMNudge,
         'marginLeft': tokens.spacingHorizontalM,
         'width': '250px'
     }
