@@ -3,7 +3,7 @@ import type { ManagedDataGridConfiguration } from '@/utility/types/components/Ma
 import { isValidElement } from 'react';
 
 /** Structure of the single selection configuration for the managed data grid component. */
-interface SingleSelect<T> {
+export interface SingleSelect<T> {
     /** Flag that indicates the selection mode is a single selection. */
     'mode': 'single';
     /** React state object that manages the selected state of the data grid. */
@@ -11,7 +11,7 @@ interface SingleSelect<T> {
 }
 
 /** Structure of the multiple selection configuration for the managed data grid component. */
-interface MultiSelect<T> {
+export interface MultiSelect<T> {
     /** Flag that indicates the selection mode is a multiple selection. */
     'mode': 'multiselect';
     /** React state object that manages the selected state of the data grid. */
@@ -19,7 +19,7 @@ interface MultiSelect<T> {
 }
 
 /** Structure of the managed data grid component's props. */
-interface ManagedDataGridProps<T> {
+export interface ManagedDataGridProps<T> {
     /** Configuration used to override the default behavior of the managed data grid component. */
     'renderConfiguration'?: ManagedDataGridConfiguration<T>;
     /** Configures the selection behavior of the data grid. If this is not provided, the data grid will not support selection. */
