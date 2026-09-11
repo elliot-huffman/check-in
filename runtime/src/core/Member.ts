@@ -112,7 +112,7 @@ export class MemberEngine {
      * @param filter Optional filter used to select a subset of members.
      * @returns List of stored members.
      */
-    public async getMember(id: never, filter?: Partial<Member>): Promise<Member[]>;
+    public async getMember(id?: never, filter?: Partial<Member>): Promise<Member[]>;
 
     /**
      * Retrieves one member by ID or all members when no ID is provided.
