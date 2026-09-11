@@ -1,24 +1,29 @@
-import { type CreateTableColumnOptions, DataGrid, DataGridBody, DataGridCell, DataGridHeader, DataGridHeaderCell, DataGridRow, type TableColumnDefinition, Text, createTableColumn } from '@fluentui/react-components';
+import { type CreateTableColumnOptions, DataGrid, DataGridBody, DataGridCell, DataGridHeader, DataGridHeaderCell, DataGridRow, type OnSelectionChangeData, type TableColumnDefinition, Text, createTableColumn } from '@fluentui/react-components';
 import type { ManagedDataGridConfiguration } from '@/utility/types/components/ManagedDataGrid';
 import { isValidElement } from 'react';
+
+/** Structure of the single selection configuration for the managed data grid component. */
+interface SingleSelect<T> {
+    /** Flag that indicates the selection mode is a single selection. */
+    'mode': 'single';
+    /** React state object that manages the selected state of the data grid. */
+    'handler': (selection: T | undefined) => void;
+}
+
+/** Structure of the multiple selection configuration for the managed data grid component. */
+interface MultiSelect<T> {
+    /** Flag that indicates the selection mode is a multiple selection. */
+    'mode': 'multiselect';
+    /** React state object that manages the selected state of the data grid. */
+    'handler': (selection: T[] | undefined) => void;
+}
 
 /** Structure of the managed data grid component's props. */
 interface ManagedDataGridProps<T> {
     /** Configuration used to override the default behavior of the managed data grid component. */
     'renderConfiguration'?: ManagedDataGridConfiguration<T>;
     /** Configures the selection behavior of the data grid. If this is not provided, the data grid will not support selection. */
-    'selection'?: {
-        /** React state object that manages the selected state of the data grid. */
-        'handler': (selection: T | T[] | null) => void;
-        /**
-         * Current selection of the data grid.
-         *
-         * If the value is:
-         * - null or a single item, single selection mode is used in the data grid.
-         * - any array of items, multi selection mode is used.
-         */
-        'current': T[] | T | null;
-    };
+    'selection'?: SingleSelect<T> | MultiSelect<T>;
     /** Items to be displayed in the data grid. */
     'items': T[];
     /** Optional React ref attached to the rendered parent div element for direct manipulation if required. */
@@ -33,12 +38,6 @@ interface ManagedDataGridProps<T> {
 export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactNode {
     /** List of columns to be rendered in the data grid. */
     const columnList: TableColumnDefinition<T>[] = [];
-
-    /** Selection mode flag that is used to configure the data grid to work with single or multiple selection. Or to disable it if no selection config is received. */
-    let selectionMode: 'single' | 'multiselect' = 'single';
-
-    // Determine the selection mode based on the provided selection configuration.
-    if (props.selection && Array.isArray(props.selection)) { selectionMode = 'multiselect'; }
 
     // Iterate through each property in the items object and process them as needed for rendering in the data grid.
     for (const key in props.items[0]) {
@@ -248,6 +247,40 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
         columnList.push(createTableColumn(columnConfig));
     }
 
+    /**
+     * Handles the selection change event for the data grid.
+     *
+     * Converts the selected items from index-based selection to the corresponding data items.
+     * Sets the selected rows based on the selection change.
+     * @param _event The event object associated with the selection change.
+     * @param data The data object containing information about the selection change.
+     */
+    function onSelectionChange(_event: unknown, data: OnSelectionChangeData): void {
+        // Only process selection changes if selection is enabled.
+        if (props.selection) {
+            /** List of selected items based on the current selection indices. */
+            const selectedItems: T[] = [];
+
+            // Iterate through all of the selected indexes and extract the corresponding data items from the props.items array.
+            for (const selectionAtIndex of data.selectedItems) {
+                /** Item extracted from the props.items array based on the current selection index. */
+                const extractedItem = props.items[selectionAtIndex as number];
+
+                // Only add an item to the selected item list if it exists.
+                if (extractedItem) { selectedItems.push(extractedItem); }
+            }
+
+            // Invoke the selection handler with the appropriate selected items based on the selection mode.
+            if (props.selection.mode === 'multiselect') {
+                // Indicate all of the selected items
+                props.selection.handler(selectedItems);
+            } else {
+                // Indicate only the first selected item since only a single item can be selected in single selection mode.
+                props.selection.handler(selectedItems[0]);
+            }
+        }
+    }
+
     // If a selection mode is specified, render the data grid with selection capabilities.
     if (props.selection) {
         // Render the managed data grid
@@ -255,11 +288,12 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
             <DataGrid
                 items={ props.items }
                 columns={ columnList }
-                selectionMode={ selectionMode }
+                selectionMode={ props.selection.mode }
+                onSelectionChange={ onSelectionChange }
                 sortable
             >
                 <DataGridHeader>
-                    <DataGridRow selectionCell={ { 'aria-label': selectionMode === 'multiselect' ? 'Select all rows' : void 0 } }>
+                    <DataGridRow selectionCell={ { 'aria-label': props.selection.mode === 'multiselect' ? 'Select all rows' : void 0 } }>
                         { ({ renderHeaderCell }) => <DataGridHeaderCell>{ renderHeaderCell() }</DataGridHeaderCell> }
                     </DataGridRow>
                 </DataGridHeader>
