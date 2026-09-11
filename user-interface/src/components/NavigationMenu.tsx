@@ -153,7 +153,7 @@ export function NavigationMenu(props: NavigationMenuProps): React.ReactNode {
         switch (item.type) {
             case 'divider':
                 // Render a section header for dividers, using the label as the header text if it exists
-                return <NavSectionHeader>{ item.label }</NavSectionHeader>;
+                return <NavSectionHeader key={ item.id }>{ item.label }</NavSectionHeader>;
             case 'container':
                 return (
                     <NavCategory value={ item.id } key={ item.id }>
