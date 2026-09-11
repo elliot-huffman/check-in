@@ -20,7 +20,7 @@ const builderConfig: Configuration = {
     'electronVersion': packageConfig.devDependencies.electron.replace('~', ''),
     'executableName': 'Check-In',
     'files': [
-        'bin/',
+        'bin/src/',
         '!bin/tsconfig.tsbuildinfo',
         {
             'from': '../user-interface/out/client/',

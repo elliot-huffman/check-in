@@ -1,9 +1,9 @@
 /** Access control engine type imported from the runtime source declarations. */
-type AccessControlEngine = import('../runtime/core/AccessControl.js').AccessControlEngine;
+type AccessControlEngine = import('../runtime/src/core/AccessControl.js').AccessControlEngine;
 /** Member engine type imported from the runtime source declarations. */
-type MemberEngine = import('../runtime/core/Member.js').MemberEngine;
+type MemberEngine = import('../runtime/src/core/Member.js').MemberEngine;
 /** Legal engine type imported from the runtime source declarations. */
-type LegalEngine = import('../runtime/core/Legal.js').LegalEngine;
+type LegalEngine = import('../runtime/src/core/Legal.js').LegalEngine;
 
 /** Global window contract for the Electron preload API. */
 interface Window {

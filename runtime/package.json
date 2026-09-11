@@ -4,7 +4,7 @@
     "description": "Checks the presented ID to see if it is a valid ID and records the entry/exit of the user.",
     "private": true,
     "type": "module",
-    "main": "bin/index.js",
+    "main": "bin/src/index.js",
     "keywords": [
         "automation",
         "check-in",
