@@ -275,7 +275,7 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
 
     // Render the managed data grid with no selection mode
     return (
-        <DataGrid items={ props.items } columns={ columnList }>
+        <DataGrid items={ props.items } columns={ columnList } sortable>
             <DataGridHeader>
                 <DataGridRow>
                     { ({ renderHeaderCell }) => <DataGridHeaderCell>{ renderHeaderCell() }</DataGridHeaderCell> }
