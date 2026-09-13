@@ -1,4 +1,4 @@
-import { type CreateTableColumnOptions, DataGrid, DataGridBody, DataGridCell, DataGridHeader, DataGridHeaderCell, DataGridRow, type OnSelectionChangeData, type TableColumnDefinition, Text, createTableColumn } from '@fluentui/react-components';
+import { type CreateTableColumnOptions, DataGrid, DataGridBody, DataGridCell, DataGridHeader, DataGridHeaderCell, type DataGridProps, DataGridRow, type DataGridRowProps, type OnSelectionChangeData, type TableColumnDefinition, Text, createTableColumn } from '@fluentui/react-components';
 import type { ManagedDataGridConfiguration } from '@/utility/types/components/ManagedDataGrid';
 import { isValidElement } from 'react';
 
@@ -281,42 +281,44 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
         }
     }
 
-    // If a selection mode is specified, render the data grid with selection capabilities.
+    /** Properties to be applied to the data grid component itself. */
+    const dataGridProps: DataGridProps = {
+        'columns': columnList,
+        'items': props.items,
+        'sortable': true
+    };
+
+    /** Properties to be applied to the header row of the data grid. */
+    const headerRowProps: Omit<DataGridRowProps, 'children'> = {};
+
+    /** Properties to be applied to the data rows of the data grid. */
+    const dataRowProps: Omit<DataGridRowProps, 'children'> = {};
+
+    // Inject the selection properties into the data grid props and row props if selection is enabled.
     if (props.selection) {
-        // Render the managed data grid
-        return (
-            <DataGrid
-                items={ props.items }
-                columns={ columnList }
-                selectionMode={ props.selection.mode }
-                onSelectionChange={ onSelectionChange }
-                sortable
-            >
-                <DataGridHeader>
-                    <DataGridRow selectionCell={ { 'aria-label': props.selection.mode === 'multiselect' ? 'Select all rows' : void 0 } }>
-                        { ({ renderHeaderCell }) => <DataGridHeaderCell>{ renderHeaderCell() }</DataGridHeaderCell> }
-                    </DataGridRow>
-                </DataGridHeader>
-                <DataGridBody<T>>
-                    { ({ item, rowId }) => <DataGridRow<T> key={ rowId } selectionCell={ { 'checkboxIndicator': { 'aria-label': 'Select row' } } }>
-                        { ({ renderCell }) => <DataGridCell>{ renderCell(item) }</DataGridCell> }
-                    </DataGridRow>
-                    }
-                </DataGridBody>
-            </DataGrid>
-        );
+        // Set the selection mode and selection change handler for the data grid.
+        dataGridProps.selectionMode = props.selection.mode;
+
+        // Assign the selection change handler to the data grid props.
+        dataGridProps.onSelectionChange = onSelectionChange;
+
+        // Apply the selection cell properties to the header and data rows.
+        headerRowProps.selectionCell = { 'aria-label': props.selection.mode === 'multiselect' ? 'Select all rows' : void 0 };
+
+        // Apply the selection cell properties to the data rows.
+        dataRowProps.selectionCell = { 'checkboxIndicator': { 'aria-label': 'Select row' } };
     }
 
     // Render the managed data grid with no selection mode
     return (
-        <DataGrid items={ props.items } columns={ columnList } sortable>
+        <DataGrid { ...dataGridProps } >
             <DataGridHeader>
-                <DataGridRow>
+                <DataGridRow { ...headerRowProps }>
                     { ({ renderHeaderCell }) => <DataGridHeaderCell>{ renderHeaderCell() }</DataGridHeaderCell> }
                 </DataGridRow>
             </DataGridHeader>
             <DataGridBody<T>>
-                { ({ item, rowId }) => <DataGridRow<T> key={ rowId }>
+                { ({ item, rowId }) => <DataGridRow<T> key={ rowId } { ...dataRowProps }>
                     { ({ renderCell }) => <DataGridCell>{ renderCell(item) }</DataGridCell> }
                 </DataGridRow>
                 }
