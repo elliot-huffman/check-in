@@ -57,33 +57,36 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
              * @returns The content to be rendered in the cell.
              */
             'renderCell': (item: T): React.ReactNode => {
+                /** Extracted value of the current cell to be rendered. */
+                const cellValue = item[key as keyof T];
+
                 // Render React element as is
-                if (isValidElement(item)) { return item; }
+                if (isValidElement(cellValue)) { return cellValue; }
 
                 // Handle rendering for the primitive types
-                switch (typeof item) {
+                switch (typeof cellValue) {
                     case 'string':
                     case 'number':
                     case 'boolean':
                     case 'bigint':
                         // Handle string compatible types by rendering them as text.
-                        return <Text>{ item }</Text>;
+                        return <Text>{ cellValue }</Text>;
                     case 'symbol':
                         // Handle symbol type by converting it to a string for display.
-                        return <Text>{ item.toString() }</Text>;
+                        return <Text>{ cellValue.toString() }</Text>;
                     case 'undefined':
                         // Handle undefined values by rendering an empty text element.
                         return <Text></Text>;
                     case 'object':
                         // Handle non-null object values by rendering their JSON string representation.
-                        if (item !== null) { return <Text>{ JSON.stringify(item) }</Text>; }
+                        if (cellValue !== null) { return <Text>{ JSON.stringify(cellValue) }</Text>; }
 
                         // Return an empty text element for null values.
                         return <Text></Text>;
                     case 'function': {
                         /** Results of the callback invocation to be rendered. */
                         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-                        const callbackResults = item() as unknown;
+                        const callbackResults = cellValue() as unknown;
 
                         // Render React element as is
                         if (isValidElement(callbackResults)) { return callbackResults; }
@@ -142,7 +145,7 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
                  * @param incomingCell Value of the incoming cell that will be compared against the current cell.
                  * @returns A number indicating the relative order of the two cells (0 for equality, a negative number if the current cell should come before the incoming cell, and a positive number if the current cell should come after the incoming cell).
                  */
-                columnConfig.compare = (currentCell, incomingCell): number => (currentCell as string).localeCompare(incomingCell as string);
+                columnConfig.compare = (currentCell, incomingCell): number => (currentCell[key as keyof T] as string).localeCompare(incomingCell[key as keyof T] as string);
 
                 // Stop execution to prevent fallthrough
                 break;
@@ -153,7 +156,7 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
                  * @param incomingCell Value of the incoming cell that will be compared against the current cell.
                  * @returns A number indicating the relative order of the two cells (0 for equality, a negative number if the current cell should come before the incoming cell, and a positive number if the current cell should come after the incoming cell).
                  */
-                columnConfig.compare = (currentCell, incomingCell): number => (currentCell as number) - (incomingCell as number);
+                columnConfig.compare = (currentCell, incomingCell): number => (currentCell[key as keyof T] as number) - (incomingCell[key as keyof T] as number);
 
                 // Stop execution to prevent fallthrough
                 break;
@@ -166,10 +169,10 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
                  */
                 columnConfig.compare = (currentCell, incomingCell): number => {
                     // Both bigint values are the same, considered equal.
-                    if (currentCell === incomingCell) { return 0; }
+                    if (currentCell[key as keyof T] === incomingCell[key as keyof T]) { return 0; }
 
                     // Current cell is greater than incoming cell.
-                    if (currentCell > incomingCell) { return 1; }
+                    if (currentCell[key as keyof T] > incomingCell[key as keyof T]) { return 1; }
 
                     // Current cell is less than incoming cell.
                     return -1;
@@ -188,10 +191,10 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
                     // Compare boolean values: true is considered greater than false.
 
                     // Both boolean values are the same, considered equal.
-                    if (currentCell === incomingCell) { return 0; }
+                    if (currentCell[key as keyof T] === incomingCell[key as keyof T]) { return 0; }
 
                     // Current cell is true and incoming cell is false, considered greater.
-                    if (currentCell === true && incomingCell === false) { return 1; }
+                    if (currentCell[key as keyof T] === true && incomingCell[key as keyof T] === false) { return 1; }
 
                     // Current cell is false and incoming cell is true, considered lesser.
                     return -1;
@@ -206,11 +209,29 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
                  * @param incomingCell Value of the incoming cell that will be compared against the current cell.
                  * @returns A number indicating the relative order of the two cells (0 for equality, a negative number if the current cell should come before the incoming cell, and a positive number if the current cell should come after the incoming cell).
                  */
-                columnConfig.compare = (currentCell, incomingCell): number => (currentCell as symbol).toString().localeCompare((incomingCell as symbol).toString());
+                columnConfig.compare = (currentCell, incomingCell): number => (currentCell[key as keyof T] as symbol).toString().localeCompare((incomingCell[key as keyof T] as symbol).toString());
 
                 // Stop execution to prevent fallthrough
                 break;
-            case 'object':
+            case 'object': {
+                /** Flag that indicates if comparison should be disabled due to the presence of React elements in the column. */
+                let reactElementFound = false;
+
+                // Check for react elements in each row to determine if comparison should be enabled
+                for (const item of props.items) {
+                    // Check if the current cell contains a React element.
+                    if (isValidElement(item[key as keyof T])) {
+                        // Set the flag to indicate that a React element was found in the column.
+                        reactElementFound = true;
+
+                        // Stop checking further rows as we have already found a React element.
+                        break;
+                    }
+                }
+
+                // Don't enable comparison on react elements
+                if (reactElementFound) { break; }
+
                 /**
                  * Compares two object values for sorting purposes.
                  * @param currentCell Value of the current cell that will be sorted.
@@ -221,16 +242,19 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
                     // Compare object values by converting them to JSON strings and using localeCompare.
 
                     // Both cells are null, considered equal.
-                    if (currentCell === null && incomingCell === null) { return 0; }
+                    if (currentCell[key as keyof T] === null && incomingCell[key as keyof T] === null) { return 0; }
 
                     // Current cell is null and incoming cell is not null, considered lesser.
-                    if (currentCell === null) { return -1; }
+                    if (currentCell[key as keyof T] === null) { return -1; }
 
                     // Incoming cell is null and current cell is not null, considered greater.
-                    if (incomingCell === null) { return 1; }
+                    if (incomingCell[key as keyof T] === null) { return 1; }
 
                     // Both cells are objects, compare their JSON string representations.
-                    if (typeof currentCell === 'object' && typeof incomingCell === 'object') { return JSON.stringify(currentCell).localeCompare(JSON.stringify(incomingCell)); }
+                    if (typeof currentCell[key as keyof T] === 'object' && typeof incomingCell[key as keyof T] === 'object') {
+                        // Render the JSON string representations of the objects for comparison.
+                        return JSON.stringify(currentCell[key as keyof T]).localeCompare(JSON.stringify(incomingCell[key as keyof T]));
+                    }
 
                     // Fall back to considering the cells equal if none of the above conditions are met.
                     return 0;
@@ -238,6 +262,7 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
 
                 // Stop execution to prevent fallthrough
                 break;
+            }
             default:
                 // Non-sortable types are ignored
                 break;
