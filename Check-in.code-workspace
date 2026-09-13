@@ -45,7 +45,8 @@
 			"fluentui",
 			"Griffel",
 			"Pipeable",
-			"renderable"
+			"renderable",
+			"typia"
 		],
 		"js/ts.tsdk.path": "node_modules\\typescript\\lib"
 	},
