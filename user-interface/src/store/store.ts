@@ -1,6 +1,5 @@
 import { checkInPageSlice } from './components/pages/checkIn';
 import { configureStore } from '@reduxjs/toolkit';
-import { navigationMenuSlice } from './components/elements/navigationMenu';
 import { setupListeners } from '@reduxjs/toolkit/query/react';
 import { themeProviderSlice } from './components/themeProvider';
 import { userDataSlice } from './components/elements/userData';
@@ -9,7 +8,6 @@ import { userDataSlice } from './components/elements/userData';
 export const store = configureStore({
     'reducer': {
         'checkInPage': checkInPageSlice.reducer,
-        'navigationMenu': navigationMenuSlice.reducer,
         'themeProvider': themeProviderSlice.reducer,
         'userData': userDataSlice.reducer
     }

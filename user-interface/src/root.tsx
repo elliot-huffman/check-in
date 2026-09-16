@@ -71,7 +71,7 @@ function RootContent(): React.ReactNode {
                 <meta name="fluentui-insertion-point" content="fluentui-insertion-point" />
             </head>
             <body className={ compiledStyles.body }>
-                <FluentProvider theme={ selectedTheme } className={ compiledStyles.themeProvider }>
+                <FluentProvider theme={ selectedTheme }>
                     <Suspense fallback="Loading...">
                         <Template>
                             <Outlet />

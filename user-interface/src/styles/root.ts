@@ -7,6 +7,5 @@ export const useStyleList = makeStyles({
         'backgroundColor': tokens.colorNeutralBackground1,
         'overflow': 'hidden',
         'scrollbarGutter': 'unset'
-    },
-    'themeProvider': { 'minHeight': '100vh' }
+    }
 });
