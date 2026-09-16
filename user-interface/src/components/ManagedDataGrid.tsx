@@ -1,4 +1,5 @@
 import { type CreateTableColumnOptions, DataGrid, DataGridBody, DataGridCell, DataGridHeader, DataGridHeaderCell, type DataGridProps, DataGridRow, type DataGridRowProps, type OnSelectionChangeData, type TableColumnDefinition, Text, createTableColumn } from '@fluentui/react-components';
+import { equals, type tags } from 'typia';
 import type { ManagedDataGridConfiguration } from '@/utility/types/components/ManagedDataGrid';
 import { isValidElement } from 'react';
 
@@ -69,6 +70,9 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
                     case 'number':
                     case 'boolean':
                     case 'bigint':
+                        // If the data to render is a string and it is an ISO string, then render it in a human friendly format.
+                        if (equals<string & tags.Format<'date-time'>>(cellValue)) { return <Text>{ new Date(cellValue).toLocaleString() }</Text>; }
+
                         // Handle string compatible types by rendering them as text.
                         return <Text>{ cellValue }</Text>;
                     case 'symbol':
