@@ -57,7 +57,7 @@ export class MemberEngine {
      * @param memberDraft Member data to persist.
      * @returns The stored member record.
      */
-    public async newMember(memberDraft: Member | Omit<Member, 'id'>): Promise<Member> {
+    public async newMember(memberDraft: Omit<Member, 'id'>): Promise<Member> {
         // #region Input Validation
         assertGuardEquals(memberDraft);
         // #endregion Input Validation
@@ -69,7 +69,7 @@ export class MemberEngine {
         if (!memberDraft.lastName.trim()) { throw new RangeError('The member last name cannot be empty.', { 'cause': 'Input validation!' }); }
 
         /** Member record normalized before being persisted to storage. */
-        const computedMember: Member | Omit<Member, 'id'> = {
+        const computedMember: Omit<Member, 'id'> = {
             ...memberDraft,
             'accessibilityNeeds': {
                 ...memberDraft.accessibilityNeeds,
@@ -87,10 +87,10 @@ export class MemberEngine {
                 ? {
                     ...memberDraft.homeAddress,
                     'city': memberDraft.homeAddress.city.trim(),
+                    'country': memberDraft.homeAddress.country.trim(),
                     'postalCode': memberDraft.homeAddress.postalCode.trim(),
                     'state': memberDraft.homeAddress.state.trim(),
-                    'streetAddress': memberDraft.homeAddress.streetAddress.trim(),
-                    'zipCode': memberDraft.homeAddress.zipCode.trim()
+                    'streetAddress': memberDraft.homeAddress.streetAddress.trim()
                 }
                 : null,
             'lastName': memberDraft.lastName.trim()
