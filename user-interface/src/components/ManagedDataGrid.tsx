@@ -129,7 +129,13 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
              */
             'renderHeaderCell': () => {
                 // Check if a column name override is provided in the render configuration.
-                if (props.renderConfiguration?.columnNameOverride) { return props.renderConfiguration.columnNameOverride[key as keyof T]; }
+                if (
+                    props.renderConfiguration?.columnNameOverride &&
+                    key in props.renderConfiguration.columnNameOverride
+                ) {
+                    // Override the column header with the provided name since one is present
+                    return props.renderConfiguration.columnNameOverride[key as keyof T];
+                }
 
                 // If no column name override is provided, fall back to using the key as the column header.
                 return key;

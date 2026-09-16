@@ -16,7 +16,7 @@ export interface ManagedDataGridConfiguration<T> {
      * Where the key is the name of the column/property to override.
      * Where the Value is the display name for the column to render.
      */
-    'columnNameOverride'?: Record<keyof T, string>;
+    'columnNameOverride'?: Partial<Record<keyof T, string>>;
     /** List of columns by their key/property name that should be hidden in the managed data grid. */
     'hideColumn'?: (keyof T)[];
 }
