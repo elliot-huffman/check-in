@@ -306,6 +306,39 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
         }
     }
 
+    // Place explicitly ordered columns first while preserving the relative order of all unlisted columns.
+    if (props.renderConfiguration?.columnOrder) {
+        /** Lookup containing the configured position of each explicitly ordered column. */
+        const configuredColumnOrder = new Map<string | number | symbol, number>();
+
+        // Build the lookup without allowing duplicate entries to change the first configured position.
+        for (const [columnIndex, columnKey] of props.renderConfiguration.columnOrder.entries()) {
+            // Add the column to the configured order map if it hasn't been added already.
+            if (!configuredColumnOrder.has(columnKey)) { configuredColumnOrder.set(columnKey, columnIndex); }
+        }
+
+        // Sort configured columns to the front in the specified order. Unlisted columns retain their existing relative order.
+        columnList.sort((currentColumn, incomingColumn): number => {
+            /** Index of the current column in the configured column order map. */
+            const currentColumnIndex = configuredColumnOrder.get(currentColumn.columnId);
+
+            /** Index of the incoming column in the configured column order map. */
+            const incomingColumnIndex = configuredColumnOrder.get(incomingColumn.columnId);
+
+            // Sort two explicitly configured columns by their configured positions.
+            if (currentColumnIndex !== void 0 && incomingColumnIndex !== void 0) { return currentColumnIndex - incomingColumnIndex; }
+
+            // Place the explicitly configured current column before an unlisted incoming column.
+            if (currentColumnIndex !== void 0) { return -1; }
+
+            // Place the explicitly configured incoming column before an unlisted current column.
+            if (incomingColumnIndex !== void 0) { return 1; }
+
+            // Preserve the relative order of columns that are not explicitly configured.
+            return 0;
+        });
+    }
+
     /** Properties to be applied to the data grid component itself. */
     const dataGridProps: DataGridProps = {
         'columns': columnList,
