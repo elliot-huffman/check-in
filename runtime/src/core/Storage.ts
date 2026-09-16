@@ -1,7 +1,7 @@
 import type { CheckIn, CheckInOut, CheckOut } from '../Utility/types/AccessControl.js';
 import type { LegalForm, LegalFormSignature, LegalFormVersion } from '../Utility/types/Legal.js';
+import { access, constants, mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import { assertGuardEquals, json } from 'typia';
-import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises';
 import type { FolderTypes } from '../Utility/types/Storage.js';
 import type { Member } from '../Utility/types/Member.js';
 import { SettingsEngine } from './Settings.js';
@@ -86,8 +86,14 @@ export class StorageEngine {
         /** Path to the check-in log JSON file in persistent storage. */
         const checkInLogPath = join(checkInOutLogFolderPath, `${ storedCheckInLog.id }.json`);
 
-        // Create the log folder if it doesn't exist so the check-in record has a valid destination.
-        await mkdir(checkInOutLogFolderPath, { 'recursive': true });
+        // Create the folder if it doesn't exist
+        try {
+            // Check if the folder is available to the app.
+            await access(checkInOutLogFolderPath, constants.F_OK);
+        } catch (_error) {
+            // Create the folder structure if it doesn't exist.
+            await mkdir(checkInOutLogFolderPath, { 'recursive': true });
+        }
 
         // Write the check-in log to disk.
         await writeFile(checkInLogPath, json.stringify(storedCheckInLog));
@@ -128,8 +134,14 @@ export class StorageEngine {
         /** Path to the check-out log JSON file in persistent storage. */
         const checkOutLogPath = join(checkInOutLogFolderPath, `${ storedCheckOutLog.id }.json`);
 
-        // Create the log folder if it doesn't exist so the check-out record has a valid destination.
-        await mkdir(checkInOutLogFolderPath, { 'recursive': true });
+        // Create the folder if it doesn't exist
+        try {
+            // Check if the folder is available to the app.
+            await access(checkInOutLogFolderPath, constants.F_OK);
+        } catch (_error) {
+            // Create the folder structure if it doesn't exist.
+            await mkdir(checkInOutLogFolderPath, { 'recursive': true });
+        }
 
         // Write the check-out log to disk.
         await writeFile(checkOutLogPath, json.stringify(storedCheckOutLog));
@@ -235,6 +247,15 @@ export class StorageEngine {
 
         /** Path to the member's JSON file in the persistent storage. */
         const memberPath = join(this.#calculateFolderPath('member'), `${ storedMember.id }.json`);
+
+        // Create the folder if it doesn't exist
+        try {
+            // Check if the folder is available to the app.
+            await access(this.#calculateFolderPath('member'), constants.F_OK);
+        } catch (_error) {
+            // Create the folder structure if it doesn't exist.
+            await mkdir(this.#calculateFolderPath('member'), { 'recursive': true });
+        }
 
         // Write the member to disk, replacing any existing record for the same ID.
         await writeFile(memberPath, json.stringify(storedMember));
@@ -364,8 +385,14 @@ export class StorageEngine {
         /** Path to the legal form family JSON file in persistent storage. */
         const legalFormPath = join(legalFormFolderPath, `${ form.id }.json`);
 
-        // Create the legal forms folder if it doesn't exist so the legal form family record has a valid destination.
-        await mkdir(legalFormFolderPath, { 'recursive': true });
+        // Create the folder if it doesn't exist
+        try {
+            // Check if the folder is available to the app.
+            await access(legalFormFolderPath, constants.F_OK);
+        } catch (_error) {
+            // Create the folder structure if it doesn't exist.
+            await mkdir(legalFormFolderPath, { 'recursive': true });
+        }
 
         // Write the legal form family record to disk.
         await writeFile(legalFormPath, json.stringify(form));
@@ -487,8 +514,14 @@ export class StorageEngine {
         /** Path to the legal form version JSON file in persistent storage. */
         const legalFormVersionPath = join(legalFormVersionFolderPath, `${ formVersion.id }.json`);
 
-        // Create the legal form versions folder if it doesn't exist so the legal form version record has a valid destination.
-        await mkdir(legalFormVersionFolderPath, { 'recursive': true });
+        // Create the folder if it doesn't exist
+        try {
+            // Check if the folder is available to the app.
+            await access(legalFormVersionFolderPath, constants.F_OK);
+        } catch (_error) {
+            // Create the folder structure if it doesn't exist.
+            await mkdir(legalFormVersionFolderPath, { 'recursive': true });
+        }
 
         // Write the legal form version record to disk.
         await writeFile(legalFormVersionPath, json.stringify(formVersion));
@@ -617,8 +650,14 @@ export class StorageEngine {
         /** Path to the legal form signature JSON file in persistent storage. */
         const signaturePath = join(signatureFolderPath, `${ storedSignature.id }.json`);
 
-        // Create the signatures folder if it doesn't exist so the signature record has a valid destination.
-        await mkdir(signatureFolderPath, { 'recursive': true });
+        // Create the folder if it doesn't exist
+        try {
+            // Check if the folder is available to the app.
+            await access(signatureFolderPath, constants.F_OK);
+        } catch (_error) {
+            // Create the folder structure if it doesn't exist.
+            await mkdir(signatureFolderPath, { 'recursive': true });
+        }
 
         // Write the signature record to disk.
         await writeFile(signaturePath, json.stringify(storedSignature));
