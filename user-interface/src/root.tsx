@@ -59,7 +59,7 @@ function RootContent(): React.ReactNode {
 
     // Render the core HTML with Fluent UI support available from the very root.
     return (
-        <html lang="en" className={ compiledStyles.html }>
+        <html lang="en" className={ compiledStyles.html } style={ { 'backgroundColor': selectedTheme.colorNeutralBackground1 } }>
             <head>
                 <title>ElHuff - Check In</title>
                 <meta charSet="utf-8" />
