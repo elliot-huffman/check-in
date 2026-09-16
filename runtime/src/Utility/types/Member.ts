@@ -9,7 +9,7 @@ interface EmergencyContact {
     /** Relationship of the emergency contact to the member. */
     'relationship': string;
     /** Phone number of the emergency contact. */
-    'phoneNumber': number | null;
+    'phoneNumber': string | null;
     /** Email address of the emergency contact. */
     'email': string & tags.Format<'email'> | null;
 }
@@ -22,22 +22,26 @@ export interface Member {
     'firstName': string;
     /** Last name of the member. */
     'lastName': string;
+    /** Birth date of the member. */
+    'birthDate': string & tags.Format<'date-time'>;
+    /** Gender of the member. */
+    'gender': string;
     /** Phone number of the member. */
-    'phoneNumber': number | null;
+    'phoneNumber': string | null;
     /** Email address of the member. */
     'email': string & tags.Format<'email'> | null;
     /** Home address of the member. */
     'homeAddress': {
         /** Street address of the member. */
         'streetAddress': string;
-        /** Postal code of the member's address. */
-        'postalCode': string;
         /** City of the member's address. */
         'city': string;
         /** State of the member's address. */
         'state': string;
         /** ZIP code of the member's address. */
-        'zipCode': string;
+        'postalCode': string;
+        /** Country of the member's address. */
+        'country': string;
     } | null;
     /** Accessibility needs of the member. */
     'accessibilityNeeds': {
