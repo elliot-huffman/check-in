@@ -3,9 +3,11 @@ import { type RouteConfig, index, route } from '@react-router/dev/routes';
 /** List of route configurations for the user interface to reference in the static HTML. */
 const pageList: RouteConfig = [
     index('./pages/Home.tsx'),
-    route('/About', './pages/About.tsx'),
     route('/Check-In', './pages/Check-In.tsx'),
-    route('/MemberManagement', './pages/MemberManagement.tsx'),
+    route('/Member/Create', './pages/Member/Create.tsx'),
+    route('/Member/Manage', './pages/Member/Manage.tsx'),
+    route('/Member/Import', './pages/Member/Import.tsx'),
+    route('/About', './pages/About.tsx'),
     route('*', './pages/404.tsx')
 ];
 

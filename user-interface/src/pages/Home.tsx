@@ -19,7 +19,7 @@ export default function Home(): React.ReactNode {
     function checkInNavigation(): void { void router('/Check-In'); }
 
     /** Navigates to the member management page while keeping state in memory. */
-    function memberManagerLandingNavigation(): void { void router('/MemberManagement'); }
+    function memberManagerLandingNavigation(): void { void router('/Member/Manage'); }
 
     // Render the home page
     return (
