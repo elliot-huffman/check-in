@@ -1,4 +1,4 @@
-import { ArrowSync20Regular, BarcodeScanner20Regular, Home20Regular, Info20Regular, PeopleSettings20Regular } from '@fluentui/react-icons';
+import { BarcodeScanner20Regular, Home20Regular, Info20Regular, PeopleSettings20Regular, PeopleSync20Regular, PersonAdd20Regular, Settings20Regular } from '@fluentui/react-icons';
 import { Layout, LayoutItem } from './LayoutSystem';
 import type { MenuItem, NavigationMenuUnifiedConfiguration } from '@/utility/types/components/NavigationMenu';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -79,21 +79,33 @@ export default function Template(props: TemplateProps): React.ReactNode {
                 'type': 'divider'
             },
             {
-                'destination': '/MemberManagement',
+                'destination': '/Member/Manage',
                 'icon': <PeopleSettings20Regular />,
-                'label': 'Add/Remove',
+                'label': 'Manage',
                 'type': 'item'
             } as MenuItem,
             {
-                'destination': '/MemberManagement/Sync',
-                'icon': <ArrowSync20Regular />,
-                'label': 'Sync',
+                'destination': '/Member/Create',
+                'icon': <PersonAdd20Regular />,
+                'label': 'Create',
+                'type': 'item'
+            } as MenuItem,
+            {
+                'destination': '/Member/Import',
+                'icon': <PeopleSync20Regular />,
+                'label': 'Import',
                 'type': 'item'
             } as MenuItem,
             {
                 'label': 'System',
                 'type': 'divider'
             },
+            {
+                'destination': '/Settings',
+                'icon': <Settings20Regular />,
+                'label': 'Settings',
+                'type': 'item'
+            } as MenuItem,
             {
                 'destination': '/About',
                 'icon': <Info20Regular />,
@@ -105,7 +117,7 @@ export default function Template(props: TemplateProps): React.ReactNode {
 
     // Rendered page wrapper
     return (
-        <Layout className={ compiledStyles.backgroundFix }>
+        <Layout>
             <TopBar ref={ topBarRef } navMenuToggle={ {
                 isMenuOpen,
                 setMenuOpen
