@@ -7,6 +7,7 @@ const pageList: RouteConfig = [
     route('/Member/Create', './pages/Member/Create.tsx'),
     route('/Member/Manage', './pages/Member/Manage.tsx'),
     route('/Member/Import', './pages/Member/Import.tsx'),
+    route('/Settings', './pages/Settings.tsx'),
     route('/About', './pages/About.tsx'),
     route('*', './pages/404.tsx')
 ];
