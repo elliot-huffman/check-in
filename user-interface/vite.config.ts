@@ -12,6 +12,7 @@ export default defineConfig(({ command }) => ({
     'plugins': [
         // eslint-disable-next-line new-cap
         UnpluginTypia(),
+
         // Ensure that when in test mode, the react router framework is not loaded, as it will cause issues with the test runner.
         !process.env['VITEST'] && reactRouter(),
 
