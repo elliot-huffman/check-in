@@ -14,7 +14,6 @@
     "removeComments": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "allowJs": true,
     "checkJs": true,
     "skipLibCheck": true,
     /* Security & quality. */
@@ -47,6 +46,11 @@
       }
     ]
   },
+  "include": [
+    "src/**/*",
+    "*.ts",
+    "*.js"
+  ],
   "exclude": [
     "bin/**/*",
     "node_modules/**/*"

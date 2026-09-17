@@ -1,8 +1,8 @@
 {
 	"folders": [
 		{
-			"name": "ElHuff - Check In",
-			"path": "."
+			"name": "Root",
+			"path": ".",
 		}
 	],
 	"settings": {
@@ -48,7 +48,8 @@
 			"renderable",
 			"typia"
 		],
-		"js/ts.tsdk.path": "node_modules\\typescript\\lib"
+		"js/ts.tsdk.path": "node_modules\\typescript\\lib",
+		"js/ts.preferences.includePackageJsonAutoImports": "off"
 	},
 	"extensions": {
 		"recommendations": [
