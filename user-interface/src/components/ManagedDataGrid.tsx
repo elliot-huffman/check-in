@@ -101,6 +101,9 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
                             case 'number':
                             case 'boolean':
                             case 'bigint':
+                                // If the data to render is a string and it is an ISO string, then render it in a human friendly format.
+                                if (equals<string & tags.Format<'date-time'>>(callbackResults)) { return <Text>{ new Date(callbackResults).toLocaleString() }</Text>; }
+
                                 // Handle string compatible types by rendering them as text.
                                 return <Text>{ callbackResults }</Text>;
                             case 'symbol':
