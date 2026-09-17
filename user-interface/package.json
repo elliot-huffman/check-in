@@ -79,7 +79,6 @@
         "@vitejs/plugin-react": "~6.1.1",
         "babel-plugin-react-compiler": "~1.0.0",
         "generate-license-file": "~4.2.5",
-        "jsdom": "~30.0.1",
         "ts-patch": "~4.0.1",
         "typescript": "~6.0.3",
         "vite": "~8.3.0",
