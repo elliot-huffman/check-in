@@ -250,7 +250,9 @@ export default function Page(): React.ReactNode {
                     <LayoutItem align="center" justify="center" grow>
                         <Button onClick={ newEmergencyContact } className={ compiledStyleList.itemSpacing }>Add Emergency Contact</Button>
                     </LayoutItem>
-                    <ManagedDataGrid items={ emergencyContactGridList } renderConfiguration={ emergencyContactGridRenderConfig } />
+                    <LayoutItem grow className={ compiledStyleList.tableRender }>
+                        <ManagedDataGrid items={ emergencyContactGridList } renderConfiguration={ emergencyContactGridRenderConfig } />
+                    </LayoutItem>
                 </LayoutItem>
                 <Divider appearance="strong" className={ compiledStyleList.sectionSpacing }>
                     <Subtitle2Stronger>Finalization</Subtitle2Stronger>

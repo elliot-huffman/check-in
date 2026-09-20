@@ -7,5 +7,6 @@ export const useStyleList = makeStyles({
     'sectionSpacing': {
         'marginBottom': '1.5em',
         'marginTop': '1.5em'
-    }
+    },
+    'tableRender': { 'overflowX': 'auto' }
 });
