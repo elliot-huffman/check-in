@@ -1,5 +1,5 @@
 import { Activity, useCallback, useState } from 'react';
-import { Button, Field, Input, Subtitle2Stronger, Switch, Textarea, Title1 } from '@fluentui/react-components';
+import { Button, Divider, Field, Input, Subtitle2Stronger, Switch, Textarea, Title1 } from '@fluentui/react-components';
 import { Layout, LayoutItem } from '@/components/LayoutSystem';
 import { DatePicker } from '@fluentui/react-datepicker-compat';
 import { ManagedDataGrid } from '@/components/ManagedDataGrid';
@@ -7,12 +7,16 @@ import type { ManagedDataGridConfiguration } from '@/utility/types/components/Ma
 import type { Member } from '../../../../runtime/src/Utility/types/Member';
 import { generateValidationResult } from '@/utility/validator';
 import { isPhoneNumber } from '@/utility/guards/phoneNumber';
+import { useStyleList } from '@/styles/pages/Member/Create';
 
 /**
  * Page that is used to create a new member.
  * @returns Rendered member creation page.
  */
 export default function Page(): React.ReactNode {
+    /** CSS Styles compiled for the Member - Create page. */
+    const compiledStyleList = useStyleList();
+
     // React state used to store the first name of the new member.
     const [firstName, setFirstName] = useState('');
 
@@ -164,88 +168,95 @@ export default function Page(): React.ReactNode {
 
     // Render the user creation page.
     return (
-        <Layout>
+        <Layout direction="column">
+            <LayoutItem invertParentDirection grow><Title1>Create a new member</Title1></LayoutItem>
             <LayoutItem>
-                <Title1>Create a new member</Title1>
-            </LayoutItem>
-            <Layout direction="column">
                 <LayoutItem>
-                    <Field label="First Name" required>
-                        <Input placeholder="Joe" appearance="underline" value={ firstName } onChange={ (_event, data) => { setFirstName(data.value); } } />
-                    </Field>
-                    <Field label="Last Name" required>
-                        <Input placeholder="Smith" appearance="underline" value={ lastName } onChange={ (_event, data) => { setLastName(data.value); } } />
-                    </Field>
-                    <Field label="Phone Number" validationState={ phoneNumberValidation.state } validationMessage={ phoneNumberValidation.message }>
-                        <Input placeholder="+1 123-456-7890" appearance="underline" value={ phoneNumber } onChange={ (_event, data) => { setPhoneNumber(data.value); } } />
-                    </Field>
-                    <Field label="eMail Address" >
-                        <Input placeholder="joe@example.com" appearance="underline" value={ emailAddress } onChange={ (_event, data) => { setEmailAddress(data.value); } } />
-                    </Field>
-                    <Field label="Date of Birth" required>
-                        <DatePicker placeholder="Select birth day" value={ dateOfBirth ?? null } onSelectDate={ (selectedDate) => { setDateOfBirth(selectedDate); } } />
-                    </Field>
-                    <Field label="Gender" >
-                        <Input placeholder="Male/Female..." appearance="underline" value={ gender } onChange={ (_event, data) => { setGender(data.value); } } />
-                    </Field>
-                </LayoutItem>
-                <LayoutItem>
+                    <Divider appearance="strong" className={ compiledStyleList.sectionSpacing }>
+                        <Subtitle2Stronger>General Information</Subtitle2Stronger>
+                    </Divider>
+                    <LayoutItem invertParentDirection align="center" justify="center">
+                        <Field label="First Name" required className={ compiledStyleList.itemSpacing }>
+                            <Input placeholder="Joe" appearance="underline" value={ firstName } onChange={ (_event, data) => { setFirstName(data.value); } } />
+                        </Field>
+                        <Field label="Last Name" required className={ compiledStyleList.itemSpacing }>
+                            <Input placeholder="Smith" appearance="underline" value={ lastName } onChange={ (_event, data) => { setLastName(data.value); } } />
+                        </Field>
+                        <Field label="Phone Number" validationState={ phoneNumberValidation.state } validationMessage={ phoneNumberValidation.message } className={ compiledStyleList.itemSpacing }>
+                            <Input placeholder="+1 123-456-7890" appearance="underline" value={ phoneNumber } onChange={ (_event, data) => { setPhoneNumber(data.value); } } />
+                        </Field>
+                        <Field label="eMail Address" className={ compiledStyleList.itemSpacing }>
+                            <Input placeholder="joe@example.com" appearance="underline" value={ emailAddress } onChange={ (_event, data) => { setEmailAddress(data.value); } } />
+                        </Field>
+                        <Field label="Date of Birth" required className={ compiledStyleList.itemSpacing }>
+                            <DatePicker placeholder="Select birth day" value={ dateOfBirth ?? null } onSelectDate={ (selectedDate) => { setDateOfBirth(selectedDate); } } />
+                        </Field>
+                        <Field label="Gender" className={ compiledStyleList.itemSpacing }>
+                            <Input placeholder="Male/Female..." appearance="underline" value={ gender } onChange={ (_event, data) => { setGender(data.value); } } />
+                        </Field>
+                    </LayoutItem>
+                    <Divider appearance="strong" className={ compiledStyleList.sectionSpacing }>
+                        <Subtitle2Stronger>Addresses</Subtitle2Stronger>
+                    </Divider>
                     <Switch label="Home Address" checked={ homeAddressSectionVisibility } onChange={ (_event, data) => { setHomeAddressSectionVisibility(data.checked); } } />
-                    <Activity mode={ homeAddressSectionVisibility ? 'visible' : 'hidden' }>
-                        <Field label="Street Address" required>
-                            <Input placeholder="123 Sesame Street" appearance="underline" value={ streetAddress } onChange={ (_event, data) => { setStreetAddress(data.value); } } />
+                    <LayoutItem invertParentDirection align="center" justify="center">
+                        <Activity mode={ homeAddressSectionVisibility ? 'visible' : 'hidden' }>
+                            <Field label="Street Address" required className={ compiledStyleList.itemSpacing }>
+                                <Input placeholder="123 Sesame Street" appearance="underline" value={ streetAddress } onChange={ (_event, data) => { setStreetAddress(data.value); } } />
+                            </Field>
+                            <Field label="City" required className={ compiledStyleList.itemSpacing }>
+                                <Input placeholder="New York" appearance="underline" value={ city } onChange={ (_event, data) => { setCity(data.value); } } />
+                            </Field>
+                            <Field label="State" required className={ compiledStyleList.itemSpacing }>
+                                <Input placeholder="New York" appearance="underline" value={ state } onChange={ (_event, data) => { setState(data.value); } } />
+                            </Field>
+                            <Field label="Postal Code" required className={ compiledStyleList.itemSpacing }>
+                                <Input placeholder="10123" appearance="underline" value={ postalCode } onChange={ (_event, data) => { setPostalCode(data.value); } } />
+                            </Field>
+                            <Field label="Country" required className={ compiledStyleList.itemSpacing }>
+                                <Input placeholder="United States" appearance="underline" value={ country } onChange={ (_event, data) => { setCountry(data.value); } } />
+                            </Field>
+                        </Activity>
+                    </LayoutItem>
+                    <Divider appearance="strong" className={ compiledStyleList.sectionSpacing }>
+                        <Subtitle2Stronger>Accessibility Needs</Subtitle2Stronger>
+                    </Divider>
+                    <LayoutItem grow justify="center">
+                        <Switch label="Wheelchair" checked={ wheelchair } onChange={ (_event, data) => { setWheelchair(data.checked); } } />
+                        <Switch label="Hearing Impairment" checked={ hearingImpairment } onChange={ (_event, data) => { setHearingImpairment(data.checked); } } />
+                        <Switch label="Visual Impairment" checked={ visualImpairment } onChange={ (_event, data) => { setVisualImpairment(data.checked); } } />
+                        <Switch label="Mobility Impairment" checked={ mobilityImpairment } onChange={ (_event, data) => { setMobilityImpairment(data.checked); } } />
+                        <Field label="Other Accessibility Requirement" className={ compiledStyleList.itemSpacing }>
+                            <Textarea placeholder="If required..." value={ otherAccessibilityRequirement } onChange={ (_event, data) => { setOtherAccessibilityRequirement(data.value); } } />
                         </Field>
-                        <Field label="City" required>
-                            <Input placeholder="New York" appearance="underline" value={ city } onChange={ (_event, data) => { setCity(data.value); } } />
-                        </Field>
-                        <Field label="State" required>
-                            <Input placeholder="New York" appearance="underline" value={ state } onChange={ (_event, data) => { setState(data.value); } } />
-                        </Field>
-                        <Field label="Postal Code" required>
-                            <Input placeholder="10123" appearance="underline" value={ postalCode } onChange={ (_event, data) => { setPostalCode(data.value); } } />
-                        </Field>
-                        <Field label="Country" required>
-                            <Input placeholder="United States" appearance="underline" value={ country } onChange={ (_event, data) => { setCountry(data.value); } } />
-                        </Field>
-                    </Activity>
+                    </LayoutItem>
                 </LayoutItem>
-                <LayoutItem>
-                    <Subtitle2Stronger>Accessibility Needs</Subtitle2Stronger>
-                    <br />
-                    <Switch label="Wheelchair" checked={ wheelchair } onChange={ (_event, data) => { setWheelchair(data.checked); } } />
-                    <Switch label="Hearing Impairment" checked={ hearingImpairment } onChange={ (_event, data) => { setHearingImpairment(data.checked); } } />
-                    <Switch label="Visual Impairment" checked={ visualImpairment } onChange={ (_event, data) => { setVisualImpairment(data.checked); } } />
-                    <Switch label="Mobility Impairment" checked={ mobilityImpairment } onChange={ (_event, data) => { setMobilityImpairment(data.checked); } } />
-                    <Field label="Other Accessibility Requirement">
-                        <Textarea placeholder="If required..." value={ otherAccessibilityRequirement } onChange={ (_event, data) => { setOtherAccessibilityRequirement(data.value); } } />
-                    </Field>
-                </LayoutItem>
-            </Layout>
-            <LayoutItem>
-                <Subtitle2Stronger>Emergency Contact List</Subtitle2Stronger>
-                <LayoutItem invertParentDirection>
-                    <Field label="Name" required>
+                <Divider appearance="strong" className={ compiledStyleList.sectionSpacing }>
+                    <Subtitle2Stronger>Emergency Contact List</Subtitle2Stronger>
+                </Divider>
+                <LayoutItem align="center" justify="center">
+                    <Field label="Name" required className={ compiledStyleList.itemSpacing }>
                         <Input placeholder="Joe Smith" appearance="underline" value={ emergencyContactName } onChange={ (_event, data) => { setEmergencyContactName(data.value); } } />
                     </Field>
-                    <Field label="Relationship" required>
+                    <Field label="Relationship" required className={ compiledStyleList.itemSpacing }>
                         <Input placeholder="Spouse" appearance="underline" value={ emergencyContactRelationship } onChange={ (_event, data) => { setEmergencyContactRelationship(data.value); } } />
                     </Field>
-                    <Field label="Phone Number" validationState={ emergencyContactPhoneNumberValidation.state } validationMessage={ emergencyContactPhoneNumberValidation.message }>
+                    <Field label="Phone Number" validationState={ emergencyContactPhoneNumberValidation.state } validationMessage={ emergencyContactPhoneNumberValidation.message } className={ compiledStyleList.itemSpacing }>
                         <Input placeholder="+1 123-456-7890" appearance="underline" value={ emergencyContactPhoneNumber } onChange={ (_event, data) => { setEmergencyContactPhoneNumber(data.value); } } />
                     </Field>
-                    <Field label="eMail Address" >
+                    <Field label="eMail Address" className={ compiledStyleList.itemSpacing }>
                         <Input placeholder="joe@example.com" appearance="underline" value={ emergencyContactEmailAddress } onChange={ (_event, data) => { setEmergencyContactEmailAddress(data.value); } } />
                     </Field>
+                    <LayoutItem align="center" justify="center" grow>
+                        <Button onClick={ newEmergencyContact } className={ compiledStyleList.itemSpacing }>Add Emergency Contact</Button>
+                    </LayoutItem>
+                    <ManagedDataGrid items={ emergencyContactGridList } renderConfiguration={ emergencyContactGridRenderConfig } />
                 </LayoutItem>
-                <LayoutItem>
-                    <Button onClick={ newEmergencyContact }>Add Emergency Contact</Button>
-                </LayoutItem>
-                <ManagedDataGrid items={ emergencyContactGridList } renderConfiguration={ emergencyContactGridRenderConfig } />
+                <Divider appearance="strong" className={ compiledStyleList.sectionSpacing }>
+                    <Subtitle2Stronger>Finalization</Subtitle2Stronger>
+                </Divider>
+                <LayoutItem align="center" justify="center" className={ compiledStyleList.bottomOfPage }><Button appearance="primary" onClick={ () => void newMember() }>Create</Button></LayoutItem>
             </LayoutItem>
-            <br />
-            <LayoutItem>
-                <Button appearance="primary" onClick={ () => void newMember() }>Create</Button>
-            </LayoutItem>
-        </Layout>
+        </Layout >
     );
 }
