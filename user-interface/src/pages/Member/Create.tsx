@@ -1,10 +1,11 @@
-import { Activity, useCallback, useState } from 'react';
+import { Activity, useCallback, useContext, useState } from 'react';
 import { Button, Divider, Field, Input, Subtitle2Stronger, Switch, Textarea, Title1 } from '@fluentui/react-components';
 import { Layout, LayoutItem } from '@/components/LayoutSystem';
 import { DatePicker } from '@fluentui/react-datepicker-compat';
 import { ManagedDataGrid } from '@/components/ManagedDataGrid';
 import type { ManagedDataGridConfiguration } from '@/utility/types/components/ManagedDataGrid';
 import type { Member } from '../../../../runtime/src/Utility/types/Member';
+import { NotificationManagerContext } from '@/components/NotificationManagerContext';
 import { generateValidationResult } from '@/utility/validator';
 import { isPhoneNumber } from '@/utility/guards/phoneNumber';
 import { useStyleList } from '@/styles/pages/Member/Create';
@@ -16,6 +17,9 @@ import { useStyleList } from '@/styles/pages/Member/Create';
 export default function Page(): React.ReactNode {
     /** CSS Styles compiled for the Member - Create page. */
     const compiledStyleList = useStyleList();
+
+    /** Instance of the notification manager. */
+    const notificationManager = useContext(NotificationManagerContext);
 
     // React state used to store the first name of the new member.
     const [firstName, setFirstName] = useState('');
@@ -89,39 +93,106 @@ export default function Page(): React.ReactNode {
     // React state used to store the state of the new member.
     const [emergencyContactList, setEmergencyContactList] = useState<Member['emergencyContactList']>([]);
 
+    // React state used to store whether the new member has a wheelchair requirement.
+    const [clearOnComplete, setClearOnComplete] = useState(false);
+
     /** Creates a new member based on the input provided by the end user. */
     const newMember = useCallback(async (): Promise<void> => {
-        // Create a new member using the provided input values.
-        await window.electronApi.MemberEngine.newMember({
-            'accessibilityNeeds': {
-                hearingImpairment,
-                mobilityImpairment,
-                'other': otherAccessibilityRequirement !== '' ? otherAccessibilityRequirement : null,
-                visualImpairment,
-                wheelchair
-            },
-            'birthDate': dateOfBirth ? dateOfBirth.toISOString() : '',
-            'checkInLogList': [],
-            'checkOutLogList': [],
-            'email': emailAddress,
-            emergencyContactList,
-            firstName,
-            gender,
-            'homeAddress': homeAddressSectionVisibility
-                ? {
-                    city,
-                    country,
-                    postalCode,
-                    state,
-                    streetAddress
-                }
-                : null,
-            'lastLogEntry': null,
-            lastName,
-            phoneNumber,
-            'signatureList': []
+        /** Object ID of the notification for creating a new member. */
+        const notificationId = notificationManager.newNotification({
+            'content': 'Please wait while the new member is being created...',
+            'displayName': 'Creating New Member',
+            'type': 'info'
         });
-    }, [city, country, dateOfBirth, emailAddress, emergencyContactList, firstName, gender, hearingImpairment, homeAddressSectionVisibility, lastName, mobilityImpairment, otherAccessibilityRequirement, phoneNumber, postalCode, state, streetAddress, visualImpairment, wheelchair]);
+
+        try {
+            // Create a new member using the provided input values.
+            await window.electronApi.MemberEngine.newMember({
+                'accessibilityNeeds': {
+                    hearingImpairment,
+                    mobilityImpairment,
+                    'other': otherAccessibilityRequirement !== '' ? otherAccessibilityRequirement : null,
+                    visualImpairment,
+                    wheelchair
+                },
+                'birthDate': dateOfBirth ? dateOfBirth.toISOString() : '',
+                'checkInLogList': [],
+                'checkOutLogList': [],
+                'email': emailAddress,
+                emergencyContactList,
+                firstName,
+                gender,
+                'homeAddress': homeAddressSectionVisibility
+                    ? {
+                        city,
+                        country,
+                        postalCode,
+                        state,
+                        streetAddress
+                    }
+                    : null,
+                'lastLogEntry': null,
+                lastName,
+                phoneNumber,
+                'signatureList': []
+            });
+
+            // Clear all the fields if the end user wants the form blank
+            if (clearOnComplete) {
+                setCity('');
+
+                setCountry('');
+
+                setDateOfBirth(null);
+
+                setEmailAddress('');
+
+                setEmergencyContactList([]);
+
+                setFirstName('');
+
+                setGender('');
+
+                setHearingImpairment(false);
+
+                setHomeAddressSectionVisibility(false);
+
+                setLastName('');
+
+                setMobilityImpairment(false);
+
+                setOtherAccessibilityRequirement('');
+
+                setPhoneNumber('');
+
+                setPostalCode('');
+
+                setState('');
+
+                setStreetAddress('');
+
+                setVisualImpairment(false);
+
+                setWheelchair(false);
+            }
+
+            // Indicate that the new member has been successfully created.
+            notificationManager.setNotification(notificationId, {
+                'content': 'The new member has been successfully created!',
+                'displayName': 'New Member Created',
+                'timeout': 10000,
+                'type': 'success'
+            });
+        } catch (_error) {
+            // Indicate that the new member creation has failed.
+            notificationManager.setNotification(notificationId, {
+                'content': 'Failed to create the new member.',
+                'displayName': 'New Member Creation Failed',
+                'timeout': 10000,
+                'type': 'error'
+            });
+        }
+    }, [city, clearOnComplete, country, dateOfBirth, emailAddress, emergencyContactList, firstName, gender, hearingImpairment, homeAddressSectionVisibility, lastName, mobilityImpairment, notificationManager, otherAccessibilityRequirement, phoneNumber, postalCode, state, streetAddress, visualImpairment, wheelchair]);
 
     /** Adds a new emergency contact to the list of emergency contacts for the member. */
     function newEmergencyContact(): void {
@@ -257,7 +328,10 @@ export default function Page(): React.ReactNode {
                 <Divider appearance="strong" className={ compiledStyleList.sectionSpacing }>
                     <Subtitle2Stronger>Finalization</Subtitle2Stronger>
                 </Divider>
-                <LayoutItem align="center" justify="center" className={ compiledStyleList.bottomOfPage }><Button appearance="primary" onClick={ () => void newMember() }>Create</Button></LayoutItem>
+                <LayoutItem align="center" justify="center" className={ compiledStyleList.bottomOfPage } invertParentDirection>
+                    <Switch label="Clear Form On Create" checked={ clearOnComplete } onChange={ (_event, data) => { setClearOnComplete(data.checked); } } />
+                    <Button appearance="primary" onClick={ () => void newMember() }>Create</Button>
+                </LayoutItem>
             </LayoutItem>
         </Layout >
     );
