@@ -110,13 +110,13 @@ export function Layout(props: LayoutProps): React.ReactNode {
 
     // Render the layout container
     return (
-        <LayoutDirectionContext.Provider value={ direction }>
+        <LayoutDirectionContext value={ direction }>
             {/* eslint-disable-next-line react-hooks/refs */ }
             <div ref={ props.ref } className={ layoutClassName }>
                 {/* eslint-disable-next-line react-hooks/refs */ }
                 { props.children }
             </div>
-        </LayoutDirectionContext.Provider>
+        </LayoutDirectionContext>
     );
 }
 
@@ -227,12 +227,12 @@ export function LayoutItem(props: LayoutItemProps): React.ReactNode {
 
     // Render the layout item
     return (
-        <LayoutDirectionContext.Provider value={ childDirection }>
+        <LayoutDirectionContext value={ childDirection }>
             {/* eslint-disable-next-line react-hooks/refs */ }
             <div ref={ props.ref } className={ layoutItemClassName }>
                 {/* eslint-disable-next-line react-hooks/refs */ }
                 { props.children }
             </div>
-        </LayoutDirectionContext.Provider>
+        </LayoutDirectionContext>
     );
 }
