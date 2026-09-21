@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/refs */
+import { AlertFilled, AlertRegular, NavigationRegular } from '@fluentui/react-icons';
+import { Button, ToggleButton } from '@fluentui/react-components';
 import { Layout, LayoutItem } from './LayoutSystem';
 import { AccountManager } from './AccountManager';
 import { Activity } from 'react';
-import { Button } from '@fluentui/react-components';
-import { NavigationRegular } from '@fluentui/react-icons';
 import { useNavigate } from 'react-router';
 import { useStyleList } from '@/styles/elements/TopBar';
 
@@ -15,6 +15,13 @@ interface TopBarProps {
         'isMenuOpen': boolean;
         /** Function to set the navigation menu's open state. */
         'setMenuOpen': (isOpen: boolean) => void;
+    };
+    /** Object containing notification center toggle state and function. */
+    'notificationCenterToggle'?: {
+        /** Indicates whether the notification center is currently open. */
+        'isOpen': boolean;
+        /** Function to set the notification center's open state. */
+        'setOpen': (isOpen: boolean) => void;
     };
     /** Reference object for the top bar's root element. */
     'ref'?: React.Ref<HTMLDivElement> | undefined;
@@ -32,6 +39,15 @@ export function TopBar(props: TopBarProps): React.ReactNode {
     /** Router used to navigate back to the main page. */
     const router = useNavigate();
 
+    /** Changes the visibility of the notification center. Closes the nav menu if it is open to ensure that only one panel is visible at a time. */
+    function toggleNotificationManager(): void {
+        // Close the main navigation menu before opening the notification center.
+        props.navMenuToggle?.setMenuOpen(false);
+
+        // Toggle the notification center's open state.
+        props.notificationCenterToggle?.setOpen(!props.notificationCenterToggle.isOpen);
+    }
+
     // Render the top bar
     return (
         <Layout className={ compiledStyles.default } direction="column" justify="space-between" ref={ props.ref }>
@@ -41,7 +57,12 @@ export function TopBar(props: TopBarProps): React.ReactNode {
                 </Activity>
                 <Button appearance="transparent" size="large" onClick={ (): void => { void router('/'); } }>Check In Manager</Button>
             </LayoutItem>
-            <AccountManager />
-        </Layout>
+            <LayoutItem invertParentDirection>
+                <Activity mode={ props.notificationCenterToggle ? 'visible' : 'hidden' }>
+                    <ToggleButton appearance="subtle" checked={ props.notificationCenterToggle?.isOpen ?? false } icon={ props.notificationCenterToggle?.isOpen ? <AlertFilled /> : <AlertRegular /> } onClick={ toggleNotificationManager } />
+                </Activity>
+                <AccountManager />
+            </LayoutItem>
+        </Layout >
     );
 }

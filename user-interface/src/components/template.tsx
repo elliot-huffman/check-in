@@ -3,6 +3,7 @@ import { Layout, LayoutItem } from './LayoutSystem';
 import type { MenuItem, NavigationMenuUnifiedConfiguration } from '@/utility/types/components/NavigationMenu';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { NavigationMenu } from './NavigationMenu';
+import { NotificationManager } from './NotificationManager';
 import { TopBar } from './TopBar';
 import { useStyleList } from '@/styles/globalTemplate';
 
@@ -23,6 +24,9 @@ export default function Template(props: TemplateProps): React.ReactNode {
 
     // Local state that controls the state of the navigation menu's visibility
     const [isMenuOpen, setMenuOpen] = useState(true);
+
+    // Local state that controls the state of the notification center's visibility
+    const [isNotificationCenterOpen, setNotificationCenterOpen] = useState(false);
 
     /** Instance of the Top Bar's HTML element, used for calculating the content container's height. */
     const topBarRef = useRef<HTMLDivElement>(null);
@@ -118,15 +122,23 @@ export default function Template(props: TemplateProps): React.ReactNode {
     // Rendered page wrapper
     return (
         <Layout>
-            <TopBar ref={ topBarRef } navMenuToggle={ {
-                isMenuOpen,
-                setMenuOpen
-            } } />
+            <TopBar
+                ref={ topBarRef }
+                navMenuToggle={ {
+                    isMenuOpen,
+                    setMenuOpen
+                } }
+                notificationCenterToggle={ {
+                    'isOpen': isNotificationCenterOpen,
+                    'setOpen': setNotificationCenterOpen
+                } } />
             <Layout direction="column" noWrap ref={ contentContainerRef }>
                 <NavigationMenu open={ isMenuOpen } setMenuOpenState={ setMenuOpen } menuLayout={ navigationMenuConfig } />
-                <LayoutItem className={ compiledStyles.pageContent } >
-                    { props.children }
-                </LayoutItem>
+                <NotificationManager open={ isNotificationCenterOpen }>
+                    <LayoutItem className={ compiledStyles.pageContent } >
+                        { props.children }
+                    </LayoutItem>
+                </NotificationManager>
             </Layout>
         </Layout>
     );
