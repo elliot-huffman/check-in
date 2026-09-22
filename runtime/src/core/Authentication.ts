@@ -74,6 +74,9 @@ export class AuthenticationEngine {
      * It does not determine what the caller is allowed to do. Authorization must be evaluated separately, typically by calling
      * `getAccessTokenAuthzData()` only after this method returns `true`.
      *
+     * This can validate access tokens issued for multiple client IDs by providing a list of expected application IDs.
+     * This can't check multiple specified tenants at once; the tenant must still be specified (single tenant mode) or inferred from the token (multi-tenant mode).
+     *
      * Validation flow:
      * 1. Validates the function inputs and safely decodes the JWT.
      * 2. Rejects malformed tokens, tokens without a `kid`, and tokens that do not match the expected Entra access-token claim shape.
@@ -85,7 +88,7 @@ export class AuthenticationEngine {
      * 6. Downloads the tenant's OpenID configuration from Microsoft, using the token `ver` claim to select the v1.0 or v2.0 metadata endpoint.
      * 7. Requires the token `iss` claim to exactly match the Microsoft-provided issuer from that metadata.
      * 8. Downloads the tenant signing keys from the metadata JWKS endpoint, scoped to the supplied `clientId` via the `appid` query parameter.
-     * 9. Selects the signing key whose `kid` matches the JWT header and verifies the `RS256` signature using the Microsoft certificate chain.
+     * 9. Selects the Microsoft-published JWK whose `kid` matches the protected header and verifies the RS256 signature using the public key contained in that JWK.
      * 10. Validates time-based claims (`nbf` and `exp`), the audience claim (`aud`), and the tenant restriction.
      *
      * This method is intentionally fail-closed. Any parsing error, metadata retrieval failure, signing-key mismatch, signature verification failure, or claim mismatch results in `false` instead of an exception.
@@ -98,12 +101,12 @@ export class AuthenticationEngine {
      * - Do not parse claims from an un-validated token and then make security decisions from them. Validate first, then extract authorization data.
      * - Because this method fetches Microsoft metadata and signing keys, transient network or service failures return `false`. Do not respond to those failures by bypassing validation.
      * @param accessToken JWT access token to validate from Entra ID.
-     * @param clientId Application ID of the API or app resource that should appear in the token `aud` claim.
+     * @param clientIdList List of application IDs of the API or app resource that should appear in the token `aud` claim.
      * @param tenantId Tenant restriction to enforce. Pass a specific tenant ID for single-tenant validation, or `NULL_UUID` (`00000000-0000-0000-0000-000000000000`) to explicitly allow any tenant and validate against the tenant named in the token issuer.
      * @returns `true` when the token passes all checks, otherwise `false` if any failure occurs.
      * @example
      * const authEngine = await AuthenticationEngine.getInstance();
-     * const isValid = await authEngine.confirmAccessToken(bearerToken, settings.clientId, settings.tenantId);
+     * const isValid = await authEngine.confirmAccessToken(bearerToken, [settings.clientId], settings.tenantId);
      *
      * if (!isValid) { throw new Error('Access token validation failed.'); }
      *
@@ -115,21 +118,21 @@ export class AuthenticationEngine {
      * const authEngine = await AuthenticationEngine.getInstance();
      *
      * // Explicit multi-tenant validation: accept any tenant that issued a valid token for this app.
-     * const isValid = await authEngine.confirmAccessToken(bearerToken, settings.clientId, NULL_UUID);
+     * const isValid = await authEngine.confirmAccessToken(bearerToken, [settings.clientId], NULL_UUID);
      *
      * if (!isValid) { return false; }
      *
      * const authz = authEngine.getAccessTokenAuthzData(bearerToken);
      * console.log(`Authenticated subject ${ authz.subjectId } from tenant ${ authz.tenantId }`);
      */
-    public async confirmAccessToken(accessToken: string, clientId: string & tags.Format<'uuid'>, tenantId: string & tags.Format<'uuid'>): Promise<boolean> {
+    public async confirmAccessToken(accessToken: string, clientIdList: (string & tags.Format<'uuid'>)[], tenantId: string & tags.Format<'uuid'>): Promise<boolean> {
         // #region Input Validation
 
         // If any input validation fails, return false instead of throwing
         try {
             assertGuardEquals(accessToken);
 
-            assertGuardEquals(clientId);
+            assertGuardEquals(clientIdList);
 
             assertGuardEquals(tenantId);
         } catch (_error) { return false; }
@@ -151,6 +154,9 @@ export class AuthenticationEngine {
 
         // Prevent ID tokens from being validated by accident
         if (tokenComponents.payload.nonce) { return false; }
+
+        // If the client ID from the token's audience claim doesn't match any of the client IDs configured for validation, then the token is not valid for this app
+        if (!clientIdList.includes(tokenComponents.payload.aud)) { return false; }
         // #endregion Input Validation
 
         // #region Cryptographic Validation
@@ -169,7 +175,7 @@ export class AuthenticationEngine {
          * If a tenant ID is provided to in the function parameters, uses that one instead and ignores the token's tenant ID.
          * This value can be trusted as it is from Microsoft.
          */
-        let openIdConfig: OpenIdConfiguration | undefined = void 0;
+        let openIdConfig: OpenIdConfiguration | undefined;
 
         // Gracefully attempt config retrieval
         try { openIdConfig = await this.#getTenantConfig(computedTenantId, tokenComponents.payload.ver === '2.0' ? '2.0' : '1.0'); } catch (_error) { return false; }
@@ -181,10 +187,12 @@ export class AuthenticationEngine {
         if (tokenComponents.payload.iss !== openIdConfig.issuer) { return false; }
 
         /** Signing keys that MSFT has specified are valid for access tokens issued to this tenant's app. */
-        let signingKeyList: JwksKeySet = { 'keys': [] };
+        const signingKeyList: JwksKeySet = { 'keys': [] };
+
+        // Attempt custom signing key retrieval for the tenant's app and if unable to retrieve, the token is not valid
+        try { signingKeyList.keys.push(...(await this.#getTenantSigningKeys(openIdConfig, tokenComponents.payload.aud)).keys); } catch (_error) { return false; }
 
         // Gracefully attempt signing key retrieval
-        try { signingKeyList = await this.#getTenantSigningKeys(openIdConfig, clientId); } catch (_error) { return false; }
 
         /** Key ID that matches the token header's key ID. Undefined if no matching key is found. */
         const selectedKey = signingKeyList.keys.find((publicKey) => publicKey.kid === tokenComponents.header.kid);
@@ -216,9 +224,6 @@ export class AuthenticationEngine {
 
         // If the current time is after the expiresAt claim, the token is no longer valid
         if (now > expiresAt) { return false; }
-
-        // If the client ID from the token's audience claim doesn't match the client ID configured for validation, then the token is not valid for this app
-        if (clientId !== tokenComponents.payload.aud) { return false; }
 
         // If a tenant ID was provided for validation and the tenant ID from the token doesn't match, then the token is not valid for the expected tenant
         if (tenantId !== NULL_UUID && tokenTenantId !== tenantId) { return false; }
