@@ -71,7 +71,7 @@ export function NotificationManager(props: ManagedNotificationProps): React.Reac
         };
 
         // Render the toast notification using the toast controller.
-        toastController.dispatchToast(<Toast key={ computedNotification.id }>
+        toastController.dispatchToast(<Toast appearance="inverted" key={ computedNotification.id }>
             <ToastTitle>{ config.displayName }</ToastTitle>
             <ToastBody>{ config.content }</ToastBody>
         </Toast>, toasterOptionsPayload);
@@ -113,7 +113,7 @@ export function NotificationManager(props: ManagedNotificationProps): React.Reac
         /** Set of options to update the toast notification in the toast controller. */
         const toasterUpdatePayload: ToastUpdateOptions = {
             'content':
-                <Toast key={ id }>
+                <Toast appearance="inverted" key={ id }>
                     <ToastTitle>{ newItem.displayName }</ToastTitle>
                     <ToastBody>{ newItem.content }</ToastBody>
                 </Toast>,
