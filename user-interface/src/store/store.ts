@@ -1,8 +1,8 @@
-import { checkInPageSlice } from './components/pages/checkIn';
+import { checkInPageSlice } from './slices/pages/checkIn';
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query/react';
-import { themeProviderSlice } from './components/themeProvider';
-import { userDataSlice } from './components/elements/userData';
+import { themeProviderSlice } from './slices/themeProvider';
+import { userDataSlice } from './slices/elements/userData';
 
 /** Global metadata store to be used across all pages in the same browser memory instance. */
 export const store = configureStore({

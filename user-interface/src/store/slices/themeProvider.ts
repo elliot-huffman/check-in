@@ -1,7 +1,6 @@
 import { type PayloadAction, createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../store';
 
-
 /** Structure of the slice's state. */
 interface ThemeProviderState {
     /** Flag that indicates if the current theme is light or dark. */
@@ -18,6 +17,11 @@ export const themeProviderSlice = createSlice({
     initialState,
     'name': 'Theme Provider',
     'reducers': {
+        /**
+         * Sets the current theme mode in the global metadata store.
+         * @param state Snapshot of the current slice state.
+         * @param action Action containing the new theme mode to set.
+         */
         'setTheme': (state, action: PayloadAction<ThemeProviderState['themeMode']>) => { state.themeMode = action.payload; }
     }
 });

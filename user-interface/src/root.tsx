@@ -2,7 +2,7 @@ import { FluentProvider, webDarkTheme, webLightTheme } from '@fluentui/react-com
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { Suspense, useCallback, useEffect, useMemo } from 'react';
-import { setTheme, themeModeSelector } from '@/store/components/themeProvider';
+import { setTheme, themeModeSelector } from '@/store/slices/themeProvider';
 import Template from '@/components/template';
 import { store } from '@/store/store';
 import { useStyleList } from '@/styles/root';

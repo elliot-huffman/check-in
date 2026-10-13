@@ -1,5 +1,5 @@
 import { Button, Persona } from '@fluentui/react-components';
-import { setUserData, userDataSelector } from '@/store/components/elements/userData';
+import { setUserData, userDataSelector } from '@/store/slices/elements/userData';
 import { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import type { UserData } from '@/utility/types/UserData';

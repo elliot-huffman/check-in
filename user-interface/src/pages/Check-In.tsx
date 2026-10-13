@@ -1,7 +1,7 @@
 import { Activity, type ChangeEvent, useState } from 'react';
 import { Button, Input, type InputOnChangeData, Text, Title1 } from '@fluentui/react-components';
 import { Layout, LayoutItem } from '@/components/LayoutSystem';
-import { checkInInputSelector, setInputValue } from '@/store/components/pages/checkIn';
+import { checkInInputSelector, setInputValue } from '@/store/slices/pages/checkIn';
 import { useDispatch, useSelector } from 'react-redux';
 import { useStyleList } from '@/styles/pages/CheckIn';
 
