@@ -1,79 +1,75 @@
 {
-  "compilerOptions": {
-    /* Language and output. */
-    "target": "es2025",
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ES2025"
-    ],
-    "types": [
-      "node",
-      "vite/client"
-    ],
-    "jsx": "react-jsx",
-    "incremental": true,
-    "rootDirs": [
-      ".",
-      "./.react-router/types"
-    ],
-    /* Import & Export. */
-    "module": "es2022",
-    "esModuleInterop": true,
-    "moduleResolution": "bundler",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@/public/*": [
-        "./public/*"
-      ]
+    "compilerOptions": {
+        /* Language and output. */
+        "target": "es2025",
+        "lib": [
+            "DOM",
+            "DOM.Iterable",
+            "ES2025"
+        ],
+        "types": [
+            "node",
+            "vite/client"
+        ],
+        "jsx": "react-jsx",
+        "incremental": true,
+        "rootDirs": [
+            ".",
+            "./.react-router/types"
+        ],
+        /* Import & Export. */
+        "module": "es2022",
+        "esModuleInterop": true,
+        "moduleResolution": "bundler",
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ],
+            "@/public/*": [
+                "./public/*"
+            ]
+        },
+        "removeComments": true,
+        "forceConsistentCasingInFileNames": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "allowJs": true,
+        "skipLibCheck": true,
+        "noEmit": true,
+        /* Security & quality. */
+        "strict": true,
+        "alwaysStrict": true,
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "exactOptionalPropertyTypes": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "noUncheckedSideEffectImports": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strictBindCallApply": true,
+        "strictBuiltinIteratorReturn": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "useUnknownInCatchVariables": true,
+        "verbatimModuleSyntax": true,
+        /* Misc. */
+        "plugins": []
     },
-    "removeComments": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "allowJs": true,
-    "skipLibCheck": true,
-    "noEmit": true,
-    /* Security & quality. */
-    "strict": true,
-    "alwaysStrict": true,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
-    "exactOptionalPropertyTypes": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": true,
-    "noImplicitOverride": true,
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "noUncheckedIndexedAccess": true,
-    "noUncheckedSideEffectImports": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "strictBindCallApply": true,
-    "strictBuiltinIteratorReturn": true,
-    "strictFunctionTypes": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "useUnknownInCatchVariables": true,
-    "verbatimModuleSyntax": true,
-    /* Misc. */
-    "plugins": [
-      {
-        "transform": "typia/lib/transform"
-      }
+    "include": [
+        "**/*.tsx",
+        "**/*.ts",
+        ".react-router/types/**/*",
+        "eslint.config.js"
+    ],
+    "exclude": [
+        "out/**/*",
+        "node_modules/**/*"
     ]
-  },
-  "include": [
-    "**/*.tsx",
-    "**/*.ts",
-    ".react-router/types/**/*",
-    "eslint.config.js"
-  ],
-  "exclude": [
-    "out/**/*",
-    "node_modules/**/*"
-  ]
 }
