@@ -1,7 +1,9 @@
+/* eslint-disable react-hooks/refs */
 import { type CreateTableColumnOptions, DataGrid, DataGridBody, DataGridCell, DataGridHeader, DataGridHeaderCell, type DataGridProps, DataGridRow, type DataGridRowProps, type OnSelectionChangeData, type TableColumnDefinition, Text, createTableColumn } from '@fluentui/react-components';
-import { equals, type tags } from 'typia';
+import { Layout } from './LayoutSystem';
 import type { ManagedDataGridConfiguration } from '@/utility/types/components/ManagedDataGrid';
 import { isValidElement } from 'react';
+import { useStyleList } from '@/styles/components/ManagedDataGrid';
 
 /** Structure of the single selection configuration for the managed data grid component. */
 export interface SingleSelect<T> {
@@ -37,6 +39,9 @@ export interface ManagedDataGridProps<T> {
  * @returns Rendered managed data grid component.
  */
 export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactNode {
+    /** Compile the layout system's Griffel classes for this render. */
+    const compiledStyles = useStyleList();
+
     /** List of columns to be rendered in the data grid. */
     const columnList: TableColumnDefinition<T>[] = [];
 
@@ -71,7 +76,10 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
                     case 'boolean':
                     case 'bigint':
                         // If the data to render is a string and it is an ISO string, then render it in a human friendly format.
-                        if (equals<string & tags.Format<'date-time'>>(cellValue)) { return <Text>{ new Date(cellValue).toLocaleString() }</Text>; }
+                        if (
+                            typeof cellValue === 'string' &&
+                            !Number.isNaN(Date.parse(cellValue))
+                        ) { return <Text>{ new Date(cellValue).toLocaleString() }</Text>; }
 
                         // Handle string compatible types by rendering them as text.
                         return <Text>{ cellValue }</Text>;
@@ -102,7 +110,10 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
                             case 'boolean':
                             case 'bigint':
                                 // If the data to render is a string and it is an ISO string, then render it in a human friendly format.
-                                if (equals<string & tags.Format<'date-time'>>(callbackResults)) { return <Text>{ new Date(callbackResults).toLocaleString() }</Text>; }
+                                if (
+                                    typeof callbackResults === 'string' &&
+                                    !Number.isNaN(Date.parse(callbackResults))
+                                ) { return <Text>{ new Date(callbackResults).toLocaleString() }</Text>; }
 
                                 // Handle string compatible types by rendering them as text.
                                 return <Text>{ callbackResults }</Text>;
@@ -356,6 +367,7 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
     const dataGridProps: DataGridProps = {
         'columns': columnList,
         'items': props.items,
+        'resizableColumns': true,
         'sortable': true
     };
 
@@ -382,18 +394,20 @@ export function ManagedDataGrid<T>(props: ManagedDataGridProps<T>): React.ReactN
 
     // Render the managed data grid with no selection mode
     return (
-        <DataGrid { ...dataGridProps } >
-            <DataGridHeader>
-                <DataGridRow { ...headerRowProps }>
-                    { ({ renderHeaderCell }) => <DataGridHeaderCell>{ renderHeaderCell() }</DataGridHeaderCell> }
-                </DataGridRow>
-            </DataGridHeader>
-            <DataGridBody<T>>
-                { ({ item, rowId }) => <DataGridRow<T> key={ rowId } { ...dataRowProps }>
-                    { ({ renderCell }) => <DataGridCell>{ renderCell(item) }</DataGridCell> }
-                </DataGridRow>
-                }
-            </DataGridBody>
-        </DataGrid>
+        <Layout ref={ props.ref } className={ compiledStyles.container }>
+            <DataGrid { ...dataGridProps }>
+                <DataGridHeader>
+                    <DataGridRow { ...headerRowProps }>
+                        { ({ renderHeaderCell }) => <DataGridHeaderCell>{ renderHeaderCell() }</DataGridHeaderCell> }
+                    </DataGridRow>
+                </DataGridHeader>
+                <DataGridBody<T>>
+                    { ({ item, rowId }) => <DataGridRow<T> key={ rowId } { ...dataRowProps }>
+                        { ({ renderCell }) => <DataGridCell>{ renderCell(item) }</DataGridCell> }
+                    </DataGridRow>
+                    }
+                </DataGridBody>
+            </DataGrid>
+        </Layout>
     );
 }
