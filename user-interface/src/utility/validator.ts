@@ -1,5 +1,3 @@
-import { assertGuardEquals } from 'typia';
-
 /** Represents the validation state of an input field, including its status and associated message. */
 interface validationResult {
     /** Validation state of the input field, indicating success, error, or none. */
@@ -17,7 +15,7 @@ interface validationResult {
  */
 export function generateValidationResult<T>(inputValue: T, errorMessage: string, guardCallback: (inputValue: T) => boolean): validationResult {
     // #region Input Validation
-    assertGuardEquals(errorMessage);
+    if (typeof errorMessage !== 'string') { throw new TypeError('Error message is not a string!', { 'cause': 'Input validation!' }); }
     // #endregion Input Validation
 
     /** Resultant state of the input value validation based on the current input. */
