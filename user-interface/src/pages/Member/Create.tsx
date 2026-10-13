@@ -305,25 +305,25 @@ export default function Page(): React.ReactNode {
                 <Divider appearance="strong" className={ compiledStyleList.sectionSpacing }>
                     <Subtitle2Stronger>Emergency Contact List</Subtitle2Stronger>
                 </Divider>
-                <LayoutItem align="center" justify="center">
-                    <Field label="Name" required className={ compiledStyleList.itemSpacing }>
-                        <Input placeholder="Joe Smith" appearance="underline" value={ emergencyContactName } onChange={ (_event, data) => { setEmergencyContactName(data.value); } } />
-                    </Field>
-                    <Field label="Relationship" required className={ compiledStyleList.itemSpacing }>
-                        <Input placeholder="Spouse" appearance="underline" value={ emergencyContactRelationship } onChange={ (_event, data) => { setEmergencyContactRelationship(data.value); } } />
-                    </Field>
-                    <Field label="Phone Number" validationState={ emergencyContactPhoneNumberValidation.state } validationMessage={ emergencyContactPhoneNumberValidation.message } className={ compiledStyleList.itemSpacing }>
-                        <Input placeholder="+1 123-456-7890" appearance="underline" value={ emergencyContactPhoneNumber } onChange={ (_event, data) => { setEmergencyContactPhoneNumber(data.value); } } />
-                    </Field>
-                    <Field label="eMail Address" className={ compiledStyleList.itemSpacing }>
-                        <Input placeholder="joe@example.com" appearance="underline" value={ emergencyContactEmailAddress } onChange={ (_event, data) => { setEmergencyContactEmailAddress(data.value); } } />
-                    </Field>
-                    <LayoutItem align="center" justify="center" grow>
+                <LayoutItem invertParentDirection>
+                    <LayoutItem align="center" justify="center">
+                        <Field label="Name" required className={ compiledStyleList.itemSpacing }>
+                            <Input placeholder="Joe Smith" appearance="underline" value={ emergencyContactName } onChange={ (_event, data) => { setEmergencyContactName(data.value); } } />
+                        </Field>
+                        <Field label="Relationship" required className={ compiledStyleList.itemSpacing }>
+                            <Input placeholder="Spouse" appearance="underline" value={ emergencyContactRelationship } onChange={ (_event, data) => { setEmergencyContactRelationship(data.value); } } />
+                        </Field>
+                        <Field label="Phone Number" validationState={ emergencyContactPhoneNumberValidation.state } validationMessage={ emergencyContactPhoneNumberValidation.message } className={ compiledStyleList.itemSpacing }>
+                            <Input placeholder="+1 123-456-7890" appearance="underline" value={ emergencyContactPhoneNumber } onChange={ (_event, data) => { setEmergencyContactPhoneNumber(data.value); } } />
+                        </Field>
+                        <Field label="eMail Address" validationState={ emergencyContactEmailValidation.state } validationMessage={ emergencyContactEmailValidation.message } className={ compiledStyleList.itemSpacing } >
+                            <Input placeholder="joe@example.com" appearance="underline" value={ emergencyContactEmailAddress } onChange={ (_event, data) => { setEmergencyContactEmailAddress(data.value); } } />
+                        </Field>
+                    </LayoutItem>
+                    <LayoutItem justify="center">
                         <Button onClick={ newEmergencyContact } className={ compiledStyleList.itemSpacing }>Add Emergency Contact</Button>
                     </LayoutItem>
-                    <LayoutItem grow className={ compiledStyleList.tableRender }>
-                        <ManagedDataGrid items={ emergencyContactGridList } renderConfiguration={ emergencyContactGridRenderConfig } />
-                    </LayoutItem>
+                    <ManagedDataGrid items={ emergencyContactGridList } renderConfiguration={ emergencyContactGridRenderConfig } />
                 </LayoutItem>
                 <Divider appearance="strong" className={ compiledStyleList.sectionSpacing }>
                     <Subtitle2Stronger>Finalization</Subtitle2Stronger>

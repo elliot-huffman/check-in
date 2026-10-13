@@ -23,28 +23,30 @@ export default function Home(): React.ReactNode {
 
     // Render the home page
     return (
-        <Layout align="center" justify="center">
-            <LayoutItem><Title1>Welcome to the Check-in Software</Title1></LayoutItem>
-            <LayoutItem><Subtitle1>Please select an option below to get started.</Subtitle1></LayoutItem>
-            <LayoutItem align="center">
-                <Card className={ computedStyles.card } onClick={ checkInNavigation }>
-                    <CardPreview><BarcodeScannerRegular color={ tokens.colorBrandForegroundLink } /></CardPreview>
-                    <CardHeader
-                        header={ <Subtitle1>Check-In</Subtitle1> }
-                        description={ <Text>Validates the member</Text> }
-                    />
-                    <CardPreview>
-                    </CardPreview>
-                </Card>
-                <Card className={ computedStyles.card } onClick={ memberManagerLandingNavigation }>
-                    <CardPreview><PeopleSettingsRegular color={ tokens.colorBrandForegroundLink } /></CardPreview>
-                    <CardHeader
-                        header={ <Subtitle1>Manage Member List</Subtitle1> }
-                        description={ <Text>Add, remove or sync users.</Text> }
-                    />
-                    <CardPreview>
-                    </CardPreview>
-                </Card>
+        <Layout align="center" justify="center" direction="column">
+            <LayoutItem>
+                <Title1>Welcome to the Check-in Software</Title1>
+                <Subtitle1>Please select an option below to get started.</Subtitle1>
+                <LayoutItem justify="center">
+                    <Card className={ computedStyles.card } onClick={ checkInNavigation }>
+                        <CardPreview><BarcodeScannerRegular color={ tokens.colorBrandForegroundLink } /></CardPreview>
+                        <CardHeader
+                            header={ <Subtitle1>Check-In</Subtitle1> }
+                            description={ <Text>Validates the member</Text> }
+                        />
+                        <CardPreview>
+                        </CardPreview>
+                    </Card>
+                    <Card className={ computedStyles.card } onClick={ memberManagerLandingNavigation }>
+                        <CardPreview><PeopleSettingsRegular color={ tokens.colorBrandForegroundLink } /></CardPreview>
+                        <CardHeader
+                            header={ <Subtitle1>Manage Member List</Subtitle1> }
+                            description={ <Text>Add, remove or sync users.</Text> }
+                        />
+                        <CardPreview>
+                        </CardPreview>
+                    </Card>
+                </LayoutItem>
             </LayoutItem>
         </Layout>
     );

@@ -32,6 +32,8 @@ export default function Template(props: TemplateProps): React.ReactNode {
     const topBarRef = useRef<HTMLDivElement>(null);
 
     /** Instance of the content container's HTML element, to inject manual styling into. */
+    const templateContainerRef = useRef<HTMLDivElement>(null);
+
     const contentContainerRef = useRef<HTMLDivElement>(null);
 
     /** Function that calculates the max height of the content container based on the Top Bar's height. */
@@ -43,7 +45,7 @@ export default function Template(props: TemplateProps): React.ReactNode {
         if (topBarRef.current) { calculatedMaxHeight = `calc(100vh - ${ topBarRef.current.getBoundingClientRect().bottom }px)`; }
 
         // Set the max height of the content container to ensure it doesn't overflow the viewport, accounting for the Top Bar's height.
-        if (contentContainerRef.current) { contentContainerRef.current.style.maxHeight = calculatedMaxHeight; }
+        if (templateContainerRef.current) { templateContainerRef.current.style.maxHeight = calculatedMaxHeight; }
     }, []);
 
     // Manually inject the max height of the content container to ensure perfect scrolling behavior
@@ -132,10 +134,10 @@ export default function Template(props: TemplateProps): React.ReactNode {
                     'isOpen': isNotificationCenterOpen,
                     'setOpen': setNotificationCenterOpen
                 } } />
-            <Layout direction="column" noWrap ref={ contentContainerRef }>
+            <Layout direction="column" noWrap ref={ templateContainerRef }>
                 <NavigationMenu open={ isMenuOpen } setMenuOpenState={ setMenuOpen } menuLayout={ navigationMenuConfig } />
                 <NotificationManager open={ isNotificationCenterOpen }>
-                    <LayoutItem className={ compiledStyles.pageContent } >
+                    <LayoutItem className={ compiledStyles.pageContent } ref={ contentContainerRef } >
                         { props.children }
                     </LayoutItem>
                 </NotificationManager>
