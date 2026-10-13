@@ -1,4 +1,5 @@
-import { DrawerBody, DrawerHeader, DrawerHeaderTitle, InlineDrawer, Toast, ToastBody, ToastTitle, Toaster, useToastController } from '@fluentui/react-components';
+import { Button, Card, CardHeader, DrawerBody, DrawerHeader, DrawerHeaderTitle, InlineDrawer, Link, Subtitle1, Text, Toast, ToastBody, ToastTitle, ToastTrigger, Toaster, useToastController } from '@fluentui/react-components';
+import { CheckmarkCircleFilled, DismissRegular, ErrorCircleFilled, InfoFilled, WarningFilled } from '@fluentui/react-icons';
 import { Fragment, useCallback, useId, useRef, useState } from 'react';
 import type { ManagedNotification } from '@/utility/types/components/NotificationManager';
 import { NotificationManagerContext } from './NotificationManagerContext';
@@ -72,7 +73,7 @@ export function NotificationManager(props: ManagedNotificationProps): React.Reac
 
         // Render the toast notification using the toast controller.
         toastController.dispatchToast(<Toast appearance="inverted" key={ computedNotification.id }>
-            <ToastTitle>{ config.displayName }</ToastTitle>
+            <ToastTitle action={ <ToastTrigger><Link>Close</Link></ToastTrigger> }>{ config.displayName }</ToastTitle>
             <ToastBody>{ config.content }</ToastBody>
         </Toast>, toasterOptionsPayload);
 
@@ -114,7 +115,7 @@ export function NotificationManager(props: ManagedNotificationProps): React.Reac
         const toasterUpdatePayload: ToastUpdateOptions = {
             'content':
                 <Toast appearance="inverted" key={ id }>
-                    <ToastTitle>{ newItem.displayName }</ToastTitle>
+                    <ToastTitle action={ <ToastTrigger><Link>Close</Link></ToastTrigger> }>{ newItem.displayName }</ToastTitle>
                     <ToastBody>{ newItem.content }</ToastBody>
                 </Toast>,
             'toastId': id
@@ -149,6 +150,14 @@ export function NotificationManager(props: ManagedNotificationProps): React.Reac
         toastController.dismissToast(id);
     }
 
+    /** Reference mapping notification types to their corresponding icon components. */
+    const iconReference: Record<ManagedNotification['type'], React.ReactElement> = {
+        'error': <ErrorCircleFilled color="red" fontSize={ '2em' } />,
+        'info': <InfoFilled color="blue" fontSize={ '2em' } />,
+        'success': <CheckmarkCircleFilled color="green" fontSize={ '2em' } />,
+        'warning': <WarningFilled color="yellow" fontSize={ '2em' } />
+    };
+
     /** Context value object containing notification management functions and toaster ID. */
     const contextValue = {
         newNotification,
@@ -162,16 +171,20 @@ export function NotificationManager(props: ManagedNotificationProps): React.Reac
         <NotificationManagerContext value={ contextValue }>
             <Toaster toasterId={ toasterId } position="top-end" pauseOnHover offset={ { 'vertical': 50 } } />
             { props.children }
-            <InlineDrawer open={ props.open } position="end" className={ compiledStyleList.notificationContainer }>
+            <InlineDrawer open={ props.open } position="end" size="medium" className={ compiledStyleList.notificationContainer }>
                 <DrawerHeader>
                     <DrawerHeaderTitle>Notifications</DrawerHeaderTitle>
                 </DrawerHeader>
                 <DrawerBody>
                     { notificationList.map((notification) => <Fragment key={ notification.id }>
-                        <Toast>
-                            <ToastTitle>{ notification.displayName }</ToastTitle>
-                            <ToastBody>{ notification.content }</ToastBody>
-                        </Toast>
+                        <Card>
+                            <CardHeader
+                                action={ <Button appearance="subtle" icon={ <DismissRegular /> } onClick={ () => { removeNotification(notification.id); } } /> }
+                                image={ iconReference[notification.type] }
+                                header={ <Subtitle1>{ notification.displayName }</Subtitle1> }
+                            />
+                            <Text>{ notification.content }</Text>
+                        </Card>
                         <br />
                     </Fragment>) }
                 </DrawerBody>

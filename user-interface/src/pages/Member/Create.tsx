@@ -1,4 +1,4 @@
-import { Activity, useCallback, useContext, useState } from 'react';
+import { Activity, useCallback, useContext, useMemo, useState } from 'react';
 import { Button, Divider, Field, Input, Subtitle2Stronger, Switch, Textarea, Title1 } from '@fluentui/react-components';
 import { Layout, LayoutItem } from '@/components/LayoutSystem';
 import { DatePicker } from '@fluentui/react-datepicker-compat';
@@ -32,6 +32,9 @@ export default function Page(): React.ReactNode {
 
     // React state used to store the email address of the new member.
     const [emailAddress, setEmailAddress] = useState('');
+
+    /** Validation state for the email address input field, computed based on the current email address value. */
+    const emailValidation = useMemo(() => generateValidationResult(emailAddress, 'Invalid email address!', () => true), [emailAddress]);
 
     // React state used to store the date of birth of the new member.
     const [dateOfBirth, setDateOfBirth] = useState<Date | null | undefined>(null);
@@ -73,7 +76,7 @@ export default function Page(): React.ReactNode {
     const [otherAccessibilityRequirement, setOtherAccessibilityRequirement] = useState('');
 
     /** Validation state for the phone number input field, computed based on the current phone number value. */
-    const phoneNumberValidation = generateValidationResult(phoneNumber, 'Invalid phone number!', isPhoneNumber);
+    const phoneNumberValidation = useMemo(() => generateValidationResult(phoneNumber, 'Invalid phone number!', isPhoneNumber), [phoneNumber]);
 
     // React state used to store the first name of the new member.
     const [emergencyContactName, setEmergencyContactName] = useState('');
@@ -85,10 +88,13 @@ export default function Page(): React.ReactNode {
     const [emergencyContactPhoneNumber, setEmergencyContactPhoneNumber] = useState('');
 
     /** Validation state for the emergency contact phone number input field, computed based on the current emergency contact phone number value. */
-    const emergencyContactPhoneNumberValidation = generateValidationResult(emergencyContactPhoneNumber, 'Invalid phone number!', isPhoneNumber);
+    const emergencyContactPhoneNumberValidation = useMemo(() => generateValidationResult(emergencyContactPhoneNumber, 'Invalid phone number!', isPhoneNumber), [emergencyContactPhoneNumber]);
 
     // React state used to store the email address of the emergency contact for the new member.
     const [emergencyContactEmailAddress, setEmergencyContactEmailAddress] = useState('');
+
+    /** Validation state for the email address input field, computed based on the current email address value. */
+    const emergencyContactEmailValidation = useMemo(() => generateValidationResult(emergencyContactEmailAddress, 'Invalid email address!', () => true), [emergencyContactEmailAddress]);
 
     // React state used to store the state of the new member.
     const [emergencyContactList, setEmergencyContactList] = useState<Member['emergencyContactList']>([]);
@@ -101,7 +107,7 @@ export default function Page(): React.ReactNode {
         /** Object ID of the notification for creating a new member. */
         const notificationId = notificationManager.newNotification({
             'content': 'Please wait while the new member is being created...',
-            'displayName': 'Creating New Member',
+            'displayName': 'Creating Member',
             'type': 'info'
         });
 
@@ -179,8 +185,8 @@ export default function Page(): React.ReactNode {
             // Indicate that the new member has been successfully created.
             notificationManager.setNotification(notificationId, {
                 'content': 'The new member has been successfully created!',
-                'displayName': 'New Member Created',
-                'timeout': 10000,
+                'displayName': 'Member Created',
+                'timeout': 5000,
                 'type': 'success'
             });
         } catch (_error) {
@@ -240,7 +246,7 @@ export default function Page(): React.ReactNode {
     // Render the user creation page.
     return (
         <Layout direction="column">
-            <LayoutItem invertParentDirection grow><Title1>Create a new member</Title1></LayoutItem>
+            <LayoutItem invertParentDirection grow><Title1>Create a New Member</Title1></LayoutItem>
             <LayoutItem>
                 <LayoutItem>
                     <Divider appearance="strong" className={ compiledStyleList.sectionSpacing }>
@@ -256,7 +262,7 @@ export default function Page(): React.ReactNode {
                         <Field label="Phone Number" validationState={ phoneNumberValidation.state } validationMessage={ phoneNumberValidation.message } className={ compiledStyleList.itemSpacing }>
                             <Input placeholder="+1 123-456-7890" appearance="underline" value={ phoneNumber } onChange={ (_event, data) => { setPhoneNumber(data.value); } } />
                         </Field>
-                        <Field label="eMail Address" className={ compiledStyleList.itemSpacing }>
+                        <Field label="eMail Address" validationState={ emailValidation.state } validationMessage={ emailValidation.message } className={ compiledStyleList.itemSpacing }>
                             <Input placeholder="joe@example.com" appearance="underline" value={ emailAddress } onChange={ (_event, data) => { setEmailAddress(data.value); } } />
                         </Field>
                         <Field label="Date of Birth" required className={ compiledStyleList.itemSpacing }>
