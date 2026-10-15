@@ -55,14 +55,14 @@
         "@software-hardware-integration-lab/development-utilities": "~3.0.0",
         "@types/jws": "~3.2.11",
         "@types/node": "~26.6.5",
-        "electron": "~44.7.0",
+        "electron": "~44.7.2",
         "electron-builder": "~26.15.3",
         "generate-license-file": "~4.2.5",
         "ts-patch": "~4.0.1",
         "typescript": "~6.0.3"
     },
     "dependencies": {
-        "@azure/identity": "~4.13.3",
+        "@azure/identity": "~4.14.0",
         "@reduxjs/toolkit": "~2.13.0",
         "jws": "~4.0.1",
         "typia": "~12.1.1"
