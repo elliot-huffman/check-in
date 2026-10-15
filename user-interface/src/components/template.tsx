@@ -34,6 +34,7 @@ export default function Template(props: TemplateProps): React.ReactNode {
     /** Instance of the content container's HTML element, to inject manual styling into. */
     const templateContainerRef = useRef<HTMLDivElement>(null);
 
+    /** Instance of the content container's HTML element, used for calculating and setting its max height. */
     const contentContainerRef = useRef<HTMLDivElement>(null);
 
     /** Function that calculates the max height of the content container based on the Top Bar's height. */
