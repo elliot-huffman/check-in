@@ -59,7 +59,7 @@
         "electron-builder": "~26.15.3",
         "generate-license-file": "~4.2.5",
         "ts-patch": "~4.0.1",
-        "typescript": "~6.0.3"
+        "typescript": "~7.0.2"
     },
     "dependencies": {
         "@azure/identity": "~4.14.0",
