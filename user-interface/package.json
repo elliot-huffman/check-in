@@ -62,7 +62,7 @@
         "react-redux": "~9.3.0",
         "react-router": "~8.4.0",
         "signature_pad": "~5.1.4",
-        "typia": "~12.1.1"
+        "typia": "~15.1.0"
     },
     "devDependencies": {
         "@babel/core": "~8.0.7",
